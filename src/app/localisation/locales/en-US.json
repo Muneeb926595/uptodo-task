@@ -1,0 +1,28 @@
+{
+  "apiError": {
+    "authTokenExpired": "Bearer token has expired"
+  },
+  "error": {
+    "nothingFound": "Nothing Found"
+  },
+  "general": {
+    "skip": "Skip"
+  },
+  "userGuide": {
+    "profileSettings": "Profile Settings"
+  },
+  "accessablity": {
+    "onboardingFirstImage": "Onboarding step 1 image"
+  },
+  "instruction": {
+    "underProgress": "Under Progress"
+  },
+  "label": {
+    "employer": "Employer",
+    "tagline": "SwapX - Trade Anything",
+    "detailedTagline": "Exchange items safely with verified users",
+    "getStarted": "Get Started",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "login": "Log In"
+  }
+}
