@@ -21,6 +21,7 @@ import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
 import { AppNavigator } from './app/navigation';
 import StorageHelper, { StorageKeys } from './app/data/mmkv-storage';
 import { Colors } from './app/theme';
+import { AddTaskModal } from './app/components/add-task-modal';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -67,6 +68,8 @@ function App() {
             <GestureHandlerRootView style={{ flex: 1 }}>
               <SafeAreaProvider initialMetrics={initialWindowMetrics}>
                 <AppNavigator />
+                {/* global components or modals */}
+                <AddTaskModal />
               </SafeAreaProvider>
             </GestureHandlerRootView>
           </LocaleProvider>

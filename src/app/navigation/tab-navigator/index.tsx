@@ -3,13 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Colors } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { HomeScreen } from '../../../modules/todo/view/screens';
 import { styles } from './styles';
+import { emit } from '../../utils/event-bus';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -79,6 +80,22 @@ const ProfileStack = () => (
     />
   </Stack.Navigator>
 );
+
+const AddButton = () => {
+  const handlePress = () => {
+    emit('open-add-task');
+  };
+
+  return (
+    <TouchableOpacity onPress={handlePress} style={styles.floatingButton}>
+      <AppIcon
+        name={AppIconName.add}
+        iconSize={AppIconSize.xlarge}
+        color={Colors.white}
+      />
+    </TouchableOpacity>
+  );
+};
 
 export const TabsNavigator = () => {
   return (
@@ -161,15 +178,7 @@ export const TabsNavigator = () => {
         options={{
           headerShown: false,
           tabBarLabel: '',
-          tabBarIcon: () => (
-            <View style={styles.floatingButton}>
-              <AppIcon
-                name={AppIconName.add}
-                iconSize={AppIconSize.xlarge}
-                color={Colors.white}
-              />
-            </View>
-          ),
+          tabBarButton: () => <AddButton />,
         }}
       />
       <MainTabs.Screen
