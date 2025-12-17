@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
   paragraph: {
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     color: Colors.foreground,
   },
   paragraphBold: {

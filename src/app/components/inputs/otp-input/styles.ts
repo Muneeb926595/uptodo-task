@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   errorText: {
     color: Colors.red,
     paddingLeft: Layout.micro,
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(12),
   },
 });

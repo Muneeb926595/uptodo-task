@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   itemText: {
     marginBottom: Layout.zero,
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(15),
   },
 });

@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     marginVertical: Layout.heightPercentageToDP(
       Layout.micro / Layout.divisionFactorForHeight,
     ),
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(14),
     height: Layout.heightPercentageToDP(14),
     textAlignVertical: 'top',

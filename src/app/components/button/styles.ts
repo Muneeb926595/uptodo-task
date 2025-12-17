@@ -22,6 +22,6 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.white,
     fontSize: Layout.RFValue(15.5),
-    ...Fonts.poppinsBold,
+    ...Fonts.latoBold,
   },
 });

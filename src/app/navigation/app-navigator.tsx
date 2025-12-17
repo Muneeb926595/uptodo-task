@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
 import { AuthFlow } from '../../modules/auth/view/navigation/auth';
+import { hideSplash } from 'react-native-splash-view';
 import { useTheme } from '../theme/provider';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
@@ -16,6 +17,10 @@ const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 export const AppNavigator = () => {
   const routeNameRef = useRef<any>(null);
   const { active } = useTheme();
+
+  useEffect(() => {
+    hideSplash();
+  }, []);
 
   // to debug react-navigation with flipper
   const handleNavContainerReady = () => {

@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   description: {
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(14),
     color: Colors.typography['DEFAULT'],
   },

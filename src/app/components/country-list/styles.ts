@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   countryCode: {
-    ...Fonts.poppinsSemiBold,
+    ...Fonts.latoBlack,
     color: Colors.surface['100'],
     marginBottom: 0,
   },
@@ -29,14 +29,14 @@ export const styles = StyleSheet.create({
       Layout.mini / Layout.divisionFactorForHeight,
     ),
     color: Colors.foreground,
-    ...Fonts.poppinsBold,
+    ...Fonts.latoBold,
     fontSize: Layout.RFValue(20),
   },
   searchInput: {
     marginHorizontal: Layout.widthPercentageToDP(
       Layout.small / Layout.divisionFactorForWidth,
     ),
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(18),
     color: Colors.typography['100'],
   },
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     ),
     marginBottom: 0,
     color: Colors.surface['DEFAULT'],
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
   },
   separator: {
     height: 1,

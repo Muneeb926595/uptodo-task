@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   heading: {
     color: Colors.white,
-    ...Fonts.poppinsSemiBold,
+    ...Fonts.latoBold,
     fontSize: Layout.RFValue(18.5),
     marginBottom: Layout.heightPercentageToDP(1.2),
   },

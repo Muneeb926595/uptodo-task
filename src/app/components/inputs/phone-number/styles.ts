@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   countryCode: {
     color: Colors.surface['DEFAULT'],
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     fontSize: Layout.RFValue(14),
   },
   inputContainer: {
@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
 export const inputTextStyle = (color: string) => ({
   paddingHorizontal: Layout.widthPercentageToDP(1),
   flex: 1,
-  ...Fonts.poppinsRegular,
+  ...Fonts.latoRegular,
   fontSize: Layout.RFValue(14),
   color: color,
 });

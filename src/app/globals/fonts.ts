@@ -4,93 +4,59 @@ import { Layout } from './layout';
 // 600 => medium
 // 400 => regular
 
-const primaryFont = 'Poppins-Regular';
-const secondaryFont = 'Poppins-Medium';
+const primaryFont = 'Lato-Regular';
 
-const poppinsBlackItalic = 'Poppins-BlackItalic';
-const poppinsBlack = 'Poppins-Black';
-const poppinsBold = 'Poppins-Bold';
-const poppinsBoldItalic = 'Poppins-BoldItalic';
-const poppinsExtraBold = 'Poppins-ExtraBold';
-const poppinsExtraBoldItalic = 'Poppins-ExtraBoldItalic';
-const poppinsExtraLight = 'Poppins-ExtraLight';
-const poppinsExtraLightItalic = 'Poppins-ExtraLightItalic';
-const poppinsItalic = 'Poppins-Italic';
-const poppinsLight = 'Poppins-Light';
-const poppinsLightItalic = 'Poppins-LightItalic';
-const poppinsMedium = 'Poppins-Medium';
-const poppinsMediumItalic = 'Poppins-MediumItalic';
-const poppinsRegular = 'Poppins-Regular';
-const poppinsSemiBold = 'Poppins-SemiBold';
-const poppinsSemiBoldItalic = 'Poppins-SemiBoldItalic';
-const poppinsThin = 'Poppins-Thin';
-const poppinsThinItalic = 'Poppins-ThinItalic';
+const latoBlack = 'Lato-Black';
+const latoBlackItalic = 'Lato-BlackItalic';
+const latoBold = 'Lato-Bold';
+const latoBoldItalic = 'Lato-BoldItalic';
+const latoItalic = 'Lato-Italic';
+const latoLight = 'Lato-Light';
+const latoLightItalic = 'Lato-LightItalic';
+const latoThin = 'Lato-Thin';
+const latoThinItalic = 'Lato-ThinItalic';
 
 export const Fonts = {
-  poppinsBlackItalic: {
-    fontFamily: poppinsBlackItalic,
+  latoBlackItalic: {
+    fontFamily: latoBlackItalic,
   },
-  poppinsBlack: {
-    fontFamily: poppinsBlack,
+  latoBlack: {
+    fontFamily: latoBlack,
   },
-  poppinsBold: {
-    fontFamily: poppinsBold,
+  latoBold: {
+    fontFamily: latoBold,
   },
-  poppinsBoldItalic: {
-    fontFamily: poppinsBoldItalic,
+  latoRegular: {
+    fontFamily: primaryFont,
   },
-  poppinsExtraBold: {
-    fontFamily: poppinsExtraBold,
+  latoBoldItalic: {
+    fontFamily: latoBoldItalic,
   },
-  poppinsExtraBoldItalic: {
-    fontFamily: poppinsExtraBoldItalic,
+  latoItalic: {
+    fontFamily: latoItalic,
   },
-  poppinsExtraLight: {
-    fontFamily: poppinsExtraLight,
+  latoLight: {
+    fontFamily: latoLight,
   },
-  poppinsExtraLightItalic: {
-    fontFamily: poppinsExtraLightItalic,
+  latoLightItalic: {
+    fontFamily: latoLightItalic,
   },
-  poppinsItalic: {
-    fontFamily: poppinsItalic,
+  latoThin: {
+    fontFamily: latoThin,
   },
-  poppinsLight: {
-    fontFamily: poppinsLight,
-  },
-  poppinsLightItalic: {
-    fontFamily: poppinsLightItalic,
-  },
-  poppinsMedium: {
-    fontFamily: poppinsMedium,
-  },
-  poppinsMediumItalic: {
-    fontFamily: poppinsMediumItalic,
-  },
-  poppinsRegular: {
-    fontFamily: poppinsRegular,
-  },
-  poppinsSemiBold: {
-    fontFamily: poppinsSemiBold,
-  },
-  poppinsSemiBoldItalic: {
-    fontFamily: poppinsSemiBoldItalic,
-  },
-  poppinsThin: {
-    fontFamily: poppinsThin,
-  },
-  poppinsThinItalic: {
-    fontFamily: poppinsThinItalic,
+  latoThinItalic: {
+    fontFamily: latoThinItalic,
   },
   heading3: {
     fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(20),
   },
   heading4: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(20),
   },
   heading5: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(18),
   },
   paragraphLarge: {
@@ -98,31 +64,31 @@ export const Fonts = {
     fontSize: Layout.RFValue(20),
   },
   paragraphBold: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(16),
   },
   paragraph: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(16),
   },
   paragraphSmall: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(14),
   },
   paragraphTiny: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(12),
   },
   paragraphLink: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(16),
   },
   paragraphLinkBold: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
     fontSize: Layout.RFValue(16),
   },
   bold: {
-    fontFamily: `${secondaryFont}`,
+    fontFamily: `${primaryFont}`,
   },
   micro: {
     fontFamily: `${primaryFont}`,

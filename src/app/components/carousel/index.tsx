@@ -96,7 +96,7 @@ export const Carousel = ({ data, Component, onComplete }: any) => {
           btnLabelStyles={{
             color: Colors.white,
             fontSize: Layout.RFValue(15),
-            ...Fonts.poppinsMedium,
+            ...Fonts.latoBlack,
           }}
           buttonContainer={{
             backgroundColor: Colors.brand['DEFAULT'],

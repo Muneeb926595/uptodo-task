@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     marginVertical: Layout.heightPercentageToDP(
       Layout.micro / Layout.divisionFactorForHeight,
     ),
-    ...Fonts.poppinsRegular,
+    ...Fonts.latoRegular,
     textAlignVertical: 'top',
     fontSize: Layout.RFValue(14),
   },
