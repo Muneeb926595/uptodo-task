@@ -8,7 +8,9 @@
   "general": {
     "skip": "Skip",
     "done": "Done",
-    "next": "Next"
+    "next": "Next",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "userGuide": {
     "profileSettings": "Profile Settings"
@@ -31,6 +33,7 @@
     "index": "Index",
     "calendar": "Calendar",
     "focus": "Focus",
+    "chooseTime": "Choose Time",
     "whatDoYouWantToDoToday": "What do you want to do today?",
     "tapToAddYourTasks": "Tap + to add your tasks",
     "profile": "Profile",

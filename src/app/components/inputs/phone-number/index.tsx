@@ -68,7 +68,7 @@ const PhoneNumberInput = (props: Props) => {
           onBlur={handleBlur}
           placeholder={props?.placeholder}
           placeholderTextColor={
-            props.value ? Colors.foreground : Colors.typography['100']
+            props.value ? Colors.white : Colors.typography['100']
           }
           numberOfLines={1}
           multiline={false}

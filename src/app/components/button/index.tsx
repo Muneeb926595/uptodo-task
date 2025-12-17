@@ -50,7 +50,7 @@ export const Button = (props: Props) => {
       style={[
         styles.buttonContainer,
         buttonContainer,
-        disabled && { backgroundColor: disableBgColor ?? Colors.darkGray },
+        disabled && { backgroundColor: disableBgColor ?? Colors.surface['100'] },
       ]}
       disabled={disabled || loading}
     >

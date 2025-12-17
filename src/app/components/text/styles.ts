@@ -17,14 +17,14 @@ export const styles = StyleSheet.create({
   },
   heading3: {
     ...Fonts.heading3,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   heading4: {
     ...Fonts.heading4,
   },
   heading5: {
     ...Fonts.heading5,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   heading6: {
     fontSize: 20,
@@ -33,23 +33,23 @@ export const styles = StyleSheet.create({
   },
   paragraph: {
     ...Fonts.latoRegular,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   paragraphBold: {
     ...Fonts.paragraphBold,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   paragraphLarge: {
     ...Fonts.paragraphLarge,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   paragraphSmall: {
     ...Fonts.paragraphSmall,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   paragraphTiny: {
     ...Fonts.paragraphTiny,
-    color: Colors.foreground,
+    color: Colors.white,
   },
   paragraphLink: {
     ...Fonts.paragraphLink,
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
   },
   micro: {
     ...Fonts.micro,
-    color: Colors.foreground,
+    color: Colors.white,
   },
 });
 

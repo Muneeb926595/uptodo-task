@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     marginBottom: Layout.heightPercentageToDP(
       Layout.mini / Layout.divisionFactorForHeight,
     ),
-    color: Colors.foreground,
+    color: Colors.white,
     ...Fonts.latoBold,
     fontSize: Layout.RFValue(20),
   },

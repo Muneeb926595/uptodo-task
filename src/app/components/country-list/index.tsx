@@ -85,7 +85,7 @@ export const CountryList = (props: Props) => {
             props.setIsCountryModalVisible(false);
           }}
         >
-          <AppIcon name={AppIconName.back} color={Colors.foreground} />
+          <AppIcon name={AppIconName.back} color={Colors.white} />
         </TouchableOpacity>
       </View>
       <TextInput

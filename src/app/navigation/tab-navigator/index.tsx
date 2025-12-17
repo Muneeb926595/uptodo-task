@@ -10,6 +10,7 @@ import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { HomeScreen } from '../../../modules/todo/view/screens';
 import { styles } from './styles';
+
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 

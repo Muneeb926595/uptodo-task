@@ -7,6 +7,8 @@ export const lightColors = {
   white: '#FFFFFF',
   black: '#000000',
   muted: '#9CA3AF',
+  red: 'red',
+  modalBackground: '#000000BD',
   transparent: 'transparent',
 
   brand: {
@@ -23,8 +25,8 @@ export const lightColors = {
   },
 
   surface: {
-    DEFAULT: '#979797', // Cards / sheets
-    50: '#2A2A2A', // Inputs
+    DEFAULT: '#363636', // Cards / sheets
+    50: '#272727', // Inputs
     100: '#363636',
     300: '#1C1C1C',
     400: '#181818',
@@ -71,6 +73,7 @@ export const darkColors = {
   white: '#FFFFFF',
   black: '#000000',
   muted: '#6B7280',
+  red: 'red',
   transparent: 'transparent',
 
   brand: {

@@ -29,6 +29,7 @@
     "react-i18next": "^16.5.0",
     "react-intl": "^8.0.1",
     "react-native": "0.83.0",
+    "react-native-calendars": "1.1313.0",
     "react-native-compressor": "^1.13.0",
     "react-native-date-picker": "^5.0.13",
     "react-native-device-info": "^15.0.1",

@@ -102,6 +102,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly focus: string;
   readonly profile: string;
   readonly whatDoYouWantToDoToday: string;
+  readonly chooseTime: string;
   readonly tapToAddYourTasks: string;
 }
 
@@ -109,6 +110,8 @@ export interface IGeneralMessages extends IMessageGroup {
   readonly skip: string;
   readonly next: string;
   readonly done: string;
+  readonly cancel: string;
+  readonly save: string;
 }
 
 export interface IUserGuideMessages extends IMessageGroup {

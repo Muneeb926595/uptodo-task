@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
 import { HomeHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -9,13 +9,20 @@ import { CustomImage } from '../../../../../app/components/custom-image';
 import { Images } from '../../../../../app/globals';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
+import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 
 const todos = [];
 
 export const HomeScreen = () => {
   const styles = useStyles();
 
+  const [openCalendar, setOpenCalendar] = React.useState(false);
+
   const RenderTodosList = <View>{/* Render the list of todos here */}</View>;
+
+  const handleOpenCalendar = () => {
+    setOpenCalendar(true);
+  };
 
   const RenderEmptySection = (
     <View style={styles.notItemsSectionContainer}>
@@ -25,6 +32,9 @@ export const HomeScreen = () => {
         placeHolder={Images.HomeGraphics}
         resizeMode="cover"
       />
+      <TouchableOpacity onPress={handleOpenCalendar}>
+        <AppText style={{ fontSize: 20, color: 'white' }}>Test</AppText>
+      </TouchableOpacity>
       <AppText style={styles.emptyListLabelHeading}>
         <FormattedMessage
           id={LocaleProvider.IDs.label.whatDoYouWantToDoToday}
@@ -33,6 +43,14 @@ export const HomeScreen = () => {
       <AppText style={styles.emptyListLabelDescription}>
         <FormattedMessage id={LocaleProvider.IDs.label.tapToAddYourTasks} />
       </AppText>
+      <CalendarPicker
+        visible={openCalendar}
+        onCancel={() => setOpenCalendar(false)}
+        onConfirm={date => {
+          setOpenCalendar(false);
+          console.log('Selected date:', date);
+        }}
+      />
     </View>
   );
 

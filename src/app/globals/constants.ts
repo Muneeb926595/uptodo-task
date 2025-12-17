@@ -56,7 +56,6 @@ class _Constants {
     DEFAULT_SKELTON_SPEED: 800,
     DEFAULT_SKELTON_DIRECTION: 'right',
     DEFAULT_SKELTON_BACKGROUND_COLOR: Colors.white,
-    DEFAULT_SKELTON_HIGHLIGHT_COLOR: Colors.skeletonHighlightColor,
   };
 
   readonly biometric = {
