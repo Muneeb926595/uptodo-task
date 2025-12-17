@@ -1,118 +1,127 @@
 export const lightColors = {
-  background: '#FFFFFF',
-  text: '#000000',
-  primary: '#1E90FF',
-  card: '#FFFFFF',
-  border: '#E2E8F0',
-  white: '#FFFFFF',
-  black: '#000000',
-  muted: '#6B7280',
-  brand: {
-    DEFAULT: '#5A13ED',
-    50: '#1877F2', //facebook blue
-    100: '#3382FF',
-    200: '#996200',
-    300: '#c1963b',
-    400: '#f3e675',
-    500: '#997EFF', //light version
-    600: '#F6F4FC', //lightest version for backgrounds
-    700: '#6627E6',
-    800: '#8562D1',
-  },
-  surface: {
-    DEFAULT: '#1E2E0D',
-    50: '#C2E1C2',
-    100: '#1E2E0D',
-    300: '#F9F9F9', //light gray background
-    400: '#F9FAFB', //light gray background for dropdown
-    500: '#DFDFDF', //mid gray for prgoress bar
-    600: '#EDEDED', //between mid and light gray for prgoress bar
-  },
-  typography: {
-    DEFAULT: '#344054',
-    50: '#0B0B0B',
-    100: '#959991',
-    200: '#EBECE9',
-    300: '#f2f2f2',
-    400: '#A1A1A1',
-    500: '#168756',
-    600: '#798084',
-  },
-  borders: {
-    DEFAULT: '#D4D5D6',
-    50: '#D4D5D6',
-    100: '#F2F4F7',
-    200: '#F4F4F5',
-  },
-  action: {
-    DEFAULT: '#00B03C', //green
-    50: '#00B03C', //green
-    100: '#FD0303', //red
-    200: '#26CFA2', //dard green
-    300: '#A1824A', //yellow
-    400: '#F5F0E5', //light yellow
-    500: '#FED001',
-    600: '#DFF2EB', //light green
-    700: '#ff9f42',
-  },
-};
-
-export const darkColors = {
-  background: '#000000',
-  text: '#FFFFFF',
-  primary: '#1E90FF',
-  card: '#1A1A1A',
-  border: '#222222',
+  background: '#121212', // App background
+  text: '#EDEDED', // Primary text
+  primary: '#8687E7', // Main CTA buttons
+  card: '#979797', // List items / cards
+  border: '#2C2C2C',
   white: '#FFFFFF',
   black: '#000000',
   muted: '#9CA3AF',
+
   brand: {
-    DEFAULT: '#5A13ED',
-    50: '#1877F2', //facebook blue
-    100: '#3382FF',
-    200: '#996200',
-    300: '#c1963b',
-    400: '#f3e675',
-    500: '#997EFF', //light version
-    600: '#F6F4FC', //lightest version for backgrounds
-    700: '#6627E6',
-    800: '#8562D1',
+    DEFAULT: '#8687E7',
+    50: '#F3F1FF',
+    100: '#E6E2FF',
+    200: '#CFC8FF',
+    300: '#B8ADFF',
+    400: '#A193FF',
+    500: '#8687E7',
+    600: '#6F63E6',
+    700: '#554BCC',
+    800: '#3D35B3',
   },
+
   surface: {
-    DEFAULT: '#1E2E0D',
-    50: '#C2E1C2',
-    100: '#1E2E0D',
-    300: '#F9F9F9', //light gray background
-    400: '#F9FAFB', //light gray background for dropdown
-    500: '#DFDFDF', //mid gray for prgoress bar
-    600: '#EDEDED', //between mid and light gray for prgoress bar
+    DEFAULT: '#979797', // Cards / sheets
+    50: '#2A2A2A', // Inputs
+    100: '#363636',
+    300: '#1C1C1C',
+    400: '#181818',
+    500: '#141414',
+    600: '#0F0F0F',
   },
+
   typography: {
-    DEFAULT: '#344054',
-    50: '#0B0B0B',
-    100: '#959991',
-    200: '#EBECE9',
-    300: '#f2f2f2',
-    400: '#A1A1A1',
-    500: '#168756',
-    600: '#798084',
+    DEFAULT: '#EDEDED',
+    50: '#FFFFFF',
+    100: '#E5E7EB',
+    200: '#D1D5DB',
+    300: '#9CA3AF',
+    400: '#6B7280',
+    500: '#4B5563',
+    600: '#374151',
   },
+
   borders: {
-    DEFAULT: '#D4D5D6',
-    50: '#D4D5D6',
-    100: '#F2F4F7',
-    200: '#F4F4F5',
+    DEFAULT: '#2C2C2C',
+    50: '#3A3A3A',
+    100: '#333333',
+    200: '#262626',
   },
+
   action: {
-    DEFAULT: '#00B03C', //green
-    50: '#00B03C', //green
-    100: '#FD0303', //red
-    200: '#26CFA2', //dard green
-    300: '#A1824A', //yellow
-    400: '#F5F0E5', //light yellow
-    500: '#FED001',
-    600: '#DFF2EB', //light green
-    700: '#ff9f42',
+    DEFAULT: '#8687E7',
+    50: '#F3F1FF', // Hover bg
+    100: '#E6E2FF', // Focus bg
+    200: '#CFC8FF', // Selected
+    300: '#B8ADFF',
+    400: '#A193FF',
+    500: '#8687E7', // Active
+    600: '#6F63E6',
+    700: '#554BCC', // Pressed
+  },
+};
+export const darkColors = {
+  background: '#FFFFFF', // App background (inverted)
+  text: '#121212', // Primary text
+  primary: '#8687E7', // Brand stays consistent
+  card: '#F4F4F5', // Light cards
+  border: '#E5E7EB',
+  white: '#FFFFFF',
+  black: '#000000',
+  muted: '#6B7280',
+
+  brand: {
+    DEFAULT: '#8687E7',
+    50: '#F3F1FF',
+    100: '#E6E2FF',
+    200: '#CFC8FF',
+    300: '#B8ADFF',
+    400: '#A193FF',
+    500: '#8687E7',
+    600: '#6F63E6',
+    700: '#554BCC',
+    800: '#3D35B3',
+  },
+
+  surface: {
+    DEFAULT: '#F4F4F5', // Cards / sheets
+    50: '#FFFFFF', // Inputs
+    100: '#FAFAFA',
+    300: '#F3F4F6',
+    400: '#EDEEF0',
+    500: '#E5E7EB',
+    600: '#D1D5DB',
+  },
+
+  typography: {
+    DEFAULT: '#121212',
+    50: '#0A0A0A',
+    100: '#1F2937',
+    200: '#374151',
+    300: '#4B5563',
+    400: '#6B7280',
+    500: '#9CA3AF',
+    600: '#D1D5DB',
+  },
+
+  borders: {
+    DEFAULT: '#E5E7EB',
+    50: '#F3F4F6',
+    100: '#E5E7EB',
+    200: '#D1D5DB',
+  },
+
+  action: {
+    DEFAULT: '#8687E7',
+    50: '#F3F1FF',
+    100: '#E6E2FF',
+    200: '#CFC8FF',
+    300: '#B8ADFF',
+    400: '#A193FF',
+    500: '#8687E7',
+    600: '#6F63E6',
+    700: '#554BCC',
   },
 };
 

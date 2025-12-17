@@ -7,6 +7,7 @@ import { View } from 'react-native';
 import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
+import { Layout } from '../../globals';
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
@@ -90,13 +91,17 @@ export const TabsNavigator = () => {
         headerShown: true,
         lazy: true,
         tabBarActiveTintColor: Colors.brand['DEFAULT'],
-        tabBarInactiveTintColor: Colors.black,
+        tabBarInactiveTintColor: Colors.white,
+        tabBarStyle: {
+          backgroundColor: Colors.surface['100'],
+          paddingTop: Layout.heightPercentageToDP(0.6),
+        },
         tabBarIcon: ({ focused, color, size }) => {
           switch (route.name) {
             case 'Home':
               return (
                 <AppIcon
-                  name={AppIconName.home}
+                  name={AppIconName.homeTab}
                   iconSize={AppIconSize.medium}
                   color={color}
                 />

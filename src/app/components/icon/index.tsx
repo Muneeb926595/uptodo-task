@@ -7,7 +7,7 @@ import { Props, AppIconSize } from './types';
 import { iconOptions, styles } from './styles';
 import { View } from 'react-native';
 
-const Icon = createIconSet(icons, 'EvoloAI', 'EvoloAI.ttf');
+const Icon = createIconSet(icons, 'UpTodo', 'UpTodo.ttf');
 
 export const AppIcon = ({
   name,
