@@ -101,6 +101,8 @@ export interface ILabelTexts extends IMessageGroup {
   readonly calendar: string;
   readonly focus: string;
   readonly profile: string;
+  readonly whatDoYouWantToDoToday: string;
+  readonly tapToAddYourTasks: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {

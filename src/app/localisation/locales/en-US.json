@@ -31,6 +31,8 @@
     "index": "Index",
     "calendar": "Calendar",
     "focus": "Focus",
+    "whatDoYouWantToDoToday": "What do you want to do today?",
+    "tapToAddYourTasks": "Tap + to add your tasks",
     "profile": "Profile",
     "login": "Log In"
   }

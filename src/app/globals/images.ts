@@ -1,6 +1,7 @@
 class _Images {
   readonly DefaultTodo = require('../assets/images/DefaultTodo.png');
   readonly Avatar = require('../assets/images/Avatar.png');
+  readonly HomeGraphics = require('../assets/images/HomeGraphics.webp');
 }
 
 /**

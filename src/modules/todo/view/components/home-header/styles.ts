@@ -13,8 +13,8 @@ export const useStyles = themed(tokens =>
       justifyContent: 'space-between',
     },
     headerImage: {
-      width: Layout.widthPercentageToDP(8),
-      height: Layout.widthPercentageToDP(8),
+      width: Layout.widthPercentageToDP(10),
+      height: Layout.widthPercentageToDP(10),
       borderRadius: 100,
     },
     title: {

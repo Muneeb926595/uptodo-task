@@ -9,14 +9,12 @@ import { isValidUrl } from '../../utils';
 type Props = {
   uri: any;
   imageStyles: StyleProp<ImageStyle | TextStyle>;
-  svgDimensions: {
+  svgDimensions?: {
     width: any;
     height: any;
   };
   placeHolder: any;
   resizeMode: 'contain' | 'cover' | 'stretch' | 'center';
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
 };
 
 export const CustomImage = ({

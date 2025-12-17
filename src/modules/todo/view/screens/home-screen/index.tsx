@@ -4,9 +4,37 @@ import { useStyles } from './styles';
 import { HomeHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
+import { Conditional } from '../../../../../app/components/conditional';
+import { CustomImage } from '../../../../../app/components/custom-image';
+import { Images } from '../../../../../app/globals';
+import { AppText } from '../../../../../app/components/text';
+import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
+
+const todos = [];
 
 export const HomeScreen = () => {
   const styles = useStyles();
+
+  const RenderTodosList = <View>{/* Render the list of todos here */}</View>;
+
+  const RenderEmptySection = (
+    <View style={styles.notItemsSectionContainer}>
+      <CustomImage
+        uri={undefined}
+        imageStyles={styles.emptyListImage}
+        placeHolder={Images.HomeGraphics}
+        resizeMode="cover"
+      />
+      <AppText style={styles.emptyListLabelHeading}>
+        <FormattedMessage
+          id={LocaleProvider.IDs.label.whatDoYouWantToDoToday}
+        />
+      </AppText>
+      <AppText style={styles.emptyListLabelDescription}>
+        <FormattedMessage id={LocaleProvider.IDs.label.tapToAddYourTasks} />
+      </AppText>
+    </View>
+  );
 
   return (
     <Container
@@ -17,7 +45,14 @@ export const HomeScreen = () => {
       <HomeHeader
         title={LocaleProvider.formatMessage(LocaleProvider.IDs.label.index)}
       />
-      <View style={styles.container}></View>
+      <View style={styles.container}>
+        <Conditional
+          ifTrue={todos?.length > 0}
+          elseChildren={RenderEmptySection}
+        >
+          {RenderTodosList}
+        </Conditional>
+      </View>
     </Container>
   );
 };
