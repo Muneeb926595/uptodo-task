@@ -11,6 +11,7 @@ import { MainStackParamList } from './types';
 import { AuthFlow } from '../../modules/auth/view/navigation/auth';
 import { hideSplash } from 'react-native-splash-view';
 import { useTheme } from '../theme/provider';
+import { TabsNavigator } from './tab-navigator';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
@@ -46,18 +47,16 @@ export const AppNavigator = () => {
     >
       <MainAppStack.Navigator>
         {true ? (
-          <>{AuthFlow}</>
-        ) : !true ? (
-          <>{AuthFlow}</>
-        ) : (
           <>
-            {/* <MainAppStack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false }} />
-            {ProfileFlow}
-            {RxFlow}
-            {PharmacyFlow}
-            {SettingsFlow}
-            {SupportFlow} */}
+            <MainAppStack.Screen
+              name="Tabs"
+              component={TabsNavigator}
+              options={{ headerShown: false }}
+            />
+            {/* {OtherScreens} */}
           </>
+        ) : (
+          <>{AuthFlow}</>
         )}
       </MainAppStack.Navigator>
     </NavigationContainer>

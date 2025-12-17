@@ -97,6 +97,10 @@ export interface ILabelTexts extends IMessageGroup {
   readonly tryAgain: string;
   readonly selectCountry: string;
   readonly search: string;
+  readonly index: string;
+  readonly calendar: string;
+  readonly focus: string;
+  readonly profile: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {

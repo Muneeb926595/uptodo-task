@@ -28,6 +28,10 @@
     "tryAgain": "Try Again",
     "selectCountry": "Select Country",
     "search": "Search",
+    "index": "Index",
+    "calendar": "Calendar",
+    "focus": "Focus",
+    "profile": "Profile",
     "login": "Log In"
   }
 }
