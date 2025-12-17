@@ -37,6 +37,13 @@
     "whatDoYouWantToDoToday": "What do you want to do today?",
     "tapToAddYourTasks": "Tap + to add your tasks",
     "profile": "Profile",
+    "createNewCategory": "Create new category",
+    "categoryName": "Category name :",
+    "categoryNameWithoutColon": "Category name",
+    "categoryIcon": "Category icon :",
+    "chooseiconFromlibrary": "Choose icon from library",
+    "categoryColor": "Category color :",
+    "createCategory": "Create Category",
     "login": "Log In"
   }
 }

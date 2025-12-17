@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   input: {
     borderRadius: Layout.widthPercentageToDP(2),
     color: Colors.surface['DEFAULT'],
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.surface['300'],
     paddingVertical: Layout.heightPercentageToDP(
       (Platform.select({ ios: Layout.small, android: Layout.mini }) ?? 1) /
         Layout.divisionFactorForHeight,

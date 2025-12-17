@@ -101,8 +101,15 @@ export interface ILabelTexts extends IMessageGroup {
   readonly calendar: string;
   readonly focus: string;
   readonly profile: string;
+  readonly createNewCategory: string;
+  readonly categoryName: string;
+  readonly categoryNameWithoutColon: string;
+  readonly categoryIcon: string;
+  readonly chooseiconFromlibrary: string;
+  readonly categoryColor: string;
   readonly whatDoYouWantToDoToday: string;
   readonly chooseTime: string;
+  readonly createCategory: string;
   readonly tapToAddYourTasks: string;
 }
 

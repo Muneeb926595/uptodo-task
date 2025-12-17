@@ -2,8 +2,6 @@ export const lightColors = {
   background: '#121212', // App background
   text: '#EDEDED', // Primary text
   primary: '#8687E7', // Main CTA buttons
-  card: '#979797', // List items / cards
-  border: '#2C2C2C',
   white: '#FFFFFF',
   black: '#000000',
   muted: '#9CA3AF',
@@ -26,9 +24,9 @@ export const lightColors = {
 
   surface: {
     DEFAULT: '#363636', // Cards / sheets
-    50: '#272727', // Inputs
+    50: '#272727',
     100: '#363636',
-    300: '#1C1C1C',
+    300: '##1D1D1D', // Inputs
     400: '#181818',
     500: '#141414',
     600: '#0F0F0F',
@@ -46,7 +44,7 @@ export const lightColors = {
   },
 
   borders: {
-    DEFAULT: '#2C2C2C',
+    DEFAULT: '#979797',
     50: '#3A3A3A',
     100: '#333333',
     200: '#262626',
@@ -68,8 +66,6 @@ export const darkColors = {
   background: '#FFFFFF', // App background (inverted)
   text: '#121212', // Primary text
   primary: '#8687E7', // Brand stays consistent
-  card: '#F4F4F5', // Light cards
-  border: '#E5E7EB',
   white: '#FFFFFF',
   black: '#000000',
   muted: '#6B7280',

@@ -11,6 +11,7 @@ import {
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
+import { navigationRef } from '../../../../../app/navigation';
 
 type HomeHeaderProps = {
   title: string;
@@ -19,7 +20,9 @@ type HomeHeaderProps = {
 export const HomeHeader = ({ title }: HomeHeaderProps) => {
   const styles = useStyles();
 
-  const handleFilterPress = () => {};
+  const handleFilterPress = () => {
+    navigationRef.navigate('CreateNewCategoryScreen');
+  };
   const handlePressProfile = () => {};
 
   return (

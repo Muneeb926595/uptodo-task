@@ -78,10 +78,14 @@ export const AuthInput = ({
   };
 
   const getInputBorderColor = () => {
-    return isError ? Colors.red : isFocused ? Colors.black : Colors.transparent;
+    return isError
+      ? Colors.red
+      : isFocused
+      ? Colors.white
+      : Colors.borders['DEFAULT'];
   };
   const getInputBackgroundColor = () => {
-    return isError ? `${Colors.red}20` : Colors.white;
+    return isError ? `${Colors.red}20` : Colors.surface['300'];
   };
 
   const InputComponent = useBottomSheetTextInput

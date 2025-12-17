@@ -17,6 +17,7 @@ import {
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
+import { ScreenProps } from '../../../../../app/navigation';
 
 const todos = [
   // 🟢 TODAY — ACTIVE (4)
@@ -162,7 +163,7 @@ const todos = [
   },
 ];
 
-export const HomeScreen = () => {
+export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
   const styles = useStyles();
 
   const [openCalendar, setOpenCalendar] = React.useState(false);
