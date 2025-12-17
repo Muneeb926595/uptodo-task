@@ -13,6 +13,7 @@ export type MainStackParamList = {
 export type MainBottomTabsParamList = {
   Home: undefined;
   Calendar: undefined;
+  Add: undefined;
   Focus: undefined;
   Profile: undefined;
 };

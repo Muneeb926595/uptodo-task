@@ -9,6 +9,7 @@ import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { HomeScreen } from '../../../modules/todo/view/screens';
+import { styles } from './styles';
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
@@ -148,6 +149,25 @@ export const TabsNavigator = () => {
           headerShown: false,
           tabBarLabel: LocaleProvider.formatMessage(
             LocaleProvider.IDs.label.calendar,
+          ),
+        }}
+      />
+      <MainTabs.Screen
+        name="Add"
+        component={() => {
+          return null;
+        }}
+        options={{
+          headerShown: false,
+          tabBarLabel: '',
+          tabBarIcon: () => (
+            <View style={styles.floatingButton}>
+              <AppIcon
+                name={AppIconName.add}
+                iconSize={AppIconSize.xlarge}
+                color={Colors.white}
+              />
+            </View>
           ),
         }}
       />
