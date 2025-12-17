@@ -1,0 +1,32 @@
+export const mockCategories = {
+  university: {
+    id: 'cat-university',
+    name: 'University',
+    icon: 'graduation-cap',
+    color: '#6C7CFF',
+    isSystem: true,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    deletedAt: null,
+  },
+  home: {
+    id: 'cat-home',
+    name: 'Home',
+    icon: 'home',
+    color: '#FF7A7A',
+    isSystem: true,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    deletedAt: null,
+  },
+  work: {
+    id: 'cat-work',
+    name: 'Work',
+    icon: 'briefcase',
+    color: '#FFD37A',
+    isSystem: true,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    deletedAt: null,
+  },
+};

@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 // to convert backend date object into frontend calendar object
 export const convertDateStringToObj = (dateString: any) => {
   if (dateString) {
@@ -23,4 +25,25 @@ export const convertDateStringToObj = (dateString: any) => {
   } else {
     return null;
   }
+};
+
+export const formatTodoDateTime = (
+  date: Date | number | string,
+  timeFormat = 'HH:mm',
+) => {
+  const d = dayjs(date);
+
+  if (d.isToday()) {
+    return `Today At ${d.format(timeFormat)}`;
+  }
+
+  if (d.isTomorrow()) {
+    return `Tomorrow At ${d.format(timeFormat)}`;
+  }
+
+  if (d.isYesterday()) {
+    return `Yesterday At ${d.format(timeFormat)}`;
+  }
+
+  return d.format(`DD MMM YYYY [At] ${timeFormat}`);
 };

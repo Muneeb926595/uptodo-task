@@ -7,7 +7,6 @@ import './app/utils/ignore-warnings';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
-  SafeAreaView,
 } from 'react-native-safe-area-context';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -22,10 +21,18 @@ import { AppNavigator } from './app/navigation';
 import StorageHelper, { StorageKeys } from './app/data/mmkv-storage';
 import { Colors } from './app/theme';
 import { AddTaskModal } from './app/components/add-task-modal';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { MagicSheetPortal } from 'react-native-magic-sheet';
+import isToday from 'dayjs/plugin/isToday';
+import isTomorrow from 'dayjs/plugin/isTomorrow';
+import isYesterday from 'dayjs/plugin/isYesterday';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(isToday);
+dayjs.extend(isTomorrow);
+dayjs.extend(isYesterday);
 
 if (__DEV__) {
   //   require('../ReactotronConfig');
@@ -66,11 +73,14 @@ function App() {
               backgroundColor={Colors.white}
             />
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                <AppNavigator />
-                {/* global components or modals */}
-                <AddTaskModal />
-              </SafeAreaProvider>
+              <BottomSheetModalProvider>
+                <MagicSheetPortal />
+                <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                  <AppNavigator />
+                  {/* global components or modals */}
+                  <AddTaskModal />
+                </SafeAreaProvider>
+              </BottomSheetModalProvider>
             </GestureHandlerRootView>
           </LocaleProvider>
         </ThemeProvider>

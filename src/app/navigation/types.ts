@@ -4,10 +4,14 @@ export type MainStackParamList = {
 
   Tabs: undefined;
 
+  // Tabs screens
   HomeScreen: undefined;
   CalendarScreen: undefined;
   FocusScreen: undefined;
   ProfileScreen: undefined;
+
+  // Categories screens
+  CategoriesScreen: undefined;
 };
 
 export type MainBottomTabsParamList = {

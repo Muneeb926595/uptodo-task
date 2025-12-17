@@ -35,6 +35,64 @@ export const useStyles = themed(tokens =>
       textAlign: 'center',
       marginTop: Layout.heightPercentageToDP(1.6),
     },
+
+    // Todo list item styles
+    todoItem: {
+      backgroundColor: tokens.colors.surface['100'],
+      marginBottom: Layout.heightPercentageToDP(1.8),
+      padding: Layout.heightPercentageToDP(2),
+      borderRadius: 4,
+    },
+    todoItemLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(16),
+      marginBottom: Layout.heightPercentageToDP(1.4),
+    },
+    todoItemTime: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(14),
+    },
+    rowBetween: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    todoItemCategoryContainer: {
+      borderRadius: 6,
+      paddingVertical: Layout.heightPercentageToDP(1),
+      paddingHorizontal: Layout.widthPercentageToDP(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    todoItemCategoryLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(12),
+    },
+    todoItemPriorityContainer: {
+      borderWidth: 1,
+      borderColor: tokens.colors.brand['DEFAULT'],
+      borderRadius: 6,
+      paddingVertical: Layout.heightPercentageToDP(1),
+      paddingHorizontal: Layout.widthPercentageToDP(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    todoItemPriorityLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(12),
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
   }),
 );
 

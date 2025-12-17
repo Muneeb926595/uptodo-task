@@ -1,4 +1,8 @@
-export type PriorityLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+export enum TodoPriority {
+  Low = 'LOW',
+  Medium = 'MEDIUM',
+  High = 'HIGH',
+}
 
 export enum TodoStatus {
   Pending = 'PENDING',
@@ -51,7 +55,7 @@ export type Todo = {
   todoTime?: string; // "16:45" (UI-friendly)
   timezone: string; // important for notifications
 
-  priority: PriorityLevel;
+  priority: TodoPriority;
   status: TodoStatus;
 
   categoryId: string; // FK -> Category.id
@@ -104,7 +108,7 @@ export type TodoNotification = {
 
 export type AppSettings = {
   notificationsEnabled: boolean;
-  defaultPriority: PriorityLevel;
+  defaultPriority: TodoPriority;
   startWeekOnMonday: boolean;
 
   createdAt: number;
