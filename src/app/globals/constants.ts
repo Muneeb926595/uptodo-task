@@ -1,4 +1,5 @@
 import { Colors } from '../theme';
+import { Layout } from './layout';
 
 class _Constants {
   /**
@@ -79,6 +80,7 @@ class _Constants {
     DEFAULT_CHATBOT_RESPONSE_DELAY: 500,
     DEFAULT_CRYPTO_RANDOM_BYTE_COUNT: 32,
     DEFAULT_CRYPTO_CTR_COUNTER: 5,
+    DEFAULT_APP_PADDING: Layout.widthPercentageToDP(4),
   };
 }
 

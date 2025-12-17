@@ -7,6 +7,7 @@ export const lightColors = {
   white: '#FFFFFF',
   black: '#000000',
   muted: '#9CA3AF',
+  transparent: 'transparent',
 
   brand: {
     DEFAULT: '#8687E7',
@@ -70,6 +71,7 @@ export const darkColors = {
   white: '#FFFFFF',
   black: '#000000',
   muted: '#6B7280',
+  transparent: 'transparent',
 
   brand: {
     DEFAULT: '#8687E7',

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.background,
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.micro / Layout.divisionFactorForWidth,
     ),

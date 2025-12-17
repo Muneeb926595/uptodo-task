@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { useLoginMutation } from '../../../store/todoApi';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../../store/todoSlice';
-import { useTheme } from '../../../../../app/theme/provider';
 import { useStyles } from './styles';
+import { HomeHeader } from '../../components';
+import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
+import { Container } from '../../../../../app/components/container';
 
 export const HomeScreen = () => {
-  const { colors, mode, setMode } = useTheme();
   const styles = useStyles();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
-
-  const handleLogin = async () => {
-    try {
-      const user = await login({ email, password }).unwrap();
-      dispatch(setUser(user));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return <View style={styles.container}></View>;
+  return (
+    <Container
+      insetsToHandle={['left', 'right']}
+      screenBackgroundStyle={{ flex: 1 }}
+      containerStyles={{ flex: 1 }}
+    >
+      <HomeHeader
+        title={LocaleProvider.formatMessage(LocaleProvider.IDs.label.index)}
+      />
+      <View style={styles.container}></View>
+    </Container>
+  );
 };

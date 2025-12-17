@@ -60,7 +60,10 @@ function App() {
       <ReactQueryProvider>
         <ThemeProvider>
           <LocaleProvider>
-            <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor={Colors.white}
+            />
             <GestureHandlerRootView style={{ flex: 1 }}>
               <SafeAreaProvider initialMetrics={initialWindowMetrics}>
                 <AppNavigator />

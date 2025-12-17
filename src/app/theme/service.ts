@@ -1,5 +1,12 @@
 import { Appearance } from 'react-native';
-import { lightColors, darkColors, spacing, radii, typography } from './colors';
+import {
+  lightColors,
+  darkColors,
+  spacing,
+  radii,
+  typography,
+  ThemeColors,
+} from './colors';
 import StorageHelper, { StorageKeys } from '../data/mmkv-storage';
 
 const themes: any = { light: lightColors, dark: darkColors };
@@ -79,7 +86,7 @@ class ThemeServiceClass {
 export const ThemeService = new ThemeServiceClass();
 
 // Colors proxy that reads from ThemeService at access time
-export const Colors: any = new Proxy(
+export const Colors: ThemeColors = new Proxy(
   {},
   {
     get(_, prop: string) {
@@ -87,7 +94,7 @@ export const Colors: any = new Proxy(
       return c ? c[prop] : undefined;
     },
   },
-);
+) as ThemeColors;
 
 export const Spacing = spacing;
 export const Radii = radii;

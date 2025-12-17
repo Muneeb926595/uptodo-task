@@ -1,28 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { themed } from '../../../../../app/theme/utils';
+import { Constants } from '../../../../../app/globals';
 
 export const useStyles = themed(tokens =>
   StyleSheet.create({
     container: {
       flex: 1,
-      padding: 16,
       backgroundColor: tokens.colors.background,
+      paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
     },
-    heading: { color: tokens.colors.text, fontSize: 20, marginBottom: 12 },
-    input: {
-      borderWidth: 1,
-      borderColor: (tokens.colors as any).border ?? '#ccc',
-      padding: 8,
-      marginBottom: 12,
-      color: tokens.colors.text,
-      backgroundColor: (tokens.colors as any).card ?? '#fff',
-    },
-    row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 12,
-    },
-    modeText: { color: tokens.colors.text, marginBottom: 8 },
   }),
 );
 
