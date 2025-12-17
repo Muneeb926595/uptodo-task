@@ -8,6 +8,7 @@ import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
+import { HomeScreen } from '../../../modules/todo/view/screens';
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
@@ -15,13 +16,7 @@ const HomeStack = () => (
   <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="HomeScreen"
-      component={() => {
-        return (
-          <View>
-            <AppText>Home screen</AppText>
-          </View>
-        );
-      }}
+      component={HomeScreen}
       options={{
         headerShown: false,
       }}

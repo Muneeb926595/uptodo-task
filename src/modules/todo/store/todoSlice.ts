@@ -1,6 +1,6 @@
 // src/modules/auth/store/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authApi } from './homeApi';
+import { authApi } from './todoApi';
 import { User } from '../types';
 
 interface AuthState {

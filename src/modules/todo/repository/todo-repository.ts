@@ -1,5 +1,5 @@
 import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
-import { authApi } from '../api/home.api';
+import { authApi } from '../api/todo.api';
 
 class AuthRepository {
   async login(email: string, password: string) {

@@ -1,2 +1,1 @@
-export * from './login-screen';
-export * from './welcome-screen';
+export * from './home-screen';

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useLoginMutation } from '../../../store/homeApi';
+import { useLoginMutation } from '../../../store/todoApi';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../../store/homeSlice';
+import { setUser } from '../../../store/todoSlice';
 import { useTheme } from '../../../../../app/theme/provider';
 import { useStyles } from './styles';
 
-export const LoginScreen = () => {
+export const HomeScreen = () => {
   const { colors, mode, setMode } = useTheme();
   const styles = useStyles();
 
