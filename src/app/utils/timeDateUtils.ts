@@ -1,0 +1,26 @@
+// to convert backend date object into frontend calendar object
+export const convertDateStringToObj = (dateString: any) => {
+  if (dateString) {
+    // Convert date string to Date object
+    const date = new Date(dateString);
+
+    // Get year, month, and day from the Date object
+    const year = date.getFullYear();
+    // Months are zero-based in JavaScript, so we add 1 to get the correct month
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    // Create the desired object
+    const result = {
+      [`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`]:
+        {
+          marked: true,
+          selected: true,
+        },
+    };
+
+    return result;
+  } else {
+    return null;
+  }
+};

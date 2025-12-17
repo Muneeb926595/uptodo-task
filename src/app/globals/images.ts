@@ -1,5 +1,5 @@
 class _Images {
-  readonly Logo = require('../assets/images/Logo.png');
+  readonly DefaultTodo = require('../assets/images/DefaultTodo.png');
 }
 
 /**

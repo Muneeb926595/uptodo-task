@@ -6,7 +6,9 @@
     "nothingFound": "Nothing Found"
   },
   "general": {
-    "skip": "Skip"
+    "skip": "Skip",
+    "done": "Done",
+    "next": "Next"
   },
   "userGuide": {
     "profileSettings": "Profile Settings"
@@ -23,6 +25,9 @@
     "detailedTagline": "Exchange items safely with verified users",
     "getStarted": "Get Started",
     "alreadyHaveAnAccount": "Already have an account?",
+    "tryAgain": "Try Again",
+    "selectCountry": "Select Country",
+    "search": "Search",
     "login": "Log In"
   }
 }

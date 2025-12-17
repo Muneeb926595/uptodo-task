@@ -35,7 +35,7 @@ export const WelcomeScreen = () => {
 
       {/* center content */}
       <View>
-        <Image style={styles.logo} source={Images.Logo} />
+        {/* <Image style={styles.logo} source={Images.Logo} /> */}
         <Text>
           <FormattedMessage id={LocaleProvider.IDs.label.tagline} />
         </Text>

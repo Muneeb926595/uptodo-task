@@ -94,10 +94,15 @@ export interface ILabelTexts extends IMessageGroup {
   readonly getStarted: string;
   readonly alreadyHaveAnAccount: string;
   readonly login: string;
+  readonly tryAgain: string;
+  readonly selectCountry: string;
+  readonly search: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {
   readonly skip: string;
+  readonly next: string;
+  readonly done: string;
 }
 
 export interface IUserGuideMessages extends IMessageGroup {
