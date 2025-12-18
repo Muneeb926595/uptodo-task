@@ -26,6 +26,10 @@ import { PriorityLevel } from '../../../types';
 import { useImagePicker } from '../../../../../app/hooks';
 import { Conditional } from '../../../../../app/components/conditional';
 import { CustomImage } from '../../../../../app/components/custom-image';
+import {
+  persistImage,
+  PickedImage,
+} from '../../../../../app/services/media/mediaService';
 
 type Props = {
   userName?: string;
@@ -45,7 +49,15 @@ export const CreateTodoBottomSheet = (props: Props) => {
     },
   });
 
-  const { pickAndUpload, isLoading, imageUri } = useImagePicker();
+  const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
+    const persistedUri = await persistImage(imageObj?.uri);
+    console.log('persistedUri', persistedUri);
+    return persistedUri;
+  };
+
+  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+    uploader: persistImageOnPhoneStorage,
+  });
 
   const [categoryId, setCategoryId] = useState<string>();
   const [priority, setPriority] = useState<PriorityLevel>();

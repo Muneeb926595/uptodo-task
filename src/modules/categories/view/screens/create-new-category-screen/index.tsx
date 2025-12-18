@@ -14,7 +14,10 @@ import { useImagePicker } from '../../../../../app/hooks';
 import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
-import { PickedImage } from '../../../../../app/services/media/mediaService';
+import {
+  persistImage,
+  PickedImage,
+} from '../../../../../app/services/media/mediaService';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -32,7 +35,15 @@ export const CreateNewCategoryScreen = (
 ) => {
   const styles = useStyles();
 
-  const { pickAndUpload, isLoading, imageUri } = useImagePicker();
+  const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
+    const persistedUri = await persistImage(imageObj?.uri);
+    console.log('persistedUri', persistedUri);
+    return persistedUri;
+  };
+
+  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+    uploader: persistImageOnPhoneStorage,
+  });
 
   const createCategoryMutation = useCreateCategory();
 

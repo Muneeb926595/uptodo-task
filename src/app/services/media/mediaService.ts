@@ -4,6 +4,8 @@ import {
   ImageLibraryOptions,
   Asset,
 } from 'react-native-image-picker';
+import RNFS from 'react-native-fs';
+
 import { Image as CompressImage } from 'react-native-compressor';
 
 export type PickedImage = {
@@ -97,3 +99,12 @@ export const pickCompressAndOptionallyUpload = async (opts?: {
     typeof resp === 'string' ? resp : resp && (resp as any)?.url;
   return { local: picked, uploadedUrl };
 };
+
+export async function persistImage(tempUri: string): Promise<string> {
+  const fileName = tempUri?.split?.('/')?.pop?.();
+  const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+
+  await RNFS.copyFile(tempUri?.replace?.('file://', ''), destPath);
+
+  return `file://${destPath}`;
+}

@@ -14,6 +14,7 @@ import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/st
 import { magicSheet } from 'react-native-magic-sheet';
 import { CategoriesScreen } from '../../../modules/categories/view/screens';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
+import { CreateNewCategoryScreen } from '../../../modules/categories/view/screens/create-new-category-screen';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -30,6 +31,13 @@ const HomeStack = () => (
     <Stack.Screen
       name="CategoriesScreen"
       component={CategoriesScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="CreateNewCategoryScreen"
+      component={CreateNewCategoryScreen}
       options={{
         headerShown: false,
       }}
