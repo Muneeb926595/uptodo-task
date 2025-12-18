@@ -1,6 +1,5 @@
 // src/modules/auth/store/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authApi } from './categoriesApi';
 import { User } from '../../auth/types';
 
 interface AuthState {
@@ -23,28 +22,13 @@ export const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = !!action.payload;
     },
+    setLoading(state, action: PayloadAction<boolean>) {
+      state.loading = action.payload;
+    },
     clearUser(state) {
       state.user = null;
       state.isAuthenticated = false;
     },
-  },
-  extraReducers: builder => {
-    builder.addMatcher(authApi.endpoints.login.matchPending, state => {
-      state.loading = true;
-    });
-    builder.addMatcher(
-      authApi.endpoints.login.matchFulfilled,
-      (state, action) => {
-        state.user = action.payload;
-        state.isAuthenticated = true;
-        state.loading = false;
-      },
-    );
-    builder.addMatcher(authApi.endpoints.login.matchRejected, state => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.loading = false;
-    });
   },
 });
 

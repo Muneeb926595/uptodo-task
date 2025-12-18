@@ -10,6 +10,12 @@ export enum StorageKeys {
   SELECTED_APP_LANGUAGE = 'selected_app_language',
   USER_PROFILE = 'user_profile',
   APP_THEME = 'app_theme',
+  TODOS = 'todos', // Record<string, Todo>
+  CATEGORIES = 'categories', // Record<string, Category>
+  ATTACHMENTS = 'attachments', // Record<string, TodoAttachment>
+  NOTIFICATIONS = 'notifications', // Record<string, TodoNotification>
+  SETTINGS = 'app_settings',
+  OFFLINE_QUEUE = 'offline_queue', // for queued operations when offline
   // Add more keys here
 }
 

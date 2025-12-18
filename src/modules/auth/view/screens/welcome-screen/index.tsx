@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
-import { useLoginMutation } from '../../../store/authApi';
+import { useLogin } from '../../../react-query/hooks';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/authSlice';
 import { useTheme } from '../../../../../app/theme/provider';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { useStyles } from './styles';
-import { Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { Images } from '../../../../../app/globals';
 import { Text } from 'react-native-gesture-handler';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
+import { AppText } from '../../../../../app/components/text';
+import { ScreenProps } from '../../../../../app/navigation';
 
-export const WelcomeScreen = () => {
+export const WelcomeScreen = (props: ScreenProps<'WelcomeScreen'>) => {
   const { colors, mode, setMode } = useTheme();
   const styles = useStyles();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
-
-  const handleLogin = async () => {
-    try {
-      const user = await login({ email, password }).unwrap();
-      dispatch(setUser(user));
-    } catch (error) {
-      console.error(error);
-    }
+  const handleLogin = () => {
+    props.navigation.navigate('LoginScreen');
   };
 
   return (
@@ -36,24 +28,26 @@ export const WelcomeScreen = () => {
       {/* center content */}
       <View>
         {/* <Image style={styles.logo} source={Images.Logo} /> */}
-        <Text>
+        <AppText style={styles.label}>
           <FormattedMessage id={LocaleProvider.IDs.label.tagline} />
-        </Text>
-        <Text>
+        </AppText>
+        <AppText style={styles.label}>
           <FormattedMessage id={LocaleProvider.IDs.label.detailedTagline} />
-        </Text>
+        </AppText>
       </View>
 
       {/* footer */}
       <View style={styles.row}>
-        <Text>
+        <AppText style={styles.label}>
           <FormattedMessage
             id={LocaleProvider.IDs.label.alreadyHaveAnAccount}
           />
-        </Text>
-        <Text>
-          <FormattedMessage id={LocaleProvider.IDs.label.login} />
-        </Text>
+        </AppText>
+        <TouchableOpacity onPress={handleLogin}>
+          <AppText style={styles.label}>
+            <FormattedMessage id={LocaleProvider.IDs.label.login} />
+          </AppText>
+        </TouchableOpacity>
       </View>
     </View>
   );

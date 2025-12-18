@@ -64,6 +64,15 @@ export type Todo = {
   isCompleted: boolean;
   hasSubTasks: boolean;
 
+  // optional tags, recurrence & sync metadata
+  tags?: string[];
+  recurrence?: string | null; // rrule or simple recurrence expression
+
+  // sync metadata (helpful when synchronizing with remote)
+  syncStatus?: 'PENDING' | 'SYNCED' | 'ERROR';
+  syncedAt?: number | null;
+  version?: number; // incremented on each local update for conflict resolution
+
   // Sync & lifecycle
   createdAt: number;
   updatedAt: number;

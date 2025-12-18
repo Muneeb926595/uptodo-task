@@ -1,4 +1,19 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// NOTE: This RTK Query `authApi` is kept for backward compatibility only.
+// We are migrating the auth module to TanStack Query hooks (see `react-query/hooks.ts`).
+// Prefer `useLogin`, `useRefreshToken`, `useLogout` from react-query.
+// here is example how to use these rtk queryes
+
+// const [login, { isLoading }] = useLoginMutation();
+// const handleLogin = async () => {
+//   try {
+//     const user = await login({ email, password }).unwrap();
+//     dispatch(setUser(user));
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { User } from '../types';
 import { authRepository } from '../repository';
 

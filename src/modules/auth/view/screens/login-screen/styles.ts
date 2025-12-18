@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { themed } from '../../../../../app/theme/utils';
+import { Fonts, Layout } from '../../../../../app/globals';
 
 export const useStyles = themed(tokens =>
   StyleSheet.create({
@@ -8,7 +9,6 @@ export const useStyles = themed(tokens =>
       padding: 16,
       backgroundColor: tokens.colors.background,
     },
-    heading: { color: tokens.colors.text, fontSize: 20, marginBottom: 12 },
     input: {
       borderWidth: 1,
       borderColor: (tokens.colors as any).border ?? '#ccc',
@@ -22,7 +22,12 @@ export const useStyles = themed(tokens =>
       justifyContent: 'space-between',
       marginBottom: 12,
     },
-    modeText: { color: tokens.colors.text, marginBottom: 8 },
+    lable: {
+      ...Fonts.latoRegular,
+      fontWeight: '600',
+      fontSize: Layout.RFValue(22),
+      color: tokens.colors.white,
+    },
   }),
 );
 

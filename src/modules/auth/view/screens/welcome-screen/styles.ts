@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { themed } from '../../../../../app/theme/utils';
-import { Layout } from '../../../../../app/globals';
+import { Fonts, Layout } from '../../../../../app/globals';
 import { lazy } from 'react';
 
 export const useStyles = themed(tokens =>
@@ -20,6 +20,12 @@ export const useStyles = themed(tokens =>
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    label: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(12),
     },
   }),
 );
