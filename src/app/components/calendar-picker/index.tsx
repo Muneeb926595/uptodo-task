@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { View, Modal, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import styles from './styles';
@@ -10,7 +10,6 @@ import { LocaleProvider } from '../../localisation/locale-provider';
 import { TimePicker } from '../time-picker';
 
 export type CalendarPickerProps = {
-  visible: boolean;
   initialDate?: Date;
   mode?: 'date' | 'time' | 'datetime';
   minuteInterval?: number;
@@ -31,7 +30,6 @@ const CALENDAR_THEME = {
 const formatISO = (d: Date) => d.toISOString?.()?.split?.('T')?.[0];
 
 export const CalendarPicker: React.FC<CalendarPickerProps> = ({
-  visible,
   initialDate = new Date(),
   mode = 'date',
   minuteInterval = 5,
@@ -76,77 +74,73 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
     a?.getDate?.() === b?.day;
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.backdrop}>
-        <View style={styles.container}>
-          {!showTime && (
-            <>
-              <Calendar
-                current={formatISO(selected)}
-                onDayPress={onDayPress}
-                markedDates={markedDates}
-                theme={CALENDAR_THEME}
-                style={styles.calendar}
-                dayComponent={({ date, state }) => {
-                  // minimal custom day to make boxes; keep lightweight
-                  const isSelected = isSameDay(selected, date);
+    <View style={styles.backdrop}>
+      <View style={styles.container}>
+        {!showTime && (
+          <>
+            <Calendar
+              current={formatISO(selected)}
+              onDayPress={onDayPress}
+              markedDates={markedDates}
+              theme={CALENDAR_THEME}
+              style={styles.calendar}
+              dayComponent={({ date, state }) => {
+                // minimal custom day to make boxes; keep lightweight
+                const isSelected = isSameDay(selected, date);
 
-                  if (!date) return null;
-                  return (
-                    <TouchableOpacity
-                      onPress={() => onDayPress(date)}
-                      style={[
-                        styles.dayWrapper,
-                        state === 'disabled' && styles.dayDisabled,
-                        isSelected && styles.daySelected,
-                      ]}
+                if (!date) return null;
+                return (
+                  <TouchableOpacity
+                    onPress={() => onDayPress(date)}
+                    style={[
+                      styles.dayWrapper,
+                      state === 'disabled' && styles.dayDisabled,
+                      isSelected && styles.daySelected,
+                    ]}
+                  >
+                    <AppText
+                      style={
+                        state === 'disabled'
+                          ? styles.dayTextDisabled
+                          : styles.dayText
+                      }
                     >
-                      <AppText
-                        style={
-                          state === 'disabled'
-                            ? styles.dayTextDisabled
-                            : styles.dayText
-                        }
-                      >
-                        {date.day}
-                      </AppText>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
+                      {date.day}
+                    </AppText>
+                  </TouchableOpacity>
+                );
+              }}
+            />
 
-              <View style={styles.actionRow}>
-                <TouchableOpacity onPress={onCancel}>
-                  <AppText style={styles.cancel}>
-                    <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
-                  </AppText>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={openTime} style={styles.chooseBtn}>
-                  <AppText style={styles.chooseText}>
-                    <FormattedMessage
-                      id={LocaleProvider.IDs.label.chooseTime}
-                    />
-                  </AppText>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
+            <View style={styles.actionRow}>
+              <TouchableOpacity onPress={onCancel}>
+                <AppText style={styles.cancel}>
+                  <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
+                </AppText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={openTime} style={styles.chooseBtn}>
+                <AppText style={styles.chooseText}>
+                  <FormattedMessage id={LocaleProvider.IDs.label.chooseTime} />
+                </AppText>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
 
-          {showTime && (
-            <>
-              <AppText style={styles.title}>
-                <FormattedMessage id={LocaleProvider.IDs.label.chooseTime} />
-              </AppText>
-              <TimePicker
-                initialDate={selected}
-                minuteInterval={minuteInterval}
-                onCancel={closeTime}
-                onConfirm={d => handleConfirm(d)}
-              />
-            </>
-          )}
-        </View>
+        {showTime && (
+          <>
+            <AppText style={styles.title}>
+              <FormattedMessage id={LocaleProvider.IDs.label.chooseTime} />
+            </AppText>
+            <TimePicker
+              initialDate={selected}
+              minuteInterval={minuteInterval}
+              onCancel={closeTime}
+              onConfirm={d => handleConfirm(d)}
+            />
+          </>
+        )}
       </View>
-    </Modal>
+    </View>
   );
 };

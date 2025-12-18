@@ -1,5 +1,5 @@
-import { View, Keyboard, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BottomSheetWrapper } from '../../../../../app/components/bottom-sheet-wrapper';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -9,12 +9,14 @@ import { AuthInput } from '../../../../../app/components/inputs';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { AppIcon } from '../../../../../app/components/icon';
+import { magicModal } from 'react-native-magic-modal';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { Layout } from '../../../../../app/globals';
+import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 
 type Props = {
   userName?: string;
@@ -33,6 +35,17 @@ export const CreateTodoBottomSheet = (props: Props) => {
       description: '',
     },
   });
+
+  const handleOpenCalendar = async () => {
+    const result = await magicModal.show(() => (
+      <CalendarPicker
+        onCancel={() => magicModal.hideAll()}
+        onConfirm={date => {
+          console.log('Selected date:', date);
+        }}
+      />
+    )).promise;
+  };
 
   return (
     <BottomSheetWrapper
@@ -99,7 +112,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
             <View
               style={[styles.row, { columnGap: Layout.widthPercentageToDP(8) }]}
             >
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleOpenCalendar}>
                 <AppIcon
                   name={AppIconName.timer}
                   color={Colors.white}

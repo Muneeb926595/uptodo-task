@@ -166,8 +166,6 @@ todos = [];
 export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
   const styles = useStyles();
 
-  const [openCalendar, setOpenCalendar] = React.useState(false);
-
   const RenderTodosList = (
     <FlatList
       data={todos}
@@ -217,10 +215,6 @@ export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
     />
   );
 
-  const handleOpenCalendar = () => {
-    setOpenCalendar(true);
-  };
-
   const RenderEmptySection = (
     <View style={styles.notItemsSectionContainer}>
       <CustomImage
@@ -229,9 +223,6 @@ export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
         placeHolder={Images.HomeGraphics}
         resizeMode="cover"
       />
-      <TouchableOpacity onPress={handleOpenCalendar}>
-        <AppText style={{ fontSize: 20, color: 'white' }}>Test</AppText>
-      </TouchableOpacity>
       <AppText style={styles.emptyListLabelHeading}>
         <FormattedMessage
           id={LocaleProvider.IDs.label.whatDoYouWantToDoToday}
@@ -240,14 +231,6 @@ export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
       <AppText style={styles.emptyListLabelDescription}>
         <FormattedMessage id={LocaleProvider.IDs.label.tapToAddYourTasks} />
       </AppText>
-      <CalendarPicker
-        visible={openCalendar}
-        onCancel={() => setOpenCalendar(false)}
-        onConfirm={date => {
-          setOpenCalendar(false);
-          console.log('Selected date:', date);
-        }}
-      />
     </View>
   );
 

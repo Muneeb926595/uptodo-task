@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
 import './app/utils/ignore-warnings';
+import { MagicModalPortal } from 'react-native-magic-modal';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -79,6 +80,7 @@ function App() {
                   <AppNavigator />
                   {/* global components or modals */}
                   <AddTaskModal />
+                  <MagicModalPortal />
                 </SafeAreaProvider>
               </BottomSheetModalProvider>
             </GestureHandlerRootView>
