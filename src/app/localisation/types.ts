@@ -100,6 +100,8 @@ export interface ILabelTexts extends IMessageGroup {
   readonly tryAgain: string;
   readonly selectCountry: string;
   readonly search: string;
+  readonly chooseCategory: string;
+  readonly addCategory: string;
   readonly index: string;
   readonly calendar: string;
   readonly focus: string;

@@ -68,7 +68,7 @@ export const TaskPriorityPicker = ({ onCancel, onConfirm }: Props) => {
         <FlatList
           data={PRIORITY_LEVELS}
           numColumns={4}
-          style={{ marginTop: Layout.heightPercentageToDP(3) }}
+          style={{ marginTop: Layout.heightPercentageToDP(2.4) }}
           keyExtractor={item => item?.toString?.()}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.listContent}

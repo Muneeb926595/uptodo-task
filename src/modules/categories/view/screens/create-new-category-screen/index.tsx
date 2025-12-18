@@ -17,14 +17,14 @@ import { Conditional } from '../../../../../app/components/conditional';
 import { PickedImage } from '../../../../../app/services/media/mediaService';
 
 const CATEGORY_COLORS = [
-  '#FF5733', // Red
-  '#33FF57', // Green
-  '#3357FF', // Blue
-  '#F1C40F', // Yellow
-  '#9B59B6', // Purple
-  '#E67E22', // Orange
-  '#1ABC9C', // Turquoise
-  '#E91E63', // Pink
+  '#FF9A85', // Muted Red
+  '#7DDB9B', // Muted Green
+  '#8FA8FF', // Muted Blue
+  '#F4D35E', // Muted Yellow
+  '#C39BD3', // Muted Purple
+  '#F0A45D', // Muted Orange
+  '#6FD5C6', // Muted Turquoise
+  '#F48FB1', // Muted Pink
 ];
 
 export const CreateNewCategoryScreen = (
