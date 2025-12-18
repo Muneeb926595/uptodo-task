@@ -80,6 +80,7 @@ class _Constants {
     DEFAULT_CRYPTO_RANDOM_BYTE_COUNT: 32,
     DEFAULT_CRYPTO_CTR_COUNTER: 5,
     DEFAULT_APP_PADDING: Layout.widthPercentageToDP(4),
+    DEFAULT_TOUCH_HIT_SLOP: { top: 8, bottom: 8, left: 8, right: 8 },
   };
 }
 

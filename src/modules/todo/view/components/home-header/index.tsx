@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useStyles } from './styles';
 import { AppText } from '../../../../../app/components/text';
-import { Images, Layout } from '../../../../../app/globals';
+import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
@@ -28,7 +28,10 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={handleFilterPress}>
+        <TouchableOpacity
+          hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+          onPress={handleFilterPress}
+        >
           <AppIcon
             name={AppIconName.filter}
             color={Colors.white}
@@ -38,7 +41,11 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
 
         <AppText style={styles.title}>{title}</AppText>
 
-        <TouchableOpacity onPress={handlePressProfile} style={{ flex: 0.2 }}>
+        <TouchableOpacity
+          hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+          onPress={handlePressProfile}
+          style={{ flex: 0.2 }}
+        >
           <CustomImage
             uri={undefined}
             imageStyles={styles.headerImage}

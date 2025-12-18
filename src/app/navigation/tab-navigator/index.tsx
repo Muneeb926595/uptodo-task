@@ -95,7 +95,7 @@ const AddButton = () => {
   const handleOpenSheet = async () => {
     await magicSheet.show(() => <CreateTodoBottomSheet />, {
       ...CommonBottomSheetStyle,
-      snapPoints: [Layout.heightPercentageToDP(46)],
+      snapPoints: [Layout.heightPercentageToDP(54)],
     });
   };
   return (

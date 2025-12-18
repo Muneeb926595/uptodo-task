@@ -26,6 +26,7 @@ export enum AppIconName {
   hide = 'UpTodo-hide',
   home = 'UpTodo-home',
   homeTab = 'UpTodo-home-tab',
+  image = 'UpTodo-image',
   leftArrow = 'UpTodo-left-arrow',
   movie = 'UpTodo-movie',
   music = 'UpTodo-music',

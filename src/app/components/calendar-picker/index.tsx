@@ -8,6 +8,7 @@ import { AppText } from '../text';
 import { FormattedMessage } from '../../localisation/locale-formatter';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { TimePicker } from '../time-picker';
+import { Constants } from '../../globals';
 
 export type CalendarPickerProps = {
   initialDate?: Date;
@@ -92,6 +93,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
                 return (
                   <TouchableOpacity
                     onPress={() => onDayPress(date)}
+                    hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
                     style={[
                       styles.dayWrapper,
                       state === 'disabled' && styles.dayDisabled,
@@ -113,7 +115,10 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
             />
 
             <View style={styles.actionRow}>
-              <TouchableOpacity onPress={onCancel}>
+              <TouchableOpacity
+                hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+                onPress={onCancel}
+              >
                 <AppText style={styles.cancel}>
                   <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
                 </AppText>
@@ -129,9 +134,6 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
 
         {showTime && (
           <>
-            <AppText style={styles.title}>
-              <FormattedMessage id={LocaleProvider.IDs.label.chooseTime} />
-            </AppText>
             <TimePicker
               initialDate={selected}
               minuteInterval={minuteInterval}

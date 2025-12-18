@@ -4,6 +4,7 @@ import {
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  TouchableOpacity,
 } from 'react-native';
 import { Colors } from '../../theme';
 import { styles } from './styles';
@@ -11,6 +12,7 @@ import { AppText } from '../text';
 import { FormattedMessage } from '../../localisation/locale-formatter';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Form } from 'react-hook-form';
+import { Constants } from '../../globals';
 
 type Props = {
   initialDate: Date;
@@ -153,12 +155,19 @@ export const TimePicker: React.FC<Props> = ({
       </View>
 
       <View style={styles.actionRow}>
-        <AppText onPress={onCancel} style={styles.cancel}>
-          <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
-        </AppText>
-        <AppText onPress={save} style={styles.save}>
-          <FormattedMessage id={LocaleProvider.IDs.general.save} />
-        </AppText>
+        <TouchableOpacity
+          hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+          onPress={onCancel}
+        >
+          <AppText style={styles.cancel}>
+            <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
+          </AppText>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={save} style={styles.chooseBtn}>
+          <AppText style={styles.chooseText}>
+            <FormattedMessage id={LocaleProvider.IDs.label.chooseTime} />
+          </AppText>
+        </TouchableOpacity>
       </View>
     </View>
   );

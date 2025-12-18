@@ -34,12 +34,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>UpTodo.ttf</string>
 		<string>antdesign.ttf</string>
 		<string>entypo.ttf</string>
 		<string>evilicon.ttf</string>
@@ -61,6 +60,7 @@
 		<string>Lato-Regular.ttf</string>
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-ThinItalic.ttf</string>
+		<string>UpTodo.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -48,6 +48,9 @@ export type Todo = {
   title: string;
   description?: string;
 
+  // Attachments
+  attachments?: Array<string>;
+
   // Date & time
   dueDate: number; // timestamp (ms)
   todoTime?: string; // "16:45" (UI-friendly)

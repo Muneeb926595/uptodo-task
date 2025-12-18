@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: Layout.RFValue(22),
+    fontSize: Layout.RFValue(16),
     color: Colors.white,
     marginBottom: Layout.widthPercentageToDP(3),
   },
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   itemText: {
-    fontSize: Layout.RFValue(28),
+    fontSize: Layout.RFValue(22),
     color: Colors.white,
   },
   selectionOverlay: {
@@ -55,18 +55,19 @@ export const styles = StyleSheet.create({
   actionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: Layout.widthPercentageToDP(5),
   },
   cancel: {
-    fontSize: Layout.RFValue(18),
     color: Colors.brand['DEFAULT'],
   },
-  save: {
-    fontSize: Layout.RFValue(18),
-    color: Colors.white,
+  chooseBtn: {
     backgroundColor: Colors.brand['DEFAULT'],
-    paddingHorizontal: Layout.widthPercentageToDP(6),
     paddingVertical: Layout.widthPercentageToDP(2.5),
-    borderRadius: Layout.widthPercentageToDP(2),
+    paddingHorizontal: Layout.widthPercentageToDP(3),
+    borderRadius: 6,
+  },
+  chooseText: {
+    color: Colors.white,
   },
 });

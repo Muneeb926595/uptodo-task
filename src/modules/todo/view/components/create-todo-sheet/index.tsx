@@ -15,7 +15,7 @@ import {
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
-import { Layout } from '../../../../../app/globals';
+import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 import { TaskPriorityPicker } from '../task-priority-picker';
 import { TaskCategoryPicker } from '../../../../categories/view/components';
@@ -23,6 +23,9 @@ import { magicSheet } from 'react-native-magic-sheet';
 import { useCreateTodo } from '../../../react-query';
 import dayjs from 'dayjs';
 import { PriorityLevel } from '../../../types';
+import { useImagePicker } from '../../../../../app/hooks';
+import { Conditional } from '../../../../../app/components/conditional';
+import { CustomImage } from '../../../../../app/components/custom-image';
 
 type Props = {
   userName?: string;
@@ -41,6 +44,8 @@ export const CreateTodoBottomSheet = (props: Props) => {
       description: '',
     },
   });
+
+  const { pickAndUpload, isLoading, imageUri } = useImagePicker();
 
   const [categoryId, setCategoryId] = useState<string>();
   const [priority, setPriority] = useState<PriorityLevel>();
@@ -97,6 +102,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
       todoTime: dayjs(selectedDate).format('HH:mm'),
       priority,
       categoryId,
+      attachments: [imageUri] as string[],
     };
 
     try {
@@ -162,6 +168,30 @@ export const CreateTodoBottomSheet = (props: Props) => {
             </AppText>
           )}
 
+          <TouchableOpacity
+            hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+            style={styles.galleryPicker}
+            onPress={pickAndUpload}
+          >
+            <Conditional
+              ifTrue={imageUri}
+              elseChildren={
+                <AppIcon
+                  name={AppIconName.image}
+                  color={Colors.white}
+                  iconSize={AppIconSize.xxlarge}
+                />
+              }
+            >
+              <CustomImage
+                uri={imageUri}
+                imageStyles={styles.attachment}
+                placeHolder={Images.DefaultTodo}
+                resizeMode="cover"
+              />
+            </Conditional>
+          </TouchableOpacity>
+
           <View
             style={[
               styles.rowBetween,
@@ -171,21 +201,30 @@ export const CreateTodoBottomSheet = (props: Props) => {
             <View
               style={[styles.row, { columnGap: Layout.widthPercentageToDP(8) }]}
             >
-              <TouchableOpacity onPress={handleOpenCalendar}>
+              <TouchableOpacity
+                hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+                onPress={handleOpenCalendar}
+              >
                 <AppIcon
                   name={AppIconName.timer}
                   color={Colors.white}
                   iconSize={AppIconSize.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleOpenCategoryPicker}>
+              <TouchableOpacity
+                hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+                onPress={handleOpenCategoryPicker}
+              >
                 <AppIcon
                   name={AppIconName.tag}
                   color={Colors.white}
                   iconSize={AppIconSize.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleOpenPriorityPicker}>
+              <TouchableOpacity
+                hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+                onPress={handleOpenPriorityPicker}
+              >
                 <AppIcon
                   name={AppIconName.flag}
                   color={Colors.white}
@@ -193,7 +232,10 @@ export const CreateTodoBottomSheet = (props: Props) => {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={handleSubmit(handleCreateTodo)}>
+            <TouchableOpacity
+              hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+              onPress={handleSubmit(handleCreateTodo)}
+            >
               <AppIcon
                 name={AppIconName.send}
                 color={Colors.brand['DEFAULT']}
