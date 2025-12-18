@@ -12,6 +12,8 @@ import { AuthFlow } from '../../modules/auth/view/navigation/auth';
 import { hideSplash } from 'react-native-splash-view';
 import { useTheme } from '../theme/provider';
 import { TabsNavigator } from './tab-navigator';
+import { notificationService } from '../../modules/services/notifications';
+import { todoRepository } from '../../modules/todo/repository';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
@@ -21,6 +23,14 @@ export const AppNavigator = () => {
 
   useEffect(() => {
     hideSplash();
+
+    (async () => {
+      // Notifications
+      await notificationService.ensurePermissions();
+
+      const todos = await todoRepository.getAll();
+      await notificationService.resyncAll(todos);
+    })();
   }, []);
 
   // to debug react-navigation with flipper

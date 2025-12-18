@@ -1,6 +1,7 @@
 import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
 import { Todo } from '../../todo/types/todo.types';
 import { generateId } from '../../../app/utils/id';
+import { notificationService } from '../../services/notifications';
 
 type TodoMap = Record<string, Todo>;
 
@@ -78,6 +79,12 @@ class TodoRepository {
       completedAt: payload?.completedAt ?? null,
       deletedAt: null,
     } as Todo;
+
+    // 🔔 schedule notification
+    const notificationId = await notificationService.scheduleForTodo(todo);
+    if (notificationId) {
+      todo.notificationId = notificationId;
+    }
     map[id] = todo;
     await this.save(map);
     return todo;
@@ -87,11 +94,20 @@ class TodoRepository {
     const map = await this.load();
     const existing = map?.[id];
     if (!existing) return null;
+
     const updated: Todo = {
       ...existing,
       ...patch,
       updatedAt: Date.now(),
     } as Todo;
+
+    const notificationId =
+      patch?.dueDate || patch?.isCompleted !== undefined
+        ? await notificationService.rescheduleTodo(updated)
+        : updated?.notificationId;
+
+    updated.notificationId = notificationId ?? undefined;
+
     map[id] = updated;
     await this.save(map);
     return updated;
@@ -101,6 +117,9 @@ class TodoRepository {
     const map = await this.load();
     const existing = map?.[id];
     if (!existing) return;
+
+    await notificationService.cancelForTodo(existing);
+
     existing.deletedAt = Date.now();
     existing.updatedAt = Date.now();
     map[id] = existing;

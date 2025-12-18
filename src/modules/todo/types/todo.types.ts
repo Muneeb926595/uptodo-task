@@ -83,6 +83,9 @@ export type Todo = {
 
   // Derived helpers (optional but useful)
   isOverdue?: boolean;
+
+  // Notifications
+  notificationId?: string;
 };
 
 // Why todoTime + dueDate?
