@@ -51,6 +51,7 @@ export default StyleSheet.create({
   },
   actionRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: Layout.widthPercentageToDP(3),
   },

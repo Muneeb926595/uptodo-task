@@ -114,6 +114,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly whatDoYouWantToDoToday: string;
   readonly chooseTime: string;
   readonly createCategory: string;
+  readonly taskPriority: string;
   readonly tapToAddYourTasks: string;
 }
 

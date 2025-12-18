@@ -9,7 +9,6 @@ import { CustomImage } from '../../../../../app/components/custom-image';
 import { Images, Layout } from '../../../../../app/globals';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
-import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 import { formatTodoDateTime } from '../../../../../app/utils';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
@@ -18,6 +17,7 @@ import {
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
+import { Todo } from '../../../types';
 
 let todos = [
   // 🟢 TODAY — ACTIVE (4)
@@ -163,6 +163,51 @@ let todos = [
   },
 ];
 todos = [];
+
+const RenderTodoItem = ({ item }: { item: Todo | any }) => {
+  const styles = useStyles();
+  return (
+    <View style={styles.todoItem}>
+      <AppText style={styles.todoItemLabel}>{item?.title}</AppText>
+      <View style={styles.rowBetween}>
+        <AppText style={styles.todoItemTime}>
+          {formatTodoDateTime(item?.dueDate)}
+        </AppText>
+
+        <View
+          style={[
+            styles.row,
+            {
+              columnGap: Layout.widthPercentageToDP(3),
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.todoItemCategoryContainer,
+              { backgroundColor: item?.category?.color },
+            ]}
+          >
+            <AppText style={styles.todoItemCategoryLabel}>
+              {item?.category?.name}
+            </AppText>
+          </View>
+          <View style={styles.todoItemPriorityContainer}>
+            <AppIcon
+              name={AppIconName.flag}
+              iconSize={AppIconSize.mini}
+              color={Colors.white}
+              style={{ marginRight: Layout.widthPercentageToDP(1) }}
+            />
+            <AppText style={styles.todoItemPriorityLabel}>
+              {item?.priority}
+            </AppText>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
 export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
   const styles = useStyles();
 
@@ -171,47 +216,7 @@ export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
       data={todos}
       style={{ marginTop: Layout.heightPercentageToDP(2) }}
       keyExtractor={item => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.todoItem}>
-          <AppText style={styles.todoItemLabel}>{item?.title}</AppText>
-          <View style={styles.rowBetween}>
-            <AppText style={styles.todoItemTime}>
-              {formatTodoDateTime(item?.dueDate)}
-            </AppText>
-
-            <View
-              style={[
-                styles.row,
-                {
-                  columnGap: Layout.widthPercentageToDP(3),
-                },
-              ]}
-            >
-              <View
-                style={[
-                  styles.todoItemCategoryContainer,
-                  { backgroundColor: item?.category?.color },
-                ]}
-              >
-                <AppText style={styles.todoItemCategoryLabel}>
-                  {item?.category?.name}
-                </AppText>
-              </View>
-              <View style={styles.todoItemPriorityContainer}>
-                <AppIcon
-                  name={AppIconName.flag}
-                  iconSize={AppIconSize.mini}
-                  color={Colors.white}
-                  style={{ marginRight: Layout.widthPercentageToDP(1) }}
-                />
-                <AppText style={styles.todoItemPriorityLabel}>
-                  {item?.priority}
-                </AppText>
-              </View>
-            </View>
-          </View>
-        </View>
-      )}
+      renderItem={RenderTodoItem}
     />
   );
 

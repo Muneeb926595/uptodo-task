@@ -17,6 +17,7 @@ import {
 import { Colors } from '../../../../../app/theme';
 import { Layout } from '../../../../../app/globals';
 import { CalendarPicker } from '../../../../../app/components/calendar-picker';
+import { TaskPriorityPicker } from '../task-priority-picker';
 
 type Props = {
   userName?: string;
@@ -42,6 +43,17 @@ export const CreateTodoBottomSheet = (props: Props) => {
         onCancel={() => magicModal.hideAll()}
         onConfirm={date => {
           console.log('Selected date:', date);
+        }}
+      />
+    )).promise;
+  };
+
+  const handleOpenPriorityPicker = async () => {
+    const result = await magicModal.show(() => (
+      <TaskPriorityPicker
+        onCancel={() => magicModal.hideAll()}
+        onConfirm={priority => {
+          console.log('Selected priority:', priority);
         }}
       />
     )).promise;
@@ -126,7 +138,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                   iconSize={AppIconSize.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleOpenPriorityPicker}>
                 <AppIcon
                   name={AppIconName.flag}
                   color={Colors.white}
