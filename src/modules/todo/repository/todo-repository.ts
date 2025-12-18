@@ -2,6 +2,7 @@ import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
 import { Todo } from '../../todo/types/todo.types';
 import { generateId } from '../../../app/utils/id';
 import { notificationService } from '../../services/notifications';
+import { categoriesRepository } from '../../categories/repository';
 
 type TodoMap = Record<string, Todo>;
 
@@ -20,14 +21,37 @@ class TodoRepository {
 
   async getAll(): Promise<Todo[]> {
     const map = await this.load();
+    const now = Date.now();
+
+    // 1️⃣ Load categories once
+    const categories = await categoriesRepository.getAll();
+    const categoryMap = new Map(categories?.map?.(c => [c?.id, c]));
+
     return Object.values(map)
-      .filter(t => !t?.deletedAt)
-      .sort(
-        (a, b) =>
-          a?.order - b?.order ||
-          a?.dueDate - b?.dueDate ||
-          a?.createdAt - b?.createdAt,
-      );
+      .filter(todo => !todo?.deletedAt)
+      .map(todo => ({
+        ...todo,
+
+        // 2️⃣ Populate category
+        category: categoryMap?.get?.(todo?.categoryId),
+
+        // 3️⃣ Derived helpers
+        isOverdue: !todo?.isCompleted && todo?.dueDate < now,
+      }))
+      .sort((a, b) => {
+        // Higher priority first
+        if (a?.priority !== b?.priority) {
+          return b?.priority - a?.priority;
+        }
+
+        // Earlier due date first
+        if (a?.dueDate !== b?.dueDate) {
+          return a?.dueDate - b?.dueDate;
+        }
+
+        // Stable fallback
+        return a?.createdAt - b?.createdAt;
+      });
   }
 
   async getById(id: string): Promise<Todo | null> {
@@ -71,7 +95,6 @@ class TodoRepository {
         (payload?.isCompleted ? ('COMPLETED' as any) : ('PENDING' as any)),
       categoryId: payload?.categoryId ?? '',
       parentId: payload?.parentId ?? null,
-      order: payload?.order ?? 0,
       isCompleted: !!payload?.isCompleted,
       hasSubTasks: !!payload?.hasSubTasks,
       createdAt: now,

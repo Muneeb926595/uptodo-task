@@ -34,7 +34,7 @@
 		E25F1FCD04D54B8BA0F705F4 /* custom-fonts.md in Resources */ = {isa = PBXBuildFile; fileRef = 9DCE4F59BBB2489798EC877A /* custom-fonts.md */; };
 		E608379B604C498199E2C952 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E94C5869823E44969A64779C /* Lato-LightItalic.ttf */; };
 		EF50B17EC3534D0E9F7E3B53 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2BE4DD3FB4A411BB8D0418B /* Lato-BoldItalic.ttf */; };
-		B9D00F9CAE174527B982F0F6 /* UpTodo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69319E9826FC4271B4356CBA /* UpTodo.ttf */; };
+		371A3F6D36BB46DC9A8AC7A4 /* UpTodo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 243FC42D4B3042E88DF54825 /* UpTodo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,7 +71,7 @@
 		F110D1D825724570B2E34891 /* foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = foundation.ttf; path = ../src/app/assets/fonts/foundation.ttf; sourceTree = "<group>"; };
 		F2CE8BF80895498F90AF3107 /* zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = zocial.ttf; path = ../src/app/assets/fonts/zocial.ttf; sourceTree = "<group>"; };
 		FFA1518B5AB14D47B3B4D39A /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../src/app/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
-		69319E9826FC4271B4356CBA /* UpTodo.ttf */ = {isa = PBXFileReference; name = "UpTodo.ttf"; path = "../src/app/assets/fonts/UpTodo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		243FC42D4B3042E88DF54825 /* UpTodo.ttf */ = {isa = PBXFileReference; name = "UpTodo.ttf"; path = "../src/app/assets/fonts/UpTodo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +172,7 @@
 				FFA1518B5AB14D47B3B4D39A /* Lato-Regular.ttf */,
 				060C91F611A6454086B91B1F /* Lato-Thin.ttf */,
 				087FF74DAA3C43F0A07C415F /* Lato-ThinItalic.ttf */,
-				69319E9826FC4271B4356CBA /* UpTodo.ttf */,
+				243FC42D4B3042E88DF54825 /* UpTodo.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 				68C72DF68CF1495695A74167 /* Lato-Regular.ttf in Resources */,
 				00B5BC9F630D406BAC816510 /* Lato-Thin.ttf in Resources */,
 				188D0A35BF7C4DB5A387063E /* Lato-ThinItalic.ttf in Resources */,
-				B9D00F9CAE174527B982F0F6 /* UpTodo.ttf in Resources */,
+				371A3F6D36BB46DC9A8AC7A4 /* UpTodo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

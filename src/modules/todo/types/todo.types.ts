@@ -63,7 +63,6 @@ export type Todo = {
 
   // Hierarchy
   parentId?: string | null; // for sub-tasks
-  order: number; // manual ordering in list
 
   // Flags
   isCompleted: boolean;

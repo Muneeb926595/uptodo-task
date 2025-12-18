@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { themed } from '../../../../../app/theme/utils';
 import { Constants, Fonts, Layout } from '../../../../../app/globals';
+import { Colors } from '../../../../../app/theme';
 
 export const useStyles = themed(tokens =>
   StyleSheet.create({
@@ -89,9 +90,33 @@ export const useStyles = themed(tokens =>
       color: tokens.colors.white,
       fontSize: Layout.RFValue(12),
     },
+    categoryIcon: {
+      width: Layout.widthPercentageToDP(4),
+      height: Layout.widthPercentageToDP(4),
+      marginRight: Layout.widthPercentageToDP(2),
+    },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: tokens.colors.surface['100'],
+      marginTop: Layout.heightPercentageToDP(3),
+      marginBottom: Layout.heightPercentageToDP(1),
+      borderRadius: 4,
+      alignSelf: 'flex-start',
+      paddingHorizontal: Layout.widthPercentageToDP(2),
+      paddingVertical: Layout.heightPercentageToDP(0.6),
+    },
+
+    sectionHeaderText: {
+      fontSize: Layout.RFValue(12),
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
     },
   }),
 );

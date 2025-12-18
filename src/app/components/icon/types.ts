@@ -14,6 +14,7 @@ export type Props = {
 export enum AppIconName {
   add = 'UpTodo-add',
   announcement = 'UpTodo-announcement',
+  arrowDown = 'UpTodo-arrow-down',
   back = 'UpTodo-back',
   calendar = 'UpTodo-calendar',
   clock = 'UpTodo-clock',

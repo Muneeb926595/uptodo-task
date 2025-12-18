@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { FlatList, SectionList, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
 import { HomeHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -18,151 +18,200 @@ import {
 import { Colors } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
 import { Todo } from '../../../types';
+import { useTodos } from '../../../react-query';
 
-let todos = [
-  // 🟢 TODAY — ACTIVE (4)
-  {
-    id: 'todo-1',
-    title: 'Do Math Homework',
-    description: 'Complete calculus assignment',
-    dueDate: Date.now(),
-    todoTime: '16:45',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'PENDING',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 1,
-    isCompleted: false,
-    hasSubTasks: true,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: null,
-    deletedAt: null,
+export const buildTodoListItems = (
+  todos: Todo[],
+  collapsed: {
+    today: boolean;
+    completed: boolean;
   },
-  {
-    id: 'todo-2',
-    title: 'Take out dogs',
-    description: 'Evening walk',
-    dueDate: Date.now(),
-    todoTime: '18:20',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'PENDING',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 2,
-    isCompleted: false,
-    hasSubTasks: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: null,
-    deletedAt: null,
-  },
-  {
-    id: 'todo-3',
-    title: 'Business meeting with CEO',
-    description: 'Quarterly roadmap discussion',
-    dueDate: Date.now(),
-    todoTime: '08:15',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'IN_PROGRESS',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 3,
-    isCompleted: false,
-    hasSubTasks: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: null,
-    deletedAt: null,
-  },
-  {
-    id: 'todo-4',
-    title: 'Buy Grocery',
-    description: 'Milk, eggs, bread',
-    dueDate: Date.now(),
-    todoTime: '20:00',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'PENDING',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 4,
-    isCompleted: false,
-    hasSubTasks: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: null,
-    deletedAt: null,
-  },
+): any[] => {
+  const items: any[] = [];
 
-  // ✅ COMPLETED (2)
-  {
-    id: 'todo-5',
-    title: 'Morning workout',
-    description: '30 min cardio',
-    dueDate: Date.now(),
-    todoTime: '06:30',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'COMPLETED',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 5,
-    isCompleted: true,
-    hasSubTasks: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: Date.now(),
-    deletedAt: null,
-  },
-  {
-    id: 'todo-6',
-    title: 'Reply to emails',
-    description: 'Clear inbox',
-    dueDate: Date.now(),
-    todoTime: '09:00',
-    timezone: 'Asia/Karachi',
-    priority: '3',
-    status: 'COMPLETED',
-    category: {
-      id: 'health',
-      name: 'Health',
-      color: '#FF5733',
-    },
-    parentId: null,
-    order: 6,
-    isCompleted: true,
-    hasSubTasks: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    completedAt: Date.now(),
-    deletedAt: null,
-  },
-];
-todos = [];
+  const todayTodos = todos?.filter?.(t => !t?.isCompleted && !t?.deletedAt);
+
+  const completedTodos = todos?.filter?.(t => t?.isCompleted && !t?.deletedAt);
+
+  // TODAY
+  items.push({
+    type: 'header',
+    id: 'header-today',
+    title: 'Today',
+  });
+
+  if (!collapsed.today) {
+    todayTodos?.forEach?.(todo =>
+      items.push({
+        type: 'todo',
+        id: todo?.id,
+        todo,
+      }),
+    );
+  }
+
+  // COMPLETED
+  items.push({
+    type: 'header',
+    id: 'header-completed',
+    title: 'Completed',
+  });
+
+  if (!collapsed.completed) {
+    completedTodos?.forEach?.(todo =>
+      items.push({
+        type: 'todo',
+        id: todo?.id,
+        todo,
+      }),
+    );
+  }
+
+  return items;
+};
+// let todos: Todo | any = [
+//   // 🟢 TODAY — ACTIVE (4)
+//   {
+//     id: 'todo-1',
+//     title: 'Do Math Homework',
+//     description: 'Complete calculus assignment',
+//     dueDate: Date.now(),
+//     todoTime: '16:45',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'PENDING',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 1,
+//     isCompleted: false,
+//     hasSubTasks: true,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: null,
+//     deletedAt: null,
+//   },
+//   {
+//     id: 'todo-2',
+//     title: 'Take out dogs',
+//     description: 'Evening walk',
+//     dueDate: Date.now(),
+//     todoTime: '18:20',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'PENDING',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 2,
+//     isCompleted: false,
+//     hasSubTasks: false,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: null,
+//     deletedAt: null,
+//   },
+//   {
+//     id: 'todo-3',
+//     title: 'Business meeting with CEO',
+//     description: 'Quarterly roadmap discussion',
+//     dueDate: Date.now(),
+//     todoTime: '08:15',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'IN_PROGRESS',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 3,
+//     isCompleted: false,
+//     hasSubTasks: false,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: null,
+//     deletedAt: null,
+//   },
+//   {
+//     id: 'todo-4',
+//     title: 'Buy Grocery',
+//     description: 'Milk, eggs, bread',
+//     dueDate: Date.now(),
+//     todoTime: '20:00',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'PENDING',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 4,
+//     isCompleted: false,
+//     hasSubTasks: false,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: null,
+//     deletedAt: null,
+//   },
+
+//   // ✅ COMPLETED (2)
+//   {
+//     id: 'todo-5',
+//     title: 'Morning workout',
+//     description: '30 min cardio',
+//     dueDate: Date.now(),
+//     todoTime: '06:30',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'COMPLETED',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 5,
+//     isCompleted: true,
+//     hasSubTasks: false,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: Date.now(),
+//     deletedAt: null,
+//   },
+//   {
+//     id: 'todo-6',
+//     title: 'Reply to emails',
+//     description: 'Clear inbox',
+//     dueDate: Date.now(),
+//     todoTime: '09:00',
+//     timezone: 'Asia/Karachi',
+//     priority: '3',
+//     status: 'COMPLETED',
+//     category: {
+//       id: 'health',
+//       name: 'Health',
+//       color: '#FF5733',
+//     },
+//     parentId: null,
+//     order: 6,
+//     isCompleted: true,
+//     hasSubTasks: false,
+//     createdAt: Date.now(),
+//     updatedAt: Date.now(),
+//     completedAt: Date.now(),
+//     deletedAt: null,
+//   },
+// ];
 
 const RenderTodoItem = ({ item }: { item: Todo | any }) => {
   const styles = useStyles();
@@ -188,6 +237,12 @@ const RenderTodoItem = ({ item }: { item: Todo | any }) => {
               { backgroundColor: item?.category?.color },
             ]}
           >
+            <CustomImage
+              uri={item?.category?.icon}
+              imageStyles={styles.categoryIcon}
+              placeHolder={Images.DefaultTodo}
+              resizeMode="cover"
+            />
             <AppText style={styles.todoItemCategoryLabel}>
               {item?.category?.name}
             </AppText>
@@ -208,15 +263,74 @@ const RenderTodoItem = ({ item }: { item: Todo | any }) => {
     </View>
   );
 };
+
+const SectionHeader = ({ title }: { title: string }) => {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.sectionHeader}>
+      <AppText style={styles.sectionHeaderText}>{title}</AppText>
+      <AppIcon
+        name={AppIconName.arrowDown}
+        iconSize={AppIconSize.mini}
+        color={Colors.white}
+        style={{ marginLeft: Layout.widthPercentageToDP(2) }}
+      />
+    </View>
+  );
+};
+
+const RenderSectionList = ({
+  item,
+  setCollapsed,
+}: {
+  item: any;
+  setCollapsed: (newValues: any) => void;
+}) => {
+  if (item.type === 'header') {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          setCollapsed((prev: any) => ({
+            ...prev,
+            [item.title.toLowerCase()]: !prev[item.title.toLowerCase()],
+          }))
+        }
+      >
+        <SectionHeader title={item.title} />
+      </TouchableOpacity>
+    );
+  }
+
+  return <RenderTodoItem item={item.todo} />;
+};
+
 export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
   const styles = useStyles();
 
+  const { data: todos, isLoading } = useTodos();
+
+  const [collapsed, setCollapsed] = useState({
+    today: false,
+    completed: false,
+  });
+
+  const listItems = useMemo(
+    () => buildTodoListItems(todos as Todo[], collapsed),
+    [todos, collapsed],
+  );
+
   const RenderTodosList = (
     <FlatList
-      data={todos}
-      style={{ marginTop: Layout.heightPercentageToDP(2) }}
+      data={listItems}
+      renderItem={({ item }) => (
+        <RenderSectionList item={item} setCollapsed={setCollapsed} />
+      )}
       keyExtractor={item => item.id}
-      renderItem={RenderTodoItem}
+      removeClippedSubviews
+      windowSize={10}
+      initialNumToRender={20}
+      maxToRenderPerBatch={20}
     />
   );
 
@@ -250,7 +364,7 @@ export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
       />
       <View style={styles.container}>
         <Conditional
-          ifTrue={todos?.length > 0}
+          ifTrue={(todos as Todo[])?.length > 0}
           elseChildren={RenderEmptySection}
         >
           {RenderTodosList}
