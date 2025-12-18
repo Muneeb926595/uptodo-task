@@ -6,6 +6,7 @@ import {
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
+import errorHandler from '../error-handler';
 import { AppState } from 'react-native';
 
 export const queryClient = new QueryClient({
@@ -21,6 +22,22 @@ export const queryClient = new QueryClient({
       retry: 0,
     },
   },
+});
+
+// Subscribe to query and mutation cache changes to surface errors globally.
+// This avoids TypeScript issues with providing onError inside defaultOptions for queries.
+queryClient.getQueryCache().subscribe(({ query }) => {
+  const err = (query as any)?.state?.error;
+  if (err) {
+    errorHandler.showApiErrorAlert(err as any).catch(() => {});
+  }
+});
+
+queryClient.getMutationCache().subscribe(({ mutation }) => {
+  const err = (mutation as any)?.state?.error;
+  if (err) {
+    errorHandler.showApiErrorAlert(err as any).catch(() => {});
+  }
 });
 
 export const ReactQueryProvider: React.FC<{

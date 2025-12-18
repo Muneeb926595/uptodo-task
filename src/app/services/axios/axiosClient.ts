@@ -8,4 +8,6 @@ const axiosClient = axios.create({
 });
 
 // Attach interceptors in a separate file to avoid circular deps
+import './interceptors';
+
 export default axiosClient;
