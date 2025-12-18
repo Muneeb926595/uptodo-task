@@ -7,9 +7,12 @@ import { useStyles } from './styles';
 import { ScreenProps } from '../../../../../app/navigation';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
-import { Constants, Layout } from '../../../../../app/globals';
+import { Constants, Images, Layout } from '../../../../../app/globals';
 import { AuthInput } from '../../../../../app/components/inputs';
 import { FlatList } from 'react-native-gesture-handler';
+import { useImagePicker } from '../../../../../app/hooks';
+import { CustomImage } from '../../../../../app/components/custom-image';
+import { Conditional } from '../../../../../app/components/conditional';
 
 const CATEGORY_COLORS = [
   '#FF5733', // Red
@@ -27,10 +30,10 @@ export const CreateNewCategoryScreen = (
 ) => {
   const styles = useStyles();
 
+  const { pickAndUpload, isLoading, imageUri } = useImagePicker();
+
   const [categoryName, setCategoryName] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
-
-  const handleChooseIconFromLibrary = () => {};
 
   const handleColorPress = (selectedItem: string) => {
     setSelectedColor(selectedItem);
@@ -72,15 +75,28 @@ export const CreateNewCategoryScreen = (
         <AppText style={styles.inputlabel}>
           <FormattedMessage id={LocaleProvider.IDs.label.categoryIcon} />
         </AppText>
+
         <TouchableOpacity
-          onPress={handleChooseIconFromLibrary}
+          onPress={pickAndUpload}
           style={styles.chooseIconButton}
         >
-          <AppText style={styles.chooseIconButtonLabel}>
-            <FormattedMessage
-              id={LocaleProvider.IDs.label.chooseiconFromlibrary}
+          <Conditional
+            ifTrue={imageUri}
+            elseChildren={
+              <AppText style={styles.chooseIconButtonLabel}>
+                <FormattedMessage
+                  id={LocaleProvider.IDs.label.chooseiconFromlibrary}
+                />
+              </AppText>
+            }
+          >
+            <CustomImage
+              uri={imageUri}
+              imageStyles={styles.selectedImage}
+              placeHolder={Images.Avatar}
+              resizeMode="cover"
             />
-          </AppText>
+          </Conditional>
         </TouchableOpacity>
 
         <AppText style={styles.inputlabel}>

@@ -46,7 +46,7 @@ export const AppNavigator = () => {
       theme={active === 'dark' ? DarkTheme : DefaultTheme}
     >
       <MainAppStack.Navigator>
-        {false ? (
+        {true ? (
           <>
             <MainAppStack.Screen
               name="Tabs"

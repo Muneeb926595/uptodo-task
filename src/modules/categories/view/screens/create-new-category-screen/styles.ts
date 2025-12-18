@@ -35,6 +35,13 @@ export const useStyles = themed(tokens =>
       borderRadius: 4,
       backgroundColor: tokens.colors.surface['DEFAULT'],
       alignSelf: 'flex-start',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    selectedImage: {
+      width: Layout.widthPercentageToDP(8),
+      height: Layout.widthPercentageToDP(8),
+      borderRadius: Layout.widthPercentageToDP(5),
     },
     colorCircle: {
       width: Layout.widthPercentageToDP(8),
