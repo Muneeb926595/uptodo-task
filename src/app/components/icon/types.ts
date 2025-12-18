@@ -18,6 +18,7 @@ export enum AppIconName {
   back = 'UpTodo-back',
   calendar = 'UpTodo-calendar',
   clock = 'UpTodo-clock',
+  cross = 'UpTodo-cross',
   design = 'UpTodo-design',
   edit = 'UpTodo-edit',
   filter = 'UpTodo-filter',

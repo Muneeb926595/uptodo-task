@@ -8,7 +8,7 @@ import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
-import { HomeScreen } from '../../../modules/todo/view/screens';
+import { EditTaskScreen, HomeScreen } from '../../../modules/todo/view/screens';
 import { styles } from './styles';
 import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
@@ -24,6 +24,13 @@ const HomeStack = () => (
     <Stack.Screen
       name="HomeScreen"
       component={HomeScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="EditTaskScreen"
+      component={EditTaskScreen}
       options={{
         headerShown: false,
       }}

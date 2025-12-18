@@ -1,6 +1,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Todo } from '../../modules/todo/types';
 
 export type MainStackParamList = {
   LoginScreen: undefined;
@@ -13,6 +14,9 @@ export type MainStackParamList = {
   CalendarScreen: undefined;
   FocusScreen: undefined;
   ProfileScreen: undefined;
+
+  // Tasks screens
+  EditTaskScreen: { todoItem: Todo };
 
   // Categories screens
   CategoriesScreen: undefined;

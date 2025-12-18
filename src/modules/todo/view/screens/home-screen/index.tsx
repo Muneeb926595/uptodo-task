@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FlatList, SectionList, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
-import { HomeHeader } from '../../components';
+import { HomeHeader, TasksListitem } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { Conditional } from '../../../../../app/components/conditional';
@@ -69,200 +69,6 @@ export const buildTodoListItems = (
 
   return items;
 };
-// let todos: Todo | any = [
-//   // 🟢 TODAY — ACTIVE (4)
-//   {
-//     id: 'todo-1',
-//     title: 'Do Math Homework',
-//     description: 'Complete calculus assignment',
-//     dueDate: Date.now(),
-//     todoTime: '16:45',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'PENDING',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 1,
-//     isCompleted: false,
-//     hasSubTasks: true,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: null,
-//     deletedAt: null,
-//   },
-//   {
-//     id: 'todo-2',
-//     title: 'Take out dogs',
-//     description: 'Evening walk',
-//     dueDate: Date.now(),
-//     todoTime: '18:20',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'PENDING',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 2,
-//     isCompleted: false,
-//     hasSubTasks: false,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: null,
-//     deletedAt: null,
-//   },
-//   {
-//     id: 'todo-3',
-//     title: 'Business meeting with CEO',
-//     description: 'Quarterly roadmap discussion',
-//     dueDate: Date.now(),
-//     todoTime: '08:15',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'IN_PROGRESS',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 3,
-//     isCompleted: false,
-//     hasSubTasks: false,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: null,
-//     deletedAt: null,
-//   },
-//   {
-//     id: 'todo-4',
-//     title: 'Buy Grocery',
-//     description: 'Milk, eggs, bread',
-//     dueDate: Date.now(),
-//     todoTime: '20:00',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'PENDING',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 4,
-//     isCompleted: false,
-//     hasSubTasks: false,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: null,
-//     deletedAt: null,
-//   },
-
-//   // ✅ COMPLETED (2)
-//   {
-//     id: 'todo-5',
-//     title: 'Morning workout',
-//     description: '30 min cardio',
-//     dueDate: Date.now(),
-//     todoTime: '06:30',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'COMPLETED',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 5,
-//     isCompleted: true,
-//     hasSubTasks: false,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: Date.now(),
-//     deletedAt: null,
-//   },
-//   {
-//     id: 'todo-6',
-//     title: 'Reply to emails',
-//     description: 'Clear inbox',
-//     dueDate: Date.now(),
-//     todoTime: '09:00',
-//     timezone: 'Asia/Karachi',
-//     priority: '3',
-//     status: 'COMPLETED',
-//     category: {
-//       id: 'health',
-//       name: 'Health',
-//       color: '#FF5733',
-//     },
-//     parentId: null,
-//     order: 6,
-//     isCompleted: true,
-//     hasSubTasks: false,
-//     createdAt: Date.now(),
-//     updatedAt: Date.now(),
-//     completedAt: Date.now(),
-//     deletedAt: null,
-//   },
-// ];
-
-const RenderTodoItem = ({ item }: { item: Todo | any }) => {
-  const styles = useStyles();
-  return (
-    <View style={styles.todoItem}>
-      <AppText style={styles.todoItemLabel}>{item?.title}</AppText>
-      <View style={styles.rowBetween}>
-        <AppText style={styles.todoItemTime}>
-          {formatTodoDateTime(item?.dueDate)}
-        </AppText>
-
-        <View
-          style={[
-            styles.row,
-            {
-              columnGap: Layout.widthPercentageToDP(3),
-            },
-          ]}
-        >
-          <View
-            style={[
-              styles.todoItemCategoryContainer,
-              { backgroundColor: item?.category?.color },
-            ]}
-          >
-            <CustomImage
-              uri={item?.category?.icon}
-              imageStyles={styles.categoryIcon}
-              placeHolder={Images.DefaultTodo}
-              resizeMode="cover"
-            />
-            <AppText style={styles.todoItemCategoryLabel}>
-              {item?.category?.name}
-            </AppText>
-          </View>
-          <View style={styles.todoItemPriorityContainer}>
-            <AppIcon
-              name={AppIconName.flag}
-              iconSize={AppIconSize.mini}
-              color={Colors.white}
-              style={{ marginRight: Layout.widthPercentageToDP(1) }}
-            />
-            <AppText style={styles.todoItemPriorityLabel}>
-              {item?.priority}
-            </AppText>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 const SectionHeader = ({ title }: { title: string }) => {
   const styles = useStyles();
@@ -302,7 +108,7 @@ const RenderSectionList = ({
     );
   }
 
-  return <RenderTodoItem item={item.todo} />;
+  return <TasksListitem item={item.todo} />;
 };
 
 export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
