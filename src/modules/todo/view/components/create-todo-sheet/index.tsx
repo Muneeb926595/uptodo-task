@@ -1,5 +1,5 @@
-import { View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { View, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BottomSheetWrapper } from '../../../../../app/components/bottom-sheet-wrapper';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -20,6 +20,9 @@ import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 import { TaskPriorityPicker } from '../task-priority-picker';
 import { TaskCategoryPicker } from '../../../../categories/view/components';
 import { magicSheet } from 'react-native-magic-sheet';
+import { useCreateTodo } from '../../../react-query';
+import dayjs from 'dayjs';
+import { PriorityLevel } from '../../../types';
 
 type Props = {
   userName?: string;
@@ -39,12 +42,18 @@ export const CreateTodoBottomSheet = (props: Props) => {
     },
   });
 
+  const [categoryId, setCategoryId] = useState<string>();
+  const [priority, setPriority] = useState<PriorityLevel>();
+  const [selectedDate, setSelectedDate] = useState<Date | null>();
+
+  const createTodoMutation = useCreateTodo();
+
   const handleOpenCalendar = async () => {
     const result = await magicModal.show(() => (
       <CalendarPicker
         onCancel={() => magicModal.hideAll()}
         onConfirm={date => {
-          console.log('Selected date:', date);
+          setSelectedDate(date);
           magicModal.hideAll();
         }}
       />
@@ -56,7 +65,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
       <TaskPriorityPicker
         onCancel={() => magicModal.hideAll()}
         onConfirm={priority => {
-          console.log('Selected priority:', priority);
+          setPriority(priority);
           magicModal.hideAll();
         }}
       />
@@ -67,16 +76,34 @@ export const CreateTodoBottomSheet = (props: Props) => {
     const result = await magicModal.show(() => (
       <TaskCategoryPicker
         onConfirm={category => {
-          console.log('Selected category:', category);
+          setCategoryId(category?.id);
           magicModal.hideAll();
         }}
       />
     )).promise;
   };
 
-  const handleCreateTodo = () => {
+  const handleCreateTodo = async (data: {
+    title: string;
+    description: string;
+  }) => {
     magicModal.hideAll();
     magicSheet.hide();
+
+    const payload = {
+      title: data?.title?.trim?.(),
+      description: data?.description?.trim?.(),
+      dueDate: dayjs(selectedDate).valueOf(), //timestamp in ms
+      todoTime: dayjs(selectedDate).format('HH:mm'),
+      priority,
+      categoryId,
+    };
+
+    try {
+      await createTodoMutation.mutateAsync(payload);
+    } catch (err) {
+      Alert.alert('Error', 'Unable to create todo');
+    }
   };
 
   return (
@@ -166,7 +193,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={handleCreateTodo}>
+            <TouchableOpacity onPress={handleSubmit(handleCreateTodo)}>
               <AppIcon
                 name={AppIconName.send}
                 color={Colors.brand['DEFAULT']}

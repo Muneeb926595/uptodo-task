@@ -47,7 +47,7 @@ export const CreateNewCategoryScreen = (
     props.navigation.goBack();
   };
 
-  const handleCreateCategory = () => {
+  const handleCreateCategory = async () => {
     if (categoryName?.trim?.()?.length <= 0) {
       return Alert.alert('Please enter Category name');
     }
@@ -59,19 +59,18 @@ export const CreateNewCategoryScreen = (
     }
 
     // persist category to local storage via repository + react-query
-    (async () => {
-      try {
-        await createCategoryMutation.mutateAsync({
-          name: categoryName?.trim?.(),
-          icon: imageUri ?? undefined,
-          color: selectedColor,
-          isSystem: false,
-        });
-        props.navigation.goBack();
-      } catch (err) {
-        Alert.alert('Error', 'Unable to create category');
-      }
-    })();
+
+    try {
+      await createCategoryMutation.mutateAsync({
+        name: categoryName?.trim?.(),
+        icon: imageUri ?? undefined,
+        color: selectedColor,
+        isSystem: false,
+      });
+      props.navigation.goBack();
+    } catch (err) {
+      Alert.alert('Error', 'Unable to create category');
+    }
   };
 
   return (
