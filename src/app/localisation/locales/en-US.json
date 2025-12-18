@@ -3,7 +3,8 @@
     "authTokenExpired": "Bearer token has expired"
   },
   "error": {
-    "nothingFound": "Nothing Found"
+    "nothingFound": "Nothing Found",
+    "fieldIsRequired": "Field is required"
   },
   "general": {
     "skip": "Skip",
@@ -23,6 +24,9 @@
   },
   "label": {
     "employer": "Employer",
+    "addTask": "Add Task",
+    "taskName": "Task Name",
+    "description": "Description",
     "tagline": "SwapX - Trade Anything",
     "detailedTagline": "Exchange items safely with verified users",
     "getStarted": "Get Started",

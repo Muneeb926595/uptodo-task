@@ -81,6 +81,7 @@ export interface IMessageGroup {}
 
 export interface IErrorMessages extends IMessageGroup {
   readonly nothingFound: string;
+  readonly fieldIsRequired: string;
 }
 
 export interface IInstructionMessages extends IMessageGroup {
@@ -89,6 +90,8 @@ export interface IInstructionMessages extends IMessageGroup {
 
 export interface ILabelTexts extends IMessageGroup {
   readonly employer: string;
+  readonly addTask: string;
+  readonly taskName: string;
   readonly tagline: string;
   readonly detailedTagline: string;
   readonly getStarted: string;
@@ -107,6 +110,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly categoryIcon: string;
   readonly chooseiconFromlibrary: string;
   readonly categoryColor: string;
+  readonly description: string;
   readonly whatDoYouWantToDoToday: string;
   readonly chooseTime: string;
   readonly createCategory: string;

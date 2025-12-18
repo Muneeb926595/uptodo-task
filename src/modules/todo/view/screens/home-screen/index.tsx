@@ -19,7 +19,7 @@ import {
 import { Colors } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
 
-const todos = [
+let todos = [
   // 🟢 TODAY — ACTIVE (4)
   {
     id: 'todo-1',
@@ -162,7 +162,7 @@ const todos = [
     deletedAt: null,
   },
 ];
-
+todos = [];
 export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
   const styles = useStyles();
 

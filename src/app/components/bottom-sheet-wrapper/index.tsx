@@ -26,13 +26,6 @@ export const BottomSheetWrapper = ({
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={handleCloseBottomSheet}>
-          <AppIcon
-            name={iconName ?? AppIconName.leftArrow}
-            color={Colors.white}
-            style={styles.backIcon}
-          />
-        </TouchableOpacity>
         <AppText style={styles.heading}>{headerTitle}</AppText>
       </View>
 

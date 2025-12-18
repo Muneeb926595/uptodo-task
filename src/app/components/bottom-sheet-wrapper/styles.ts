@@ -5,26 +5,24 @@ import { Fonts, Layout } from '../../globals';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.brand['DEFAULT'],
+    backgroundColor: Colors.surface['DEFAULT'],
     borderTopLeftRadius: Layout.widthPercentageToDP(5),
     borderTopRightRadius: Layout.widthPercentageToDP(5),
   },
   wrapper: {
     alignItems: 'flex-start',
-    padding: Layout.widthPercentageToDP(4),
-  },
-  backIcon: {
-    marginBottom: Layout.heightPercentageToDP(2),
+    padding: Layout.widthPercentageToDP(6),
   },
   heading: {
     color: Colors.white,
-    ...Fonts.latoBold,
-    fontSize: Layout.RFValue(18.5),
-    marginBottom: Layout.heightPercentageToDP(1.2),
+    ...Fonts.latoRegular,
+    fontWeight: '700',
+    fontSize: Layout.RFValue(20),
+    marginBottom: Layout.heightPercentageToDP(1),
   },
 });
 
 export const CommonBottomSheetStyle: any = {
   handleStyle: { display: 'none' },
-  backgroundStyle: { backgroundColor: Colors.brand['DEFAULT'] },
+  backgroundStyle: { backgroundColor: Colors.surface['DEFAULT'] },
 };
