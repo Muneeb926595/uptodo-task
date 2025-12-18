@@ -11,6 +11,7 @@ import { Constants, Images, Layout } from '../../../../../app/globals';
 import { AuthInput } from '../../../../../app/components/inputs';
 import { FlatList } from 'react-native-gesture-handler';
 import { useImagePicker } from '../../../../../app/hooks';
+import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
 import { PickedImage } from '../../../../../app/services/media/mediaService';
@@ -33,6 +34,8 @@ export const CreateNewCategoryScreen = (
 
   const { pickAndUpload, isLoading, imageUri } = useImagePicker();
 
+  const createCategoryMutation = useCreateCategory();
+
   const [categoryName, setCategoryName] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
 
@@ -54,7 +57,21 @@ export const CreateNewCategoryScreen = (
     if (selectedColor?.trim?.()?.length <= 0) {
       return Alert.alert('Please Choose color');
     }
-    props.navigation.goBack();
+
+    // persist category to local storage via repository + react-query
+    (async () => {
+      try {
+        await createCategoryMutation.mutateAsync({
+          name: categoryName?.trim?.(),
+          icon: imageUri ?? undefined,
+          color: selectedColor,
+          isSystem: false,
+        });
+        props.navigation.goBack();
+      } catch (err) {
+        Alert.alert('Error', 'Unable to create category');
+      }
+    })();
   };
 
   return (
