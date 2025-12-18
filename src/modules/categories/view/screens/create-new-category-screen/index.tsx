@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { HomeHeader } from '../../../../todo/view/components';
@@ -13,6 +13,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useImagePicker } from '../../../../../app/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
+import { PickedImage } from '../../../../../app/services/media/mediaService';
 
 const CATEGORY_COLORS = [
   '#FF5733', // Red
@@ -44,6 +45,15 @@ export const CreateNewCategoryScreen = (
   };
 
   const handleCreateCategory = () => {
+    if (categoryName?.trim?.()?.length <= 0) {
+      return Alert.alert('Please enter Category name');
+    }
+    if ((imageUri ?? '')?.toString?.()?.trim?.()?.length <= 0) {
+      return Alert.alert('Please select image');
+    }
+    if (selectedColor?.trim?.()?.length <= 0) {
+      return Alert.alert('Please Choose color');
+    }
     props.navigation.goBack();
   };
 
@@ -108,7 +118,11 @@ export const CreateNewCategoryScreen = (
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.colorCircle, { backgroundColor: item }]}
+              style={[
+                styles.colorCircle,
+                { backgroundColor: item },
+                selectedColor === item && styles.selectedColor,
+              ]}
               onPress={() => handleColorPress(item)}
             />
           )}

@@ -49,6 +49,10 @@ export const useStyles = themed(tokens =>
       borderRadius: Layout.widthPercentageToDP(5),
       marginRight: Layout.widthPercentageToDP(3),
     },
+    selectedColor: {
+      borderWidth: 3,
+      borderColor: tokens.colors.white,
+    },
     actionRow: {
       position: 'absolute',
       bottom: Layout.heightPercentageToDP(2),
