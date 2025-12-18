@@ -19,6 +19,7 @@ import { Layout } from '../../../../../app/globals';
 import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 import { TaskPriorityPicker } from '../task-priority-picker';
 import { TaskCategoryPicker } from '../../../../categories/view/components';
+import { magicSheet } from 'react-native-magic-sheet';
 
 type Props = {
   userName?: string;
@@ -71,6 +72,11 @@ export const CreateTodoBottomSheet = (props: Props) => {
         }}
       />
     )).promise;
+  };
+
+  const handleCreateTodo = () => {
+    magicModal.hideAll();
+    magicSheet.hide();
   };
 
   return (
@@ -160,11 +166,13 @@ export const CreateTodoBottomSheet = (props: Props) => {
                 />
               </TouchableOpacity>
             </View>
-            <AppIcon
-              name={AppIconName.send}
-              color={Colors.brand['DEFAULT']}
-              iconSize={AppIconSize.primary}
-            />
+            <TouchableOpacity onPress={handleCreateTodo}>
+              <AppIcon
+                name={AppIconName.send}
+                color={Colors.brand['DEFAULT']}
+                iconSize={AppIconSize.primary}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </BottomSheetScrollView>

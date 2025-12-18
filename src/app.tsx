@@ -21,7 +21,6 @@ import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
 import { AppNavigator } from './app/navigation';
 import StorageHelper, { StorageKeys } from './app/data/mmkv-storage';
 import { Colors } from './app/theme';
-import { AddTaskModal } from './app/components/add-task-modal';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
 import isToday from 'dayjs/plugin/isToday';
@@ -78,8 +77,6 @@ function App() {
                 <MagicSheetPortal />
                 <SafeAreaProvider initialMetrics={initialWindowMetrics}>
                   <AppNavigator />
-                  {/* global components or modals */}
-                  <AddTaskModal />
                   <MagicModalPortal />
                 </SafeAreaProvider>
               </BottomSheetModalProvider>

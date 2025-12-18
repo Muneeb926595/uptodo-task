@@ -15,13 +15,7 @@ const todos = [];
 export const CategoriesScreen = () => {
   const styles = useStyles();
 
-  const [openCalendar, setOpenCalendar] = React.useState(false);
-
   const RenderTodosList = <View>{/* Render the list of todos here */}</View>;
-
-  const handleOpenCalendar = () => {
-    setOpenCalendar(true);
-  };
 
   const RenderEmptySection = (
     <View style={styles.notItemsSectionContainer}>
@@ -31,9 +25,6 @@ export const CategoriesScreen = () => {
         placeHolder={Images.HomeGraphics}
         resizeMode="cover"
       />
-      <TouchableOpacity onPress={handleOpenCalendar}>
-        <AppText style={{ fontSize: 20, color: 'white' }}>Test</AppText>
-      </TouchableOpacity>
       <AppText style={styles.emptyListLabelHeading}>
         <FormattedMessage
           id={LocaleProvider.IDs.label.whatDoYouWantToDoToday}
@@ -42,14 +33,6 @@ export const CategoriesScreen = () => {
       <AppText style={styles.emptyListLabelDescription}>
         <FormattedMessage id={LocaleProvider.IDs.label.tapToAddYourTasks} />
       </AppText>
-      <CalendarPicker
-        visible={openCalendar}
-        onCancel={() => setOpenCalendar(false)}
-        onConfirm={date => {
-          setOpenCalendar(false);
-          console.log('Selected date:', date);
-        }}
-      />
     </View>
   );
 
