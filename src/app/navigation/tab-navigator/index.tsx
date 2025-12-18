@@ -3,24 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Colors } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { HomeScreen } from '../../../modules/todo/view/screens';
 import { styles } from './styles';
-import { emit } from '../../utils/event-bus';
 import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
 import { CategoriesScreen } from '../../../modules/categories/view/screens';
-import { CreateNewCategoryScreen } from '../../../modules/categories/view/screens/create-new-category-screen';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
@@ -38,13 +30,6 @@ const HomeStack = () => (
     <Stack.Screen
       name="CategoriesScreen"
       component={CategoriesScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <Stack.Screen
-      name="CreateNewCategoryScreen"
-      component={CreateNewCategoryScreen}
       options={{
         headerShown: false,
       }}
