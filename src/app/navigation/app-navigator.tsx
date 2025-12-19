@@ -14,6 +14,8 @@ import { useTheme } from '../theme/provider';
 import { TabsNavigator } from './tab-navigator';
 import { notificationService } from '../../modules/services/notifications';
 import { todoRepository } from '../../modules/todo/repository';
+import { EditTaskScreen } from '../../modules/todo/view/screens';
+import { CreateNewCategoryScreen } from '../../modules/categories/view/screens/create-new-category-screen';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
@@ -63,7 +65,7 @@ export const AppNavigator = () => {
               component={TabsNavigator}
               options={{ headerShown: false }}
             />
-            {/* {OtherScreens} */}
+            {ScreensWithoutBottomTab}
           </>
         ) : (
           <>{AuthFlow}</>
@@ -72,3 +74,31 @@ export const AppNavigator = () => {
     </NavigationContainer>
   );
 };
+
+const ScreensWithoutBottomTab = (
+  <MainAppStack.Group
+    navigationKey="ScreensWithoutBottomTab"
+    screenOptions={{
+      title: '',
+      headerBackTitle: '', //dont show the default back title
+      headerBackVisible: true,
+      headerShadowVisible: false,
+    }}
+  >
+    <MainAppStack.Screen
+      name="EditTaskScreen"
+      component={EditTaskScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+
+    <MainAppStack.Screen
+      name="CreateNewCategoryScreen"
+      component={CreateNewCategoryScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+  </MainAppStack.Group>
+);

@@ -7,8 +7,6 @@ import { AppText } from '../text';
 import { Colors } from '../../theme';
 
 export const Button = (props: Props) => {
-  const { authenticated } = useSelector(({ EvoloAi }: any) => EvoloAi.auth);
-
   const {
     onPress,
     buttonLable,
@@ -42,15 +40,14 @@ export const Button = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={async () => {
-        if (authenticationRequired && !authenticated) {
-          return;
-        }
         onPress();
       }}
       style={[
         styles.buttonContainer,
         buttonContainer,
-        disabled && { backgroundColor: disableBgColor ?? Colors.surface['100'] },
+        disabled && {
+          backgroundColor: disableBgColor ?? Colors.surface['100'],
+        },
       ]}
       disabled={disabled || loading}
     >

@@ -31,6 +31,30 @@ export const useStyles = themed(tokens =>
       color: tokens.colors.white,
       fontSize: Layout.RFValue(14),
     },
+    sectionsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginTop: Layout.heightPercentageToDP(4),
+    },
+    sectionActionContainer: {
+      borderRadius: 8,
+      backgroundColor: tokens.colors.surface['DEFAULT'],
+      paddingVertical: Layout.heightPercentageToDP(1.6),
+      paddingHorizontal: Layout.widthPercentageToDP(3),
+    },
+    sectionLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(16),
+    },
+    sectionActionLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(12),
+    },
   }),
 );
 

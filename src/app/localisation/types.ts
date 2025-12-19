@@ -1,3 +1,4 @@
+import { read } from 'react-native-fs';
 import { Dictionary } from '../types';
 
 export type LocaleMessage = {
@@ -115,6 +116,12 @@ export interface ILabelTexts extends IMessageGroup {
   readonly description: string;
   readonly whatDoYouWantToDoToday: string;
   readonly chooseTime: string;
+  readonly taskTime: string;
+  readonly taskCategory: string;
+  readonly taskPriorityWithColon: string;
+  readonly subTask: string;
+  readonly deleteTask: string;
+  readonly editTask: string;
   readonly createCategory: string;
   readonly taskPriority: string;
   readonly tapToAddYourTasks: string;
