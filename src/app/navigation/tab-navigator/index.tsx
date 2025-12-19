@@ -17,6 +17,7 @@ import {
   TodoListingScreen,
   CalendarScreen,
 } from '../../../modules/todo/view/screens';
+import { FocusScreen } from '../../../modules/focus/view/screens';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -53,16 +54,10 @@ const CalendarStack = () => (
 );
 
 const FocusStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: true }}>
+  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="FocusScreen"
-      component={() => {
-        return (
-          <View>
-            <AppText>Calendar screen</AppText>
-          </View>
-        );
-      }}
+      component={FocusScreen}
       options={{
         headerShown: false,
       }}

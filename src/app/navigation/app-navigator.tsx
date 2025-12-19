@@ -16,6 +16,7 @@ import { notificationService } from '../../modules/services/notifications';
 import { todoRepository } from '../../modules/todo/repository';
 import { EditTodoScreen } from '../../modules/todo/view/screens';
 import { CreateNewCategoryScreen } from '../../modules/categories/view/screens/create-new-category-screen';
+import { focusRepository } from '../../modules/focus/repository';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
@@ -32,6 +33,14 @@ export const AppNavigator = () => {
 
       const todos = await todoRepository.getAll();
       await notificationService.resyncAll(todos);
+
+      // Check for expired focus sessions and restore notifications
+      // if user turned on the focus mode then all notification will get canceled and saved to mmkv so we need to restore them later but if app closed then this below snipet will do that on app startup
+      try {
+        await focusRepository.getActiveSession();
+      } catch (e) {
+        console.error('Failed to check focus session on startup:', e);
+      }
     })();
   }, []);
 

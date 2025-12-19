@@ -2,10 +2,12 @@
 // Redux toolkit store : to only store frontend states
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../../modules/auth/store/authSlice';
+import focusReducer from '../../modules/focus/store/focusSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    focus: focusReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
 });

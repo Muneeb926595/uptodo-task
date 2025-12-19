@@ -1,0 +1,136 @@
+import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import dayjs from 'dayjs';
+import { notificationService } from '../../services/notifications';
+import { todoRepository } from '../../todo/repository/todo-repository';
+
+export type FocusSession = {
+  id: string;
+  startTime: number;
+  endTime: number;
+  duration: number; // in seconds
+  completed: boolean;
+  createdAt: number;
+};
+
+export type FocusStats = {
+  today: number; // seconds
+  thisWeek: number[]; // 7 days, seconds per day
+  totalSessions: number;
+};
+
+type FocusSessionMap = Record<string, FocusSession>;
+
+class FocusRepository {
+  private SESSIONS_KEY = StorageKeys.FOCUS_SESSIONS;
+  private ACTIVE_SESSION_KEY = StorageKeys.ACTIVE_FOCUS_SESSION;
+
+  private async loadSessions(): Promise<FocusSessionMap> {
+    const map = await StorageHelper.getItem<FocusSessionMap>(
+      this.SESSIONS_KEY,
+      {},
+    );
+    return map ?? {};
+  }
+
+  private async saveSessions(map: FocusSessionMap) {
+    await StorageHelper.setItem(this.SESSIONS_KEY, map);
+  }
+
+  async createSession(duration: number): Promise<FocusSession> {
+    const now = Date.now();
+    const session: FocusSession = {
+      id: `focus_${now}`,
+      startTime: now,
+      endTime: now + duration * 1000,
+      duration,
+      completed: false,
+      createdAt: now,
+    };
+
+    const map = await this.loadSessions();
+    map[session.id] = session;
+    await this.saveSessions(map);
+    await StorageHelper.setItem(this.ACTIVE_SESSION_KEY, session);
+
+    // Suppress only notifications that would fire during this focus session
+    const todos = await todoRepository.getAll();
+    await notificationService.suppressNotifications(todos, session.endTime);
+
+    return session;
+  }
+
+  async getActiveSession(): Promise<FocusSession | null> {
+    const session = await StorageHelper.getItem<FocusSession | null>(
+      this.ACTIVE_SESSION_KEY,
+    );
+
+    if (session && session.endTime > Date.now()) {
+      return session;
+    }
+
+    // Clean up expired session
+    if (session) {
+      await this.completeSession(session.id, false);
+    }
+
+    return null;
+  }
+
+  async completeSession(id: string, completed: boolean): Promise<void> {
+    const map = await this.loadSessions();
+    if (map[id]) {
+      map[id].completed = completed;
+      await this.saveSessions(map);
+    }
+    await StorageHelper.removeItem(this.ACTIVE_SESSION_KEY);
+
+    // Restore notifications
+    await notificationService.restoreNotifications();
+  }
+
+  async cancelActiveSession(): Promise<void> {
+    const session = await this.getActiveSession();
+    if (session) {
+      await this.completeSession(session.id, false);
+      // Note: completeSession already restores notifications
+    }
+  }
+
+  async getStats(): Promise<FocusStats> {
+    const map = await this.loadSessions();
+    const sessions = Object.values(map).filter(s => s.completed);
+
+    // Today's stats
+    const todayStart = dayjs().startOf('day').valueOf();
+    const todayEnd = dayjs().endOf('day').valueOf();
+    const todaySessions = sessions.filter(
+      s => s.startTime >= todayStart && s.startTime <= todayEnd,
+    );
+    const todayTotal = todaySessions.reduce((sum, s) => sum + s.duration, 0);
+
+    // This week's stats (Sunday to Saturday)
+    const weekStart = dayjs().startOf('week').valueOf();
+    const thisWeekData = new Array(7).fill(0);
+
+    sessions.forEach(session => {
+      const sessionDay = dayjs(session.startTime);
+      if (sessionDay.isAfter(weekStart)) {
+        const dayIndex = sessionDay.day(); // 0 = Sunday, 6 = Saturday
+        thisWeekData[dayIndex] += session.duration;
+      }
+    });
+
+    return {
+      today: todayTotal,
+      thisWeek: thisWeekData,
+      totalSessions: sessions.length,
+    };
+  }
+
+  async getAllSessions(): Promise<FocusSession[]> {
+    const map = await this.loadSessions();
+    return Object.values(map).sort((a, b) => b.startTime - a.startTime);
+  }
+}
+
+export const focusRepository = new FocusRepository();

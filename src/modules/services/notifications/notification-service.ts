@@ -1,5 +1,14 @@
 import { Todo } from '../../todo/types';
 import { NotificationAdapter } from './notification-adapter';
+import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+
+type SavedNotification = {
+  id: string;
+  todoId: string;
+  title: string;
+  body?: string;
+  timestamp: number;
+};
 
 class NotificationService {
   constructor(private adapter: NotificationAdapter) {}
@@ -41,6 +50,91 @@ class NotificationService {
         await this.scheduleForTodo(todo);
       }
     }
+  }
+
+  // ===== Focus Mode Support =====
+
+  /**
+   * Suppress notifications that would fire during the focus session
+   * Only notifications between now and focusEndTime are suppressed
+   * @param todos - All todos to check for notifications
+   * @param focusEndTime - Timestamp when focus session ends
+   */
+  async suppressNotifications(
+    todos: Todo[],
+    focusEndTime: number,
+  ): Promise<void> {
+    // Get currently scheduled notification IDs
+    const scheduledIds = await this.adapter.getScheduledIds();
+    const now = Date.now();
+
+    // Only suppress notifications that would fire DURING the focus session
+    const notificationsToSuppress: SavedNotification[] = todos
+      ?.filter?.(
+        todo =>
+          scheduledIds?.includes?.(todo?.id) &&
+          !todo?.isCompleted &&
+          !todo?.deletedAt &&
+          todo?.dueDate >= now && // Not in the past
+          todo?.dueDate <= focusEndTime, // Would fire during focus session
+      )
+      .map(todo => ({
+        id: todo?.id,
+        todoId: todo?.id,
+        title: 'Todo Due',
+        body: todo?.title,
+        timestamp: todo?.dueDate,
+      }));
+
+    // Save to storage
+    await StorageHelper.setItem(
+      StorageKeys.SUPPRESSED_NOTIFICATIONS,
+      notificationsToSuppress,
+    );
+
+    // Cancel only the notifications that would fire during focus
+    for (const notification of notificationsToSuppress) {
+      await this.adapter.cancel(notification?.id);
+    }
+  }
+
+  /**
+   * Restore previously suppressed notifications
+   */
+  async restoreNotifications(): Promise<void> {
+    // Get saved notifications
+    const saved = await StorageHelper.getItem<SavedNotification[]>(
+      StorageKeys.SUPPRESSED_NOTIFICATIONS,
+      [],
+    );
+
+    if (!saved || saved.length === 0) return;
+
+    // Reschedule each notification if still valid
+    const now = Date.now();
+    for (const notification of saved) {
+      if (notification.timestamp > now) {
+        await this.adapter.schedule({
+          id: notification.todoId,
+          title: notification.title,
+          body: notification.body,
+          timestamp: notification.timestamp,
+        });
+      }
+    }
+
+    // Clear saved notifications
+    await StorageHelper.removeItem(StorageKeys.SUPPRESSED_NOTIFICATIONS);
+  }
+
+  /**
+   * Check if notifications are currently suppressed
+   */
+  async areNotificationsSuppressed(): Promise<boolean> {
+    const saved = await StorageHelper.getItem<SavedNotification[]>(
+      StorageKeys.SUPPRESSED_NOTIFICATIONS,
+    );
+    return saved !== null && saved.length > 0;
   }
 }
 

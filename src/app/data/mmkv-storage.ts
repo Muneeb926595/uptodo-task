@@ -16,6 +16,9 @@ export enum StorageKeys {
   NOTIFICATIONS = 'notifications', // Record<string, TodoNotification>
   SETTINGS = 'app_settings',
   OFFLINE_QUEUE = 'offline_queue', // for queued operations when offline
+  FOCUS_SESSIONS = 'focus_sessions', // Record<string, FocusSession>
+  ACTIVE_FOCUS_SESSION = 'active_focus_session', // FocusSession | null
+  SUPPRESSED_NOTIFICATIONS = 'suppressed_notifications', // SavedNotification[]
   // Add more keys here
 }
 
