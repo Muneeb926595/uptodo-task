@@ -57,4 +57,12 @@ export const useDeleteTodo = () => {
   });
 };
 
+export const useRestoreTodo = () => {
+  const qc = useQueryClient();
+  return useMutation<void, any, string>({
+    mutationFn: id => todoRepository.restore(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: todosKeys.all() }),
+  });
+};
+
 export default useTodos;

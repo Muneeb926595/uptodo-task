@@ -26,6 +26,7 @@ import { MagicSheetPortal } from 'react-native-magic-sheet';
 import isToday from 'dayjs/plugin/isToday';
 import isTomorrow from 'dayjs/plugin/isTomorrow';
 import isYesterday from 'dayjs/plugin/isYesterday';
+import { ToastProvider } from './app/context/toast-context';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -68,19 +69,21 @@ function App() {
       <ReactQueryProvider>
         <ThemeProvider>
           <LocaleProvider>
-            <StatusBar
-              barStyle="light-content"
-              backgroundColor={Colors.white}
-            />
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <BottomSheetModalProvider>
-                <MagicSheetPortal />
-                <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                  <AppNavigator />
-                  <MagicModalPortal />
-                </SafeAreaProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
+            <ToastProvider>
+              <StatusBar
+                barStyle="light-content"
+                backgroundColor={Colors.white}
+              />
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                  <MagicSheetPortal />
+                  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                    <AppNavigator />
+                    <MagicModalPortal />
+                  </SafeAreaProvider>
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </ToastProvider>
           </LocaleProvider>
         </ThemeProvider>
       </ReactQueryProvider>

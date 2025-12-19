@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 
-import { styles } from './styles';
-import { AppText } from '../text';
+import { AppText } from '../../../../../app/components/text';
+import { useStyles } from './styles';
 
 type CarouselData = {
   source?: string;
@@ -22,6 +22,7 @@ type Props = {
 };
 
 export const OnBoardingCarouselItem = ({ item, renderDots }: Props) => {
+  const styles = useStyles();
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>

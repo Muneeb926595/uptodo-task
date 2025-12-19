@@ -21,6 +21,12 @@
   },
   "instruction": {
     "underProgress": "Under Progress",
+    "onboarding1Title": "Manage your tasks",
+    "onboarding1Description": "You can easily manage all of your daily tasks in DoMe for free",
+    "onboarding2Title": "Create daily routine",
+    "onboarding2Description": "In Uptodo  you can create your personalized routine to stay productive",
+    "onboarding3Title": "Organize your tasks",
+    "onboarding3Description": "You can organize your daily tasks by adding your tasks into separate categories",
     "areYouSureYouWantToDeleteThisTask": "Are You sure you want to delete this task?"
   },
   "label": {

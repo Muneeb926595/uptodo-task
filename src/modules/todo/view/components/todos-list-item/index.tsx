@@ -21,24 +21,49 @@ import {
 } from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
-import { useUpdateTodo, useDeleteTodo } from '../../../react-query';
+import {
+  useUpdateTodo,
+  useDeleteTodo,
+  useRestoreTodo,
+} from '../../../react-query';
 import { Conditional } from '../../../../../app/components/conditional';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
+import { useToast } from '../../../../../app/context/toast-context';
 
 export const TodoListItem = ({ item }: { item: Todo }) => {
   const styles = useStyles();
   const translateX = useSharedValue(0);
+  const { showToast } = useToast();
+
+  // Priority color based on isOverdue and priority level
+  const priorityColor = item.isOverdue
+    ? Colors.red
+    : item.priority >= 8
+    ? Colors.brand.DEFAULT
+    : item.priority >= 5
+    ? '#F4D35E'
+    : '#7DDB9B';
 
   const handleItemPress = () => {
     navigationRef.navigate('EditTodoScreen', { todoItem: item });
   };
   const updateTodoMutation = useUpdateTodo();
   const deleteTodoMutation = useDeleteTodo();
+  const restoreTodoMutation = useRestoreTodo();
 
   const handleDeleteTodo = async () => {
     try {
       await deleteTodoMutation.mutateAsync(item?.id);
+
+      // Show toast with undo option
+      showToast('Task deleted', 'UNDO', async () => {
+        try {
+          await restoreTodoMutation.mutateAsync(item?.id);
+        } catch (err) {
+          Alert.alert('Error', 'Unable to restore task');
+        }
+      });
     } catch (err) {
       Alert.alert('Error', 'Unable to delete todo');
     }
@@ -200,7 +225,7 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
                   <AppIcon
                     name={AppIconName.flag}
                     iconSize={AppIconSize.mini}
-                    color={Colors.white}
+                    color={priorityColor}
                     style={{ marginRight: Layout.widthPercentageToDP(1) }}
                   />
                   <AppText style={styles.todoItemPriorityLabel}>

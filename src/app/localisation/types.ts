@@ -87,6 +87,12 @@ export interface IErrorMessages extends IMessageGroup {
 
 export interface IInstructionMessages extends IMessageGroup {
   readonly underProgress: string;
+  readonly onboarding1Title: string;
+  readonly onboarding1Description: string;
+  readonly onboarding2Title: string;
+  readonly onboarding2Description: string;
+  readonly onboarding3Title: string;
+  readonly onboarding3Description: string;
   readonly areYouSureYouWantToDeleteThisTask: string;
 }
 

@@ -149,6 +149,27 @@ class TodoRepository {
     await this.save(map);
   }
 
+  async restore(id: string): Promise<void> {
+    const map = await this.load();
+    const existing = map?.[id];
+    if (!existing) return;
+
+    // Remove deletedAt to restore the todo
+    delete existing.deletedAt;
+    existing.updatedAt = Date.now();
+
+    // Reschedule notification if needed
+    if (existing.dueDate && existing.dueDate > Date.now()) {
+      const notificationId = await notificationService.scheduleForTodo(
+        existing,
+      );
+      existing.notificationId = notificationId ?? undefined;
+    }
+
+    map[id] = existing;
+    await this.save(map);
+  }
+
   // Additional helper: bulk replace (used by sync/migrations)
   async replaceAll(todos: Todo[]) {
     const map: TodoMap = {};
