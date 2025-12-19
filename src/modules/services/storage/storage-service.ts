@@ -17,6 +17,7 @@ export enum StorageKeys {
   SELECTED_APP_LANGUAGE = 'selected_app_language',
   APP_THEME = 'app_theme',
   SETTINGS = 'app_settings',
+  IS_APP_OPEND_FIRSTTIME = 'is_app_opened_firsttime',
 
   // Todo Module
   TODOS = 'todos',

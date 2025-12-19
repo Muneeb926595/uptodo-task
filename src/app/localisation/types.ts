@@ -149,6 +149,7 @@ export interface ILabelTexts extends IMessageGroup {
 export interface IGeneralMessages extends IMessageGroup {
   readonly skip: string;
   readonly next: string;
+  readonly back: string;
   readonly done: string;
   readonly cancel: string;
   readonly save: string;

@@ -10,10 +10,12 @@ export const useStyles = themed(tokens =>
       backgroundColor: tokens.colors.background,
     },
     heading: {
-      ...Fonts.latoRegular,
+      ...Fonts.bold,
+      fontWeight: '700',
       fontSize: Layout.RFValue(32),
       color: tokens.colors.typography['DEFAULT'],
       lineHeight: 40,
+      textAlign: 'center',
       marginBottom: Layout.heightPercentageToDP(2),
     },
   }),

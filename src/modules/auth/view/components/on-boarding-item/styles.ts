@@ -21,11 +21,14 @@ export const useStyles = themed(tokens =>
     },
     description: {
       ...Fonts.latoRegular,
-      fontSize: Layout.RFValue(14),
+      fontWeight: '400',
+      textAlign: 'center',
+      marginTop: Layout.heightPercentageToDP(1.4),
+      fontSize: Layout.RFValue(16),
       color: tokens.colors.typography['DEFAULT'],
     },
     imageContainer: {
-      backgroundColor: tokens.colors.white,
+      backgroundColor: tokens.colors.background,
     },
     image: {
       width: '80%',

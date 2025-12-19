@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -17,12 +17,19 @@ import { todoRepository } from '../../modules/todo/repository';
 import { EditTodoScreen } from '../../modules/todo/view/screens';
 import { CreateNewCategoryScreen } from '../../modules/categories/view/screens/create-new-category-screen';
 import { focusRepository } from '../../modules/focus/repository';
+import { useFirstTimeAppOpen } from '../hooks';
+import { Conditional } from '../components/conditional';
+import { OnboardingScreen } from '../../modules/auth/view/screens/onboarding-screen';
+import { StorageKeys, storageService } from '../../modules/services/storage';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = () => {
   const routeNameRef = useRef<any>(null);
   const { active } = useTheme();
+
+  const isFirstTime = useFirstTimeAppOpen();
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(true);
 
   useEffect(() => {
     hideSplash();
@@ -59,7 +66,7 @@ export const AppNavigator = () => {
     routeNameRef.current = currentRouteName;
   };
 
-  return (
+  const RenderAppNavigations = (
     <NavigationContainer
       ref={navigationRef}
       onReady={handleNavContainerReady}
@@ -81,6 +88,31 @@ export const AppNavigator = () => {
         )}
       </MainAppStack.Navigator>
     </NavigationContainer>
+  );
+
+  return (
+    <Conditional
+      ifTrue={true}
+      // ifTrue={isFirstTime && showOnboarding}
+      elseChildren={RenderAppNavigations}
+    >
+      <OnboardingScreen
+        onComplete={async () => {
+          await storageService.setItem(
+            StorageKeys.IS_APP_OPEND_FIRSTTIME,
+            'false',
+          );
+          setShowOnboarding(false);
+        }}
+        onSkip={async () => {
+          await storageService.setItem(
+            StorageKeys.IS_APP_OPEND_FIRSTTIME,
+            'false',
+          );
+          setShowOnboarding(false);
+        }}
+      />
+    </Conditional>
   );
 };
 

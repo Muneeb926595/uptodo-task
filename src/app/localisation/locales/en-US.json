@@ -9,6 +9,7 @@
   "general": {
     "skip": "Skip",
     "done": "Done",
+    "back": "Back",
     "next": "Next",
     "cancel": "Cancel",
     "save": "Save"

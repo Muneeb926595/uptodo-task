@@ -2,17 +2,25 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Toast } from '../components/toast';
 
 interface ToastContextType {
-  showToast: (message: string, actionLabel?: string, onActionPress?: () => void) => void;
+  showToast: (
+    message: string,
+    actionLabel?: string,
+    onActionPress?: () => void,
+  ) => void;
   hideToast: () => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [actionLabel, setActionLabel] = useState<string | undefined>();
-  const [onActionPress, setOnActionPress] = useState<(() => void) | undefined>();
+  const [onActionPress, setOnActionPress] = useState<
+    (() => void) | undefined
+  >();
 
   const showToast = useCallback(
     (msg: string, action?: string, callback?: () => void) => {
