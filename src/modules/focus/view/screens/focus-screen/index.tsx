@@ -3,7 +3,6 @@ import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
 import { ScreenProps } from '../../../../../app/navigation';
-import { useStyles } from './styles';
 import Svg, { Circle } from 'react-native-svg';
 import { Colors } from '../../../../../app/theme';
 import { Layout } from '../../../../../app/globals';
@@ -18,10 +17,12 @@ import {
   useStartFocus,
   useStopFocus,
   useCancelFocus,
+  useFocusTimer,
 } from '../../../react-query';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../app/stores';
+import { useStyles } from './styles';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -63,8 +64,8 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
   const styles = useStyles();
 
   // React Query hooks
-  const { data: activeSession, refetch } = useActiveSession();
   const { data: stats } = useFocusStats();
+  const timer = useFocusTimer();
   const startFocus = useStartFocus();
   const stopFocus = useStopFocus();
   const cancelFocus = useCancelFocus();
@@ -74,41 +75,31 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
 
   const progress = useSharedValue(0);
 
-  // Calculate time remaining
-  const timeRemaining = useMemo(() => {
-    if (!activeSession || !activeSession.endTime) return 0;
-    const remaining = Math.max(
-      0,
-      Math.floor((activeSession.endTime - Date.now()) / 1000),
-    );
-    return remaining;
-  }, [activeSession]);
-
-  // Calculate total time for progress
-  const totalTime = activeSession?.duration || 1800;
+  // Extract timer values
+  const activeSession = timer?.session;
+  const timeRemaining = timer?.remainingSeconds || 0;
 
   // Update progress animation
   useEffect(() => {
-    if (activeSession && totalTime > 0) {
-      const progressValue = 1 - timeRemaining / totalTime;
-      progress.value = withTiming(Math.max(0, Math.min(1, progressValue)), {
+    if (timer && timer.progress >= 0) {
+      progress.value = withTiming(Math.max(0, Math.min(1, timer.progress)), {
         duration: 500,
       });
     } else {
       progress.value = 0;
     }
-  }, [timeRemaining, totalTime, activeSession]);
+  }, [timer]);
 
   // Auto-complete session when timer reaches 0
   useEffect(() => {
-    if (activeSession && timeRemaining === 0) {
+    if (timer && timeRemaining === 0) {
       stopFocus.mutate({ completed: true });
       Alert.alert(
         'Focus Session Complete!',
         'Great job! You completed your focus session.',
       );
     }
-  }, [timeRemaining, activeSession]);
+  }, [timeRemaining, timer]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
