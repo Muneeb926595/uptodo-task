@@ -103,6 +103,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly selectCountry: string;
   readonly search: string;
   readonly chooseCategory: string;
+  readonly editTaskTitle: string;
   readonly addCategory: string;
   readonly index: string;
   readonly calendar: string;
@@ -129,6 +130,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly createCategory: string;
   readonly taskPriority: string;
   readonly tapToAddYourTasks: string;
+  readonly edit: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {

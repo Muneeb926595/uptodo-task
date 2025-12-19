@@ -66,5 +66,10 @@ export const useStyles = themed(tokens =>
       textAlign: 'center',
       color: Colors.white,
     },
+    error: {
+      color: tokens.colors.red,
+      ...Fonts.latoRegular,
+      fontSize: Layout.RFValue(12),
+    },
   }),
 );

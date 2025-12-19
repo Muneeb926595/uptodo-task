@@ -1,43 +1,115 @@
 import { TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useStyles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { Layout } from '../../../../../app/globals';
+import { Controller, useForm } from 'react-hook-form';
+import { AuthInput } from '../../../../../app/components/inputs';
 
 type Props = {
   todoTitle: string;
+  todoDescription: string;
   onCancel: () => void;
-  onConfirm: () => void;
+  onConfirm: ({
+    title,
+    description,
+  }: {
+    title: string;
+    description: string;
+  }) => void;
 };
 
-export const EditTaskTitles = ({ todoTitle, onCancel, onConfirm }: Props) => {
+export const EditTodoTitles = ({
+  todoTitle,
+  todoDescription,
+  onCancel,
+  onConfirm,
+}: Props) => {
   const styles = useStyles();
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+    },
+  });
+
+  useLayoutEffect(() => {
+    setValue('title', todoTitle);
+    setValue('description', todoDescription);
+  }, [todoTitle, todoDescription]);
+
+  const handleEdit = (data: { title: string; description: string }) => {
+    onConfirm({
+      title: data?.title,
+      description: data?.description,
+    });
+  };
 
   return (
     <View style={styles.backdrop}>
       <View style={styles.container}>
         <AppText style={styles.heading}>
-          <FormattedMessage id={LocaleProvider.IDs.label.deleteTask} />
+          <FormattedMessage id={LocaleProvider.IDs.label.editTaskTitle} />
         </AppText>
         <Divider />
 
         <View style={{ marginTop: Layout.heightPercentageToDP(2) }}>
-          <AppText style={styles.message}>
-            <FormattedMessage
-              id={
-                LocaleProvider.IDs.instruction.areYouSureYouWantToDeleteThisTask
-              }
-            />
-          </AppText>
-          <AppText style={styles.message}>
-            <FormattedMessage
-              id={LocaleProvider.IDs.label.taskTitle}
-              values={{ title: todoTitle }}
-            />
-          </AppText>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AuthInput
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                placeholder={LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.label.taskName,
+                )}
+                isError={errors?.title}
+              />
+            )}
+            name="title"
+          />
+          {errors?.title && (
+            <AppText style={styles.error}>
+              <FormattedMessage id={LocaleProvider.IDs.error.fieldIsRequired} />
+            </AppText>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AuthInput
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                placeholder={LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.label.description,
+                )}
+                isError={errors?.description}
+              />
+            )}
+            name="description"
+          />
+          {errors?.description && (
+            <AppText style={styles.error}>
+              <FormattedMessage id={LocaleProvider.IDs.error.fieldIsRequired} />
+            </AppText>
+          )}
         </View>
 
         <View style={styles.actionRow}>
@@ -46,9 +118,12 @@ export const EditTaskTitles = ({ todoTitle, onCancel, onConfirm }: Props) => {
               <FormattedMessage id={LocaleProvider.IDs.general.cancel} />
             </AppText>
           </TouchableOpacity>
-          <TouchableOpacity onPress={onConfirm} style={styles.chooseBtn}>
+          <TouchableOpacity
+            onPress={handleSubmit(handleEdit)}
+            style={styles.chooseBtn}
+          >
             <AppText style={styles.chooseText}>
-              <FormattedMessage id={LocaleProvider.IDs.label.delete} />
+              <FormattedMessage id={LocaleProvider.IDs.label.edit} />
             </AppText>
           </TouchableOpacity>
         </View>

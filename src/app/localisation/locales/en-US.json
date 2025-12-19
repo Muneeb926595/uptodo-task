@@ -38,6 +38,7 @@
     "taskCategory": "Task Category :",
     "taskPriorityWithColon": "Task Priority :",
     "delete": "Delete",
+    "editTaskTitle": "Edit Task title",
     "subTask": "Sub - Task",
     "addSubTask": "Add Sub-Task",
     "deleteTask": "Delete Task",
@@ -60,6 +61,7 @@
     "categoryIcon": "Category icon :",
     "chooseiconFromlibrary": "Choose icon from library",
     "categoryColor": "Category color :",
+    "edit": "Edit",
     "createCategory": "Create Category",
     "login": "Log In"
   }

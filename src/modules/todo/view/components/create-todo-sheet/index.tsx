@@ -51,7 +51,6 @@ export const CreateTodoBottomSheet = (props: Props) => {
 
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
     const persistedUri = await persistImage(imageObj?.uri);
-    console.log('persistedUri', persistedUri);
     return persistedUri;
   };
 

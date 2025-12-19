@@ -20,6 +20,7 @@ import { magicModal } from 'react-native-magic-modal';
 import { magicSheet } from 'react-native-magic-sheet';
 import { Category, PriorityLevel } from '../../../types';
 import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item';
+import { EditTodoTitles } from '../../components/edit-todo-titles';
 
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const styles = useStyles();
@@ -59,6 +60,10 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
 
   const todo = props.route.params?.todoItem;
 
+  const [title, setTitle] = useState<string>(todo?.title);
+  const [description, setDescription] = useState<string>(
+    todo?.description as string,
+  );
   const [category, setCategory] = useState<Category>(
     todo?.category as Category,
   );
@@ -69,6 +74,9 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
 
   useLayoutEffect(() => {
     if (todo) {
+      setTitle(todo?.title);
+      setDescription(todo?.description as string);
+      setSelectedDate(todo?.dueDate ? new Date(todo.dueDate) : null);
       setCategory(todo?.category as Category);
       setPriority(todo?.priority);
       setSelectedDate(todo?.dueDate ? new Date(todo.dueDate) : null);
@@ -78,6 +86,21 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const handleCompleteTodo = () => {};
 
   const handleEditTitle = async () => {
+    await magicModal.show(() => (
+      <EditTodoTitles
+        todoTitle={title}
+        todoDescription={description}
+        onCancel={() => magicModal.hideAll()}
+        onConfirm={newValues => {
+          setTitle(newValues.title);
+          setDescription(newValues.description);
+          magicModal.hideAll();
+        }}
+      />
+    )).promise;
+  };
+
+  const handleEditTodo = () => {
     magicModal.hideAll();
     magicSheet.hide();
 
@@ -97,8 +120,6 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       Alert.alert('Error', 'Unable to update todo');
     }
   };
-
-  const handleEditTodo = () => {};
 
   return (
     <Container
@@ -133,8 +154,8 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
               onValueChange={handleCompleteTodo}
             />
             <View>
-              <AppText style={styles.todoItemLabel}>{todo?.title}</AppText>
-              <AppText style={styles.todoItemTime}>{todo?.description}</AppText>
+              <AppText style={styles.todoItemLabel}>{title}</AppText>
+              <AppText style={styles.todoItemTime}>{description}</AppText>
             </View>
           </View>
 
