@@ -18,12 +18,16 @@ import { EditTodoActionType, EditTodoOptions } from './types';
 import { Button } from '../../../../../app/components/button';
 import { magicModal } from 'react-native-magic-modal';
 import { magicSheet } from 'react-native-magic-sheet';
+import dayjs from 'dayjs';
 import { Category, PriorityLevel } from '../../../types';
+import { useUpdateTodo } from '../../../react-query/hooks';
 import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item';
 import { EditTodoTitles } from '../../components/edit-todo-titles';
 
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const styles = useStyles();
+
+  const updateTodoMutation = useUpdateTodo();
 
   const [totoActions] = useState<EditTodoOptions[]>([
     {
@@ -100,22 +104,37 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     )).promise;
   };
 
-  const handleEditTodo = () => {
+  const handleEditTodo = async () => {
     magicModal.hideAll();
     magicSheet.hide();
 
-    // const payload = {
-    //   title: data?.title?.trim?.(),
-    //   description: data?.description?.trim?.(),
-    //   dueDate: dayjs(selectedDate).valueOf(), //timestamp in ms
-    //   todoTime: dayjs(selectedDate).format('HH:mm'),
-    //   priority,
-    //   categoryId,
-    //   attachments: [imageUri] as string[],
-    // };
+    if (!title?.trim?.()) {
+      return Alert.alert('Error', 'Please enter a task title');
+    }
+
+    if (!category?.id) {
+      return Alert.alert('Error', 'Please select a category');
+    }
+
+    if (!selectedDate) {
+      return Alert.alert('Error', 'Please select a due date');
+    }
+
+    const payload = {
+      title: title.trim(),
+      description: description?.trim?.(),
+      dueDate: dayjs(selectedDate).valueOf(), // timestamp in ms
+      todoTime: dayjs(selectedDate).format('HH:mm'),
+      priority,
+      categoryId: category?.id,
+    };
 
     try {
-      // await createTodoMutation.mutateAsync(payload);
+      await updateTodoMutation.mutateAsync({
+        id: todo?.id,
+        patch: payload,
+      });
+      props.navigation.goBack();
     } catch (err) {
       Alert.alert('Error', 'Unable to update todo');
     }
