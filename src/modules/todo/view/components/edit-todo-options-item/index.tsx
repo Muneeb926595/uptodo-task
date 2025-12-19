@@ -1,6 +1,6 @@
 import { magicModal } from 'react-native-magic-modal';
 import { CalendarPicker } from '../../../../../app/components/calendar-picker';
-import { Category, PriorityLevel } from '../../../types';
+import { Category, PriorityLevel, Todo } from '../../../types';
 import {
   EditTodoActionType,
   EditTodoOptions,
@@ -8,7 +8,7 @@ import {
 import { DeleteTaskConfirmation } from '../delete-todo-confirmation';
 import { formatTodoDateTime } from '../../../../../app/utils';
 import { AppText } from '../../../../../app/components/text';
-import { TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import { Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
@@ -20,10 +20,13 @@ import { Colors } from '../../../../../app/theme';
 import { Conditional } from '../../../../../app/components/conditional';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
 import { TodoPriorityPicker } from '../todo-priority-picker';
+import { useDeleteTodo } from '../../../react-query';
+import { magicSheet } from 'react-native-magic-sheet';
+import { navigationRef } from '../../../../../app/navigation';
 
 type ListItemProps = {
   item: EditTodoOptions;
-  todoTitle: string;
+  todo: Partial<Todo>;
   selectedDate: Date | null;
   category: Category;
   priority: PriorityLevel;
@@ -34,7 +37,7 @@ type ListItemProps = {
 
 export const EditTodoOptionsListItem = ({
   item,
-  todoTitle,
+  todo,
   setSelectedDate,
   setCategory,
   setPriority,
@@ -42,6 +45,19 @@ export const EditTodoOptionsListItem = ({
   category,
   priority,
 }: ListItemProps) => {
+  const deleteTodoMutation = useDeleteTodo();
+
+  const handleDeleteTodo = async () => {
+    try {
+      await deleteTodoMutation.mutateAsync(todo?.id as string);
+      magicModal.hideAll();
+      magicSheet.hide();
+      navigationRef.goBack();
+    } catch (err) {
+      Alert.alert('Error', 'Unable to delete todo');
+    }
+  };
+
   const doSelectedOperation = async (selectedOp: string) => {
     switch (selectedOp) {
       case EditTodoActionType.TodoDueDate:
@@ -81,12 +97,12 @@ export const EditTodoOptionsListItem = ({
       case EditTodoActionType.DeleteTodo:
         await magicModal.show(() => (
           <DeleteTaskConfirmation
-            todoTitle={todoTitle}
+            todoTitle={todo.title as string}
             onCancel={() => {
               magicModal.hideAll();
             }}
             onConfirm={() => {
-              magicModal.hideAll();
+              handleDeleteTodo();
             }}
           />
         )).promise;

@@ -207,7 +207,10 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
               selectedDate={selectedDate}
               category={category}
               priority={priority}
-              todoTitle={todo?.title!}
+              todo={{
+                id: todo?.id,
+                title: todo?.title!,
+              }}
             />
           )}
         />
