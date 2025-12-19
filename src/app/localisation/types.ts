@@ -110,6 +110,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly delete: string;
   readonly focus: string;
   readonly taskTitle: string;
+  readonly searchForYourTask: string;
   readonly profile: string;
   readonly createNewCategory: string;
   readonly categoryName: string;

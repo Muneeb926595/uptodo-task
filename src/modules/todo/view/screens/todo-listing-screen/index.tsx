@@ -31,6 +31,7 @@ import { Colors } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
 import { Todo } from '../../../types';
 import { useTodos } from '../../../react-query';
+import { AuthInput } from '../../../../../app/components/inputs';
 
 export const buildTodoListItems = (
   todos: Todo[],
@@ -156,15 +157,26 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
 
   const { data: todos, isLoading, refetch } = useTodos();
   const [refreshing, setRefreshing] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const [collapsed, setCollapsed] = useState({
     today: false,
     completed: false,
   });
 
+  const filteredTodos = useMemo(() => {
+    if (!searchText?.trim?.()) return todos;
+    const query = searchText?.toLowerCase?.();
+    return (todos as Todo[])?.filter?.(
+      todo =>
+        todo?.title?.toLowerCase?.()?.includes?.(query) ||
+        todo?.description?.toLowerCase?.()?.includes?.(query),
+    );
+  }, [todos, searchText]);
+
   const listItems = useMemo(
-    () => buildTodoListItems(todos as Todo[], collapsed),
-    [todos, collapsed],
+    () => buildTodoListItems(filteredTodos as Todo[], collapsed),
+    [filteredTodos, collapsed],
   );
 
   const handleRefresh = async () => {
@@ -227,6 +239,14 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
           ifTrue={(todos as Todo[])?.length > 0}
           elseChildren={RenderEmptySection}
         >
+          <AuthInput
+            value={searchText}
+            onChange={setSearchText}
+            onBlur={() => {}}
+            placeholder={LocaleProvider.formatMessage(
+              LocaleProvider.IDs.label.searchForYourTask,
+            )}
+          />
           {RenderTodosList}
         </Conditional>
       </View>

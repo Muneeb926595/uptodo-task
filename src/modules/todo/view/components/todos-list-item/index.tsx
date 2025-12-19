@@ -130,7 +130,6 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
     <View
       style={{
         overflow: 'hidden',
-        marginBottom: Layout.heightPercentageToDP(1),
       }}
     >
       <Animated.View style={[deleteStyle, styles.deleteActionContainer]}>
