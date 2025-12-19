@@ -1,7 +1,7 @@
-import { Alert, Platform } from 'react-native';
-import { storageService, StorageKeys } from '../../../modules/services/storage';
-import { store } from '../../stores';
-import { clearUser } from '../../../modules/auth/store/authSlice';
+import { Alert } from 'react-native';
+import { storageService, StorageKeys } from '../storage';
+import { store } from '../../../app/stores';
+import { clearUser } from '../../auth/store/authSlice';
 
 export type ParsedError = {
   status?: number;
@@ -10,6 +10,9 @@ export type ParsedError = {
   original?: any;
 };
 
+/**
+ * Parse API errors into a consistent format
+ */
 export const parseApiError = (err: any): ParsedError => {
   if (!err) return { message: 'Unknown error', original: err };
   if (err?.response) {
@@ -29,6 +32,10 @@ export const parseApiError = (err: any): ParsedError => {
   return { message: err?.message || 'An error occurred', original: err };
 };
 
+/**
+ * Show an error alert with optional retry functionality
+ * Handles 401 errors specially by clearing session
+ */
 export const showApiErrorAlert = async (
   err: any,
   opts?: { onRetry?: () => void | Promise<any>; title?: string },
@@ -65,7 +72,6 @@ export const showApiErrorAlert = async (
       });
     }
     buttons.push({ text: 'OK', onPress: () => resolve() });
-    // On Android use Alert.alert
     Alert.alert(title, parsed.message, buttons, { cancelable: true });
   });
 };

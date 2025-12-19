@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import errorHandler from '../error-handler';
+import errorHandler from '../../../modules/services/error-handler';
 import { AxiosError } from 'axios';
 import { storageService, StorageKeys } from '../../../modules/services/storage';
 

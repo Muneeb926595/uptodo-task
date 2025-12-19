@@ -6,7 +6,7 @@ import {
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
-import errorHandler from '../error-handler';
+import errorHandler from '../../../modules/services/error-handler';
 import { AppState } from 'react-native';
 
 export const queryClient = new QueryClient({
