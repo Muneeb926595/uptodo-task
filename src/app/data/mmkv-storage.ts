@@ -1,9 +1,6 @@
-// src/utils/StorageHelper.ts
 import { createMMKV, MMKV } from 'react-native-mmkv';
 
-// -----------------------------
 // Define storage keys centrally
-// -----------------------------
 export enum StorageKeys {
   ACCESS_TOKEN = 'access_token',
   REFRESH_TOKEN = 'refresh_token',
@@ -15,25 +12,19 @@ export enum StorageKeys {
   ATTACHMENTS = 'attachments', // Record<string, TodoAttachment>
   NOTIFICATIONS = 'notifications', // Record<string, TodoNotification>
   SETTINGS = 'app_settings',
-  OFFLINE_QUEUE = 'offline_queue', // for queued operations when offline
   FOCUS_SESSIONS = 'focus_sessions', // Record<string, FocusSession>
   ACTIVE_FOCUS_SESSION = 'active_focus_session', // FocusSession | null
   SUPPRESSED_NOTIFICATIONS = 'suppressed_notifications', // SavedNotification[]
-  // Add more keys here
 }
 
-// -----------------------------
 // MMKV instance configuration
-// -----------------------------
 const defaultMMKV = createMMKV({
   id: 'app_storage',
   encryptionKey: 'super-secret-key-32-char', // use env variable in production
   //   accessible: 'accessibleAfterFirstUnlock', // iOS only
 });
 
-// -----------------------------
 // Helper functions
-// -----------------------------
 class StorageHelperClass {
   private storage: MMKV;
 
@@ -41,9 +32,7 @@ class StorageHelperClass {
     this.storage = storageInstance;
   }
 
-  // -----------------------------
   // Set a value
-  // -----------------------------
   setItem = async <T = string>(key: StorageKeys, value: T) => {
     try {
       if (typeof value === 'object') {
@@ -57,9 +46,7 @@ class StorageHelperClass {
     }
   };
 
-  // -----------------------------
   // Get a value
-  // -----------------------------
   getItem = async <T = string>(
     key: StorageKeys,
     defaultValue?: T,
@@ -80,9 +67,7 @@ class StorageHelperClass {
     }
   };
 
-  // -----------------------------
   // Remove a key
-  // -----------------------------
   removeItem = async (key: StorageKeys) => {
     try {
       this.storage.remove(key);
@@ -92,9 +77,7 @@ class StorageHelperClass {
     }
   };
 
-  // -----------------------------
   // Clear all storage
-  // -----------------------------
   clearAll = async () => {
     try {
       this.storage.clearAll();
@@ -104,23 +87,16 @@ class StorageHelperClass {
     }
   };
 
-  // -----------------------------
-  // Check if a key exists
-  // -----------------------------
+  // Check if key exists
   hasKey = (key: StorageKeys): boolean => {
     return this.storage.contains(key);
   };
 
-  // -----------------------------
-  // Get all keys (for debugging)
-  // -----------------------------
+  // Get all keys for debugging
   getAllKeys = (): string[] => {
     return this.storage.getAllKeys();
   };
 }
 
-// -----------------------------
-// Export singleton instance
-// -----------------------------
 const StorageHelper = new StorageHelperClass();
 export default StorageHelper;

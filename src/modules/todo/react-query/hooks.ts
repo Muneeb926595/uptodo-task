@@ -2,8 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { todoRepository } from '../../todo/repository/todo-repository';
 import { todosKeys } from './keys';
 import { Todo } from '../../todo/types/todo.types';
-import { withLoading } from '../../../app/services/reactQuery/mutationHelpers';
-import { useDispatch } from 'react-redux';
 
 export const useTodos = () => {
   return useQuery<Todo[]>({

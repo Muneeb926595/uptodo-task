@@ -19,11 +19,11 @@ export type AppDispatch = typeof store.dispatch;
 // Redux manages the APP
 // React Query manages the DATA
 
-// 🟦 Use Redux Toolkit for (App State)
+// Use Redux Toolkit for (App State)
 
 // Store things that define how the app behaves.
 
-// ✅ Put in Redux if the data:
+// Put in Redux if the data:
 // 	•	Controls navigation / access
 // 	•	Represents identity or session
 // 	•	Must exist before any API call
@@ -32,7 +32,7 @@ export type AppDispatch = typeof store.dispatch;
 // 	•	Is mostly synchronous
 // 	•	Is global UI or app configuration
 
-// 🧩 Examples
+// Examples
 // 	•	Auth session (user, isAuthenticated)
 // 	•	User role / permissions
 // 	•	Modal & bottom sheet state
@@ -42,12 +42,12 @@ export type AppDispatch = typeof store.dispatch;
 // 	•	Onboarding status
 //   If losing this data breaks the app flow → Redux
 
-//   🟩 Use React Query for (Server / Storage Data)
+//  Use React Query for (Server / Storage Data)
 
 //     Formula
 // Store things that represent content coming from a backend or storage.
 
-// ✅ Put in React Query if the data:
+// Put in React Query if the data:
 // 	•	Comes from backend, database, MMKV, SQLite
 // 	•	Can be refetched anytime
 // 	•	Can be cached
@@ -56,7 +56,7 @@ export type AppDispatch = typeof store.dispatch;
 // 	•	Can be synced (offline → online)
 // 	•	Supports pagination, filtering, optimistic updates
 
-// 🧩 Examples
+// Examples
 // 	•	Todos
 // 	•	Categories
 //   •	Subtasks

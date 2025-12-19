@@ -23,7 +23,7 @@ class TodoRepository {
     const map = await this.load();
     const now = Date.now();
 
-    // 1️⃣ Load categories once
+    // 1 Load categories once
     const categories = await categoriesRepository.getAll();
     const categoryMap = new Map(categories?.map?.(c => [c?.id, c]));
 
@@ -32,10 +32,10 @@ class TodoRepository {
       .map(todo => ({
         ...todo,
 
-        // 2️⃣ Populate category
+        // 2 Populate category
         category: categoryMap?.get?.(todo?.categoryId),
 
-        // 3️⃣ Derived helpers
+        // 3 Derived helpers
         isOverdue: !todo?.isCompleted && todo?.dueDate < now,
       }))
       .sort((a, b) => {
@@ -103,7 +103,7 @@ class TodoRepository {
       deletedAt: null,
     } as Todo;
 
-    // 🔔 schedule notification
+    // schedule notification
     const notificationId = await notificationService.scheduleForTodo(todo);
     if (notificationId) {
       todo.notificationId = notificationId;

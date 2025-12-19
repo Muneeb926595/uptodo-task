@@ -20,11 +20,11 @@ export enum NotificationStatus {
 }
 
 export type Category = {
-  id: string; // uuid
-  name: string; // "Work", "Home", etc
-  icon?: string; // icon name or image uri
-  color: string; // hex color
-  isSystem: boolean; // true for predefined enums
+  id: string;
+  name: string;
+  icon?: string;
+  color: string;
+  isSystem: boolean;
   createdAt: number;
   updatedAt: number;
   deletedAt?: number | null; // soft delete
@@ -44,7 +44,7 @@ export enum TodoCategory {
 }
 
 export type Todo = {
-  id: string; // uuid
+  id: string;
   title: string;
   description?: string;
 
