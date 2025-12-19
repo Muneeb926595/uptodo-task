@@ -102,7 +102,7 @@ focus/
 
 ## Storage Keys
 
-Added to `/src/app/data/mmkv-storage.ts`:
+Added to `/src/modules/services/storage/storage-service.ts`:
 
 - `FOCUS_SESSIONS`: Record<string, FocusSession> - All focus sessions
 - `ACTIVE_FOCUS_SESSION`: FocusSession | null - Currently active session

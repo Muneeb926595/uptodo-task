@@ -1,4 +1,4 @@
-import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import { storageService, StorageKeys } from '../../services/storage';
 import dayjs from 'dayjs';
 import { notificationService } from '../../services/notifications';
 import { todoRepository } from '../../todo/repository/todo-repository';
@@ -25,7 +25,7 @@ class FocusRepository {
   private ACTIVE_SESSION_KEY = StorageKeys.ACTIVE_FOCUS_SESSION;
 
   private async loadSessions(): Promise<FocusSessionMap> {
-    const map = await StorageHelper.getItem<FocusSessionMap>(
+    const map = await storageService.getItem<FocusSessionMap>(
       this.SESSIONS_KEY,
       {},
     );
@@ -33,7 +33,7 @@ class FocusRepository {
   }
 
   private async saveSessions(map: FocusSessionMap) {
-    await StorageHelper.setItem(this.SESSIONS_KEY, map);
+    await storageService.setItem(this.SESSIONS_KEY, map);
   }
 
   async createSession(duration: number): Promise<FocusSession> {
@@ -50,7 +50,7 @@ class FocusRepository {
     const map = await this.loadSessions();
     map[session.id] = session;
     await this.saveSessions(map);
-    await StorageHelper.setItem(this.ACTIVE_SESSION_KEY, session);
+    await storageService.setItem(this.ACTIVE_SESSION_KEY, session);
 
     // Suppress only notifications that would fire during this focus session
     const todos = await todoRepository.getAll();
@@ -60,7 +60,7 @@ class FocusRepository {
   }
 
   async getActiveSession(): Promise<FocusSession | null> {
-    const session = await StorageHelper.getItem<FocusSession | null>(
+    const session = await storageService.getItem<FocusSession | null>(
       this.ACTIVE_SESSION_KEY,
     );
 
@@ -82,7 +82,7 @@ class FocusRepository {
       map[id].completed = completed;
       await this.saveSessions(map);
     }
-    await StorageHelper.removeItem(this.ACTIVE_SESSION_KEY);
+    await storageService.removeItem(this.ACTIVE_SESSION_KEY);
 
     // Restore notifications
     await notificationService.restoreNotifications();

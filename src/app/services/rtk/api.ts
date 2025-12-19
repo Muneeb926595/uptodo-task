@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:8080/api',
   prepareHeaders: async headers => {
-    // const token = await StorageHelper.getItem(StorageKeys.ACCESS_TOKEN);
+    // const token = await storageService.getItem(StorageKeys.ACCESS_TOKEN);
     // if (token) headers.set('Authorization', `Bearer ${token}`);
     return headers;
   },

@@ -1,6 +1,6 @@
 import { Todo } from '../../todo/types';
 import { NotificationAdapter } from './notification-adapter';
-import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import { storageService, StorageKeys } from '../storage';
 
 type SavedNotification = {
   id: string;
@@ -87,7 +87,7 @@ class NotificationService {
       }));
 
     // Save to storage
-    await StorageHelper.setItem(
+    await storageService.setItem(
       StorageKeys.SUPPRESSED_NOTIFICATIONS,
       notificationsToSuppress,
     );
@@ -103,7 +103,7 @@ class NotificationService {
    */
   async restoreNotifications(): Promise<void> {
     // Get saved notifications
-    const saved = await StorageHelper.getItem<SavedNotification[]>(
+    const saved = await storageService.getItem<SavedNotification[]>(
       StorageKeys.SUPPRESSED_NOTIFICATIONS,
       [],
     );
@@ -124,14 +124,14 @@ class NotificationService {
     }
 
     // Clear saved notifications
-    await StorageHelper.removeItem(StorageKeys.SUPPRESSED_NOTIFICATIONS);
+    await storageService.removeItem(StorageKeys.SUPPRESSED_NOTIFICATIONS);
   }
 
   /**
    * Check if notifications are currently suppressed
    */
   async areNotificationsSuppressed(): Promise<boolean> {
-    const saved = await StorageHelper.getItem<SavedNotification[]>(
+    const saved = await storageService.getItem<SavedNotification[]>(
       StorageKeys.SUPPRESSED_NOTIFICATIONS,
     );
     return saved !== null && saved.length > 0;

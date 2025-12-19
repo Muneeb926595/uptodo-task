@@ -1,13 +1,13 @@
 import axiosClient from './axiosClient';
 import errorHandler from '../error-handler';
 import { AxiosError } from 'axios';
-import StorageHelper, { StorageKeys } from '../../data/mmkv-storage';
+import { storageService, StorageKeys } from '../../../modules/services/storage';
 
 // Request interceptor: attach access token if present
 axiosClient.interceptors.request.use(
   async config => {
     try {
-      const token: any = await StorageHelper.getItem(StorageKeys.ACCESS_TOKEN);
+      const token: any = await storageService.getItem(StorageKeys.ACCESS_TOKEN);
       if (token) {
         config.headers = config.headers || {};
         config.headers.Authorization = `Bearer ${token}`;
@@ -60,7 +60,7 @@ axiosClient.interceptors.response.use(
 // axiosClient.interceptors.request.use(
 //   async config => {
 //     try {
-//       const token: any = await StorageHelper.getItem(StorageKeys.ACCESS_TOKEN);
+//       const token: any = await storageService.getItem(StorageKeys.ACCESS_TOKEN);
 //       if (token) {
 //         config.headers = config.headers || {};
 //         config.headers.Authorization = `Bearer ${token}`;
@@ -84,7 +84,7 @@ axiosClient.interceptors.response.use(
 
 // async function onRefreshToken(): Promise<string> {
 //   // NOTE: Use a raw axios instance without interceptors to avoid recursion.
-//   const refreshToken: any = await StorageHelper.getItem(
+//   const refreshToken: any = await storageService.getItem(
 //     StorageKeys.REFRESH_TOKEN,
 //   );
 //   if (!refreshToken) throw new Error('No refresh token available');
@@ -101,9 +101,9 @@ axiosClient.interceptors.response.use(
 //   const newRefresh = resp?.data?.refreshToken;
 //   if (!newToken) throw new Error('Refresh failed');
 
-//   await StorageHelper.setItem(StorageKeys.ACCESS_TOKEN, newToken);
+//   await storageService.setItem(StorageKeys.ACCESS_TOKEN, newToken);
 //   if (newRefresh) {
-//     await StorageHelper.setItem(StorageKeys.REFRESH_TOKEN, newRefresh);
+//     await storageService.setItem(StorageKeys.REFRESH_TOKEN, newRefresh);
 //   }
 //   return newToken;
 // }

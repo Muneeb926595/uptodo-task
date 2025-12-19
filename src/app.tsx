@@ -19,7 +19,7 @@ import { store } from './app/stores';
 import { Provider } from 'react-redux';
 import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
 import { AppNavigator } from './app/navigation';
-import StorageHelper, { StorageKeys } from './app/data/mmkv-storage';
+import { storageService, StorageKeys } from './modules/services/storage';
 import { Colors } from './app/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
@@ -54,7 +54,7 @@ function App() {
   const initAppAssets = async () => {
     let appLocale = Constants.defaults.DEFAULT_APP_LOCALE;
     try {
-      appLocale = (await StorageHelper.getItem(
+      appLocale = (await storageService.getItem(
         StorageKeys.SELECTED_APP_LANGUAGE,
       )) as string;
     } catch (e) {

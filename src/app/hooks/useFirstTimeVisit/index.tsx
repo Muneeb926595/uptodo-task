@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import StorageHelper, { StorageKeys } from '../../data/mmkv-storage';
+import { storageService, StorageKeys } from '../../../modules/services/storage';
 
 export const useFirstTimeVisit = (storageKey: StorageKeys) => {
   const [isFirstTime, setIsFirstTime] = useState(false);
 
   useEffect(() => {
     async function checkIfFirstTime() {
-      const hasVisited = await StorageHelper.getItem(storageKey);
+      const hasVisited = await storageService.getItem(storageKey);
 
       if (!hasVisited) {
-        await StorageHelper.setItem(storageKey, 'true');
+        await storageService.setItem(storageKey, 'true');
         setIsFirstTime(true);
       }
     }

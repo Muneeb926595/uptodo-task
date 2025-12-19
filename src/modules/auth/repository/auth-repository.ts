@@ -1,4 +1,4 @@
-import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import { storageService, StorageKeys } from '../../services/storage';
 import { authApi } from '../api/auth.api';
 import { User } from '../types';
 
@@ -7,15 +7,15 @@ class AuthRepository {
     const response = await authApi.login(email, password);
     console.log('response', response);
     const { accessToken, refreshToken, user } = response.data;
-    await StorageHelper.setItem(StorageKeys.ACCESS_TOKEN, accessToken);
-    await StorageHelper.setItem(StorageKeys.REFRESH_TOKEN, refreshToken);
+    await storageService.setItem(StorageKeys.ACCESS_TOKEN, accessToken);
+    await storageService.setItem(StorageKeys.REFRESH_TOKEN, refreshToken);
     return user;
   }
 
   async refreshToken(): Promise<string> {
-    const token: any = await StorageHelper.getItem(StorageKeys.REFRESH_TOKEN);
+    const token: any = await storageService.getItem(StorageKeys.REFRESH_TOKEN);
     const response = await authApi.refreshToken(token);
-    await StorageHelper.setItem(
+    await storageService.setItem(
       StorageKeys.ACCESS_TOKEN,
       response.data.accessToken,
     );
@@ -23,8 +23,8 @@ class AuthRepository {
   }
 
   async logout(): Promise<void> {
-    await StorageHelper.removeItem(StorageKeys.ACCESS_TOKEN);
-    await StorageHelper.removeItem(StorageKeys.REFRESH_TOKEN);
+    await storageService.removeItem(StorageKeys.ACCESS_TOKEN);
+    await storageService.removeItem(StorageKeys.REFRESH_TOKEN);
   }
 }
 

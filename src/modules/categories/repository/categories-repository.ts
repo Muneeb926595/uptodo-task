@@ -1,4 +1,4 @@
-import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import { storageService, StorageKeys } from '../../services/storage';
 import { Category } from '../../categories/types/categories.types';
 import { generateId } from '../../../app/utils/id';
 
@@ -6,7 +6,7 @@ type CategoryMap = Record<string, Category>;
 
 class CategoriesRepository {
   private async load(): Promise<CategoryMap> {
-    const map = (await StorageHelper.getItem<CategoryMap>(
+    const map = (await storageService.getItem<CategoryMap>(
       StorageKeys.CATEGORIES,
       {},
     )) as CategoryMap;
@@ -14,7 +14,7 @@ class CategoriesRepository {
   }
 
   private async save(map: CategoryMap) {
-    await StorageHelper.setItem(StorageKeys.CATEGORIES, map);
+    await storageService.setItem(StorageKeys.CATEGORIES, map);
   }
 
   async getAll(): Promise<Category[]> {

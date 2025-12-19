@@ -1,4 +1,4 @@
-import StorageHelper, { StorageKeys } from '../../../app/data/mmkv-storage';
+import { storageService, StorageKeys } from '../../services/storage';
 import { Todo } from '../../todo/types/todo.types';
 import { generateId } from '../../../app/utils/id';
 import { notificationService } from '../../services/notifications';
@@ -8,7 +8,7 @@ type TodoMap = Record<string, Todo>;
 
 class TodoRepository {
   private async load(): Promise<TodoMap> {
-    const map = (await StorageHelper.getItem<TodoMap>(
+    const map = (await storageService.getItem<TodoMap>(
       StorageKeys.TODOS,
       {},
     )) as TodoMap;
@@ -16,7 +16,7 @@ class TodoRepository {
   }
 
   private async save(map: TodoMap) {
-    await StorageHelper.setItem(StorageKeys.TODOS, map);
+    await storageService.setItem(StorageKeys.TODOS, map);
   }
 
   async getAll(): Promise<Todo[]> {

@@ -1,5 +1,5 @@
 import { Alert, Platform } from 'react-native';
-import StorageHelper, { StorageKeys } from '../../data/mmkv-storage';
+import { storageService, StorageKeys } from '../../../modules/services/storage';
 import { store } from '../../stores';
 import { clearUser } from '../../../modules/auth/store/authSlice';
 
@@ -40,8 +40,8 @@ export const showApiErrorAlert = async (
   // handle 401 specially: clear session and prompt to login
   if (parsed?.status === 401) {
     // clear tokens and user
-    await StorageHelper.removeItem(StorageKeys.ACCESS_TOKEN);
-    await StorageHelper.removeItem(StorageKeys.REFRESH_TOKEN);
+    await storageService.removeItem(StorageKeys.ACCESS_TOKEN);
+    await storageService.removeItem(StorageKeys.REFRESH_TOKEN);
     try {
       store.dispatch(clearUser());
     } catch (e) {

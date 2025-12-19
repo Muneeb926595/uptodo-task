@@ -7,7 +7,7 @@ import {
   typography,
   ThemeColors,
 } from './colors';
-import StorageHelper, { StorageKeys } from '../data/mmkv-storage';
+import { storageService, StorageKeys } from '../../modules/services/storage';
 
 const themes: any = { light: lightColors, dark: darkColors };
 
@@ -24,7 +24,7 @@ class ThemeServiceClass {
 
   constructor() {
     try {
-      //   (StorageHelper.getItem(StorageKeys.APP_THEME) as any).then(
+      //   (storageService.getItem(StorageKeys.APP_THEME) as any).then(
       //     (s: any) => (this.mode = s),
       //   );
     } catch (e) {
@@ -65,7 +65,7 @@ class ThemeServiceClass {
   setMode(m: ThemeMode) {
     this.mode = m;
     try {
-      StorageHelper.setItem(StorageKeys.APP_THEME, m);
+      storageService.setItem(StorageKeys.APP_THEME, m);
     } catch (e) {
       // ignore
     }
