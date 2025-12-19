@@ -99,6 +99,11 @@ export interface ILabelTexts extends IMessageGroup {
   readonly getStarted: string;
   readonly alreadyHaveAnAccount: string;
   readonly login: string;
+  readonly completed: string;
+  readonly tapPlusToAddNewTasks: string;
+  readonly completeTasksToSeeThemHere: string;
+  readonly noTasksForThisDay: string;
+  readonly noCompletedTasks: string;
   readonly tryAgain: string;
   readonly selectCountry: string;
   readonly search: string;

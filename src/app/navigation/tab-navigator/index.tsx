@@ -13,7 +13,10 @@ import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/st
 import { magicSheet } from 'react-native-magic-sheet';
 import { CategoriesScreen } from '../../../modules/categories/view/screens';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
-import { TodoListingScreen } from '../../../modules/todo/view/screens';
+import {
+  TodoListingScreen,
+  CalendarScreen,
+} from '../../../modules/todo/view/screens';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -41,13 +44,7 @@ const CalendarStack = () => (
   <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="CalendarScreen"
-      component={() => {
-        return (
-          <View>
-            <AppText>Calendar screen</AppText>
-          </View>
-        );
-      }}
+      component={CalendarScreen}
       options={{
         headerShown: false,
       }}
