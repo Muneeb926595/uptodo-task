@@ -142,6 +142,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       priority,
       categoryId: category?.id,
       isCompleted,
+      attachments,
     };
 
     try {
