@@ -1,5 +1,12 @@
-import React, { useMemo, useState } from 'react';
-import { FlatList, SectionList, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  FadeInDown,
+  FadeOutUp,
+  useAnimatedStyle,
+  withTiming,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { useStyles } from './styles';
 import { HomeHeader, TodoListItem } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -70,18 +77,35 @@ export const buildTodoListItems = (
   return items;
 };
 
-const SectionHeader = ({ title }: { title: string }) => {
+const SectionHeader = ({
+  title,
+  isCollapsed,
+}: {
+  title: string;
+  isCollapsed: boolean;
+}) => {
   const styles = useStyles();
+  const rotation = useSharedValue(isCollapsed ? 180 : 0);
+
+  useEffect(() => {
+    rotation.value = withTiming(isCollapsed ? 180 : 0, { duration: 300 });
+  }, [isCollapsed]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
 
   return (
     <View style={styles.sectionHeader}>
       <AppText style={styles.sectionHeaderText}>{title}</AppText>
-      <AppIcon
-        name={AppIconName.arrowDown}
-        iconSize={AppIconSize.mini}
-        color={Colors.white}
-        style={{ marginLeft: Layout.widthPercentageToDP(2) }}
-      />
+      <Animated.View style={animatedStyle}>
+        <AppIcon
+          name={AppIconName.arrowDown}
+          iconSize={AppIconSize.mini}
+          color={Colors.white}
+          style={{ marginLeft: Layout.widthPercentageToDP(2) }}
+        />
+      </Animated.View>
     </View>
   );
 };
@@ -89,11 +113,15 @@ const SectionHeader = ({ title }: { title: string }) => {
 const RenderSectionList = ({
   item,
   setCollapsed,
+  collapsed,
 }: {
   item: any;
   setCollapsed: (newValues: any) => void;
+  collapsed: { today: boolean; completed: boolean };
 }) => {
   if (item.type === 'header') {
+    const isCollapsed =
+      collapsed?.[item?.title?.toLowerCase?.() as 'today' | 'completed'];
     return (
       <TouchableOpacity
         onPress={() =>
@@ -103,12 +131,19 @@ const RenderSectionList = ({
           }))
         }
       >
-        <SectionHeader title={item.title} />
+        <SectionHeader title={item.title} isCollapsed={isCollapsed} />
       </TouchableOpacity>
     );
   }
 
-  return <TodoListItem item={item.todo} />;
+  return (
+    <Animated.View
+      entering={FadeInDown.duration(300).springify()}
+      exiting={FadeOutUp.duration(200)}
+    >
+      <TodoListItem item={item.todo} />
+    </Animated.View>
+  );
 };
 
 export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
@@ -130,7 +165,11 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
     <FlatList
       data={listItems}
       renderItem={({ item }) => (
-        <RenderSectionList item={item} setCollapsed={setCollapsed} />
+        <RenderSectionList
+          item={item}
+          setCollapsed={setCollapsed}
+          collapsed={collapsed}
+        />
       )}
       keyExtractor={item => item.id}
       removeClippedSubviews
