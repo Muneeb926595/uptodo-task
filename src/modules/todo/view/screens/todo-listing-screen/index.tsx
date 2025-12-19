@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Animated, {
   FadeInDown,
   FadeOutUp,
@@ -149,7 +154,8 @@ const RenderSectionList = ({
 export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
   const styles = useStyles();
 
-  const { data: todos, isLoading } = useTodos();
+  const { data: todos, isLoading, refetch } = useTodos();
+  const [refreshing, setRefreshing] = useState(false);
 
   const [collapsed, setCollapsed] = useState({
     today: false,
@@ -160,6 +166,12 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
     () => buildTodoListItems(todos as Todo[], collapsed),
     [todos, collapsed],
   );
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setTimeout(() => setRefreshing(false), 500);
+  };
 
   const RenderTodosList = (
     <FlatList
@@ -176,6 +188,9 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
       windowSize={10}
       initialNumToRender={20}
       maxToRenderPerBatch={20}
+      refreshControl={refreshing ? <ActivityIndicator /> : undefined}
+      onRefresh={handleRefresh}
+      refreshing={refreshing}
     />
   );
 
