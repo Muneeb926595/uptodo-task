@@ -104,18 +104,21 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   };
 
   const handleEditTitle = async () => {
-    await magicModal.show(() => (
-      <EditTodoTitles
-        todoTitle={title}
-        todoDescription={description}
-        onCancel={() => magicModal.hideAll()}
-        onConfirm={newValues => {
-          setTitle(newValues.title);
-          setDescription(newValues.description);
-          magicModal.hideAll();
-        }}
-      />
-    )).promise;
+    await magicModal.show(
+      () => (
+        <EditTodoTitles
+          todoTitle={title}
+          todoDescription={description}
+          onCancel={() => magicModal.hideAll()}
+          onConfirm={newValues => {
+            setTitle(newValues.title);
+            setDescription(newValues.description);
+            magicModal.hideAll();
+          }}
+        />
+      ),
+      { swipeDirection: undefined },
+    ).promise;
   };
 
   const handleEditTodo = async () => {

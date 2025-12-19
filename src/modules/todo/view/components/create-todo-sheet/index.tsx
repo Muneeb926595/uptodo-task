@@ -65,38 +65,47 @@ export const CreateTodoBottomSheet = (props: Props) => {
   const createTodoMutation = useCreateTodo();
 
   const handleOpenCalendar = async () => {
-    const result = await magicModal.show(() => (
-      <CalendarPicker
-        onCancel={() => magicModal.hideAll()}
-        onConfirm={date => {
-          setSelectedDate(date);
-          magicModal.hideAll();
-        }}
-      />
-    )).promise;
+    const result = await magicModal.show(
+      () => (
+        <CalendarPicker
+          onCancel={() => magicModal.hideAll()}
+          onConfirm={date => {
+            setSelectedDate(date);
+            magicModal.hideAll();
+          }}
+        />
+      ),
+      { swipeDirection: undefined },
+    ).promise;
   };
 
   const handleOpenPriorityPicker = async () => {
-    const result = await magicModal.show(() => (
-      <TodoPriorityPicker
-        onCancel={() => magicModal.hideAll()}
-        onConfirm={priority => {
-          setPriority(priority);
-          magicModal.hideAll();
-        }}
-      />
-    )).promise;
+    const result = await magicModal.show(
+      () => (
+        <TodoPriorityPicker
+          onCancel={() => magicModal.hideAll()}
+          onConfirm={priority => {
+            setPriority(priority);
+            magicModal.hideAll();
+          }}
+        />
+      ),
+      { swipeDirection: undefined },
+    ).promise;
   };
 
   const handleOpenCategoryPicker = async () => {
-    const result = await magicModal.show(() => (
-      <TodoCategoryPicker
-        onConfirm={category => {
-          setCategoryId(category?.id);
-          magicModal.hideAll();
-        }}
-      />
-    )).promise;
+    const result = await magicModal.show(
+      () => (
+        <TodoCategoryPicker
+          onConfirm={category => {
+            setCategoryId(category?.id);
+            magicModal.hideAll();
+          }}
+        />
+      ),
+      { swipeDirection: undefined },
+    ).promise;
   };
 
   const handleCreateTodo = async (data: {

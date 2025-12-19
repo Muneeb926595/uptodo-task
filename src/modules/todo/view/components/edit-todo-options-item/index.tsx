@@ -83,38 +83,47 @@ export const EditTodoOptionsListItem = ({
   const doSelectedOperation = async (selectedOp: string) => {
     switch (selectedOp) {
       case EditTodoActionType.TodoDueDate:
-        await magicModal.show(() => (
-          <CalendarPicker
-            onCancel={() => magicModal.hideAll()}
-            onConfirm={date => {
-              setSelectedDate(date);
-              magicModal.hideAll();
-            }}
-          />
-        )).promise;
+        await magicModal.show(
+          () => (
+            <CalendarPicker
+              onCancel={() => magicModal.hideAll()}
+              onConfirm={date => {
+                setSelectedDate(date);
+                magicModal.hideAll();
+              }}
+            />
+          ),
+          { swipeDirection: undefined },
+        ).promise;
         break;
       case EditTodoActionType.TodoCategory:
-        await magicModal.show(() => (
-          <TodoCategoryPicker
-            onConfirm={newCategory => {
-              setCategory(newCategory);
-              magicModal.hideAll();
-            }}
-          />
-        )).promise;
+        await magicModal.show(
+          () => (
+            <TodoCategoryPicker
+              onConfirm={newCategory => {
+                setCategory(newCategory);
+                magicModal.hideAll();
+              }}
+            />
+          ),
+          { swipeDirection: undefined },
+        ).promise;
         break;
       case EditTodoActionType.TodoPriority:
-        await magicModal.show(() => (
-          <TodoPriorityPicker
-            onCancel={() => {
-              magicModal.hideAll();
-            }}
-            onConfirm={newPriority => {
-              setPriority(newPriority);
-              magicModal.hideAll();
-            }}
-          />
-        )).promise;
+        await magicModal.show(
+          () => (
+            <TodoPriorityPicker
+              onCancel={() => {
+                magicModal.hideAll();
+              }}
+              onConfirm={newPriority => {
+                setPriority(newPriority);
+                magicModal.hideAll();
+              }}
+            />
+          ),
+          { swipeDirection: undefined },
+        ).promise;
         break;
       case EditTodoActionType.DeleteTodo:
         await magicModal.show(() => (
