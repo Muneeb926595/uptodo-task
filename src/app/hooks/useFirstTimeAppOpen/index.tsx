@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { StorageKeys, storageService } from '../../../modules/services/storage';
 
 export const useFirstTimeAppOpen = () => {
-  const [isFirstTime, setIsFirstTime] = useState(true);
+  const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkFirstTime = async () => {
@@ -13,15 +13,12 @@ export const useFirstTimeAppOpen = () => {
 
         if (!isFirstTimeValue) {
           setIsFirstTime(true);
-          await storageService.setItem(
-            StorageKeys.IS_APP_OPEND_FIRSTTIME,
-            'false',
-          );
         } else {
           setIsFirstTime(false);
         }
       } catch (error) {
         console.error('Error while checking first-time status:', error);
+        setIsFirstTime(false); // Default to false on error
       }
     };
 

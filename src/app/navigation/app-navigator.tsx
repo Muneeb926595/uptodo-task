@@ -32,7 +32,10 @@ export const AppNavigator = () => {
   const [showOnboarding, setShowOnboarding] = useState<boolean>(true);
 
   useEffect(() => {
-    hideSplash();
+    // Only hide splash once we know if it's first time or not
+    if (isFirstTime !== null) {
+      hideSplash();
+    }
 
     (async () => {
       // Notifications
@@ -49,7 +52,12 @@ export const AppNavigator = () => {
         console.error('Failed to check focus session on startup:', e);
       }
     })();
-  }, []);
+  }, [isFirstTime]);
+
+  // Show nothing while checking first-time status
+  if (isFirstTime === null) {
+    return null;
+  }
 
   // to debug react-navigation with flipper
   const handleNavContainerReady = () => {
@@ -92,8 +100,7 @@ export const AppNavigator = () => {
 
   return (
     <Conditional
-      ifTrue={true}
-      // ifTrue={isFirstTime && showOnboarding}
+      ifTrue={isFirstTime && showOnboarding}
       elseChildren={RenderAppNavigations}
     >
       <OnboardingScreen
