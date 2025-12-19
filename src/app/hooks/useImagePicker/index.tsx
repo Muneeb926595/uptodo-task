@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import {
-  pickCompressAndOptionallyUpload,
+  mediaService,
   PickedImage,
   UploadFn,
-} from '../../services/media/mediaService';
+} from '../../../modules/services/media';
 
 export const useImagePicker = (opts?: { uploader?: UploadFn }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +12,7 @@ export const useImagePicker = (opts?: { uploader?: UploadFn }) => {
   const pickAndUpload = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await pickCompressAndOptionallyUpload({
+      const res = await mediaService.pickCompressAndUpload({
         uploader: opts?.uploader,
       });
       if (res.local) setImageUri(res.local.uri);

@@ -25,9 +25,9 @@ import { useImagePicker } from '../../../../../app/hooks';
 import { Conditional } from '../../../../../app/components/conditional';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import {
-  persistImage,
+  mediaService,
   PickedImage,
-} from '../../../../../app/services/media/mediaService';
+} from '../../../../services/media';
 import { TodoPriorityPicker } from '../todo-priority-picker';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
 
@@ -50,7 +50,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
   });
 
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
-    const persistedUri = await persistImage(imageObj?.uri);
+    const persistedUri = await mediaService.persistImage(imageObj?.uri);
     return persistedUri;
   };
 

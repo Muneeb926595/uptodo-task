@@ -27,9 +27,9 @@ import { useDeleteTodo } from '../../../react-query';
 import { magicSheet } from 'react-native-magic-sheet';
 import { navigationRef } from '../../../../../app/navigation';
 import {
-  persistImage,
+  mediaService,
   PickedImage,
-} from '../../../../../app/services/media/mediaService';
+} from '../../../../services/media';
 import { useImagePicker } from '../../../../../app/hooks';
 
 type ListItemProps = {
@@ -60,7 +60,7 @@ export const EditTodoOptionsListItem = ({
   const deleteTodoMutation = useDeleteTodo();
 
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
-    const persistedUri = await persistImage(imageObj?.uri);
+    const persistedUri = await mediaService.persistImage(imageObj?.uri);
     setAttachments([persistedUri]);
     return persistedUri;
   };

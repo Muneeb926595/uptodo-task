@@ -15,9 +15,9 @@ import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
 import {
-  persistImage,
+  mediaService,
   PickedImage,
-} from '../../../../../app/services/media/mediaService';
+} from '../../../../services/media';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -36,7 +36,7 @@ export const CreateNewCategoryScreen = (
   const styles = useStyles();
 
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
-    const persistedUri = await persistImage(imageObj?.uri);
+    const persistedUri = await mediaService.persistImage(imageObj?.uri);
     console.log('persistedUri', persistedUri);
     return persistedUri;
   };
