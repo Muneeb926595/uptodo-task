@@ -70,6 +70,28 @@ export const useStyles = themed(tokens =>
       color: tokens.colors.white,
       fontSize: Layout.RFValue(12),
     },
+    deleteActionContainer: {
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      bottom: Layout.heightPercentageToDP(2),
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: tokens.colors.red,
+      alignItems: 'center',
+    },
+    deleteActionWrapper: {
+      width: Layout.widthPercentageToDP(30),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    deleteActionLabel: {
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(15),
+      ...Fonts.latoRegular,
+      marginTop: Layout.heightPercentageToDP(0.5),
+      fontWeight: '600',
+    },
   }),
 );
 
