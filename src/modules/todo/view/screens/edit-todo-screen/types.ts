@@ -5,6 +5,7 @@ export enum EditTodoActionType {
   TodoDueDate = 'TodoDueDate',
   TodoCategory = 'TodoCategory',
   TodoPriority = 'TodoPriority',
+  TodoAttachments = 'TodoAttachments',
   TodoSubTask = 'TodoSubTask',
   DeleteTodo = 'DeleteTodo',
 }

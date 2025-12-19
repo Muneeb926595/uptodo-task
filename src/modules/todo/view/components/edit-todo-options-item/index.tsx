@@ -9,13 +9,16 @@ import { DeleteTaskConfirmation } from '../delete-todo-confirmation';
 import { formatTodoDateTime } from '../../../../../app/utils';
 import { AppText } from '../../../../../app/components/text';
 import { Alert, TouchableOpacity, View } from 'react-native';
-import { Images, Layout } from '../../../../../app/globals';
+import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { useStyles } from './styles';
 import { AppIcon } from '../../../../../app/components/icon';
-import { AppIconSize } from '../../../../../app/components/icon/types';
+import {
+  AppIconName,
+  AppIconSize,
+} from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { Conditional } from '../../../../../app/components/conditional';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
@@ -23,6 +26,11 @@ import { TodoPriorityPicker } from '../todo-priority-picker';
 import { useDeleteTodo } from '../../../react-query';
 import { magicSheet } from 'react-native-magic-sheet';
 import { navigationRef } from '../../../../../app/navigation';
+import {
+  persistImage,
+  PickedImage,
+} from '../../../../../app/services/media/mediaService';
+import { useImagePicker } from '../../../../../app/hooks';
 
 type ListItemProps = {
   item: EditTodoOptions;
@@ -30,22 +38,36 @@ type ListItemProps = {
   selectedDate: Date | null;
   category: Category;
   priority: PriorityLevel;
+  attachments: string[] | undefined;
   setSelectedDate: (date: Date | null) => void;
   setCategory: (category: Category) => void;
   setPriority: (priority: PriorityLevel) => void;
+  setAttachments: (attachments: string[] | undefined) => void;
 };
 
 export const EditTodoOptionsListItem = ({
   item,
   todo,
-  setSelectedDate,
-  setCategory,
-  setPriority,
+  attachments,
   selectedDate,
   category,
   priority,
+  setSelectedDate,
+  setCategory,
+  setPriority,
+  setAttachments,
 }: ListItemProps) => {
   const deleteTodoMutation = useDeleteTodo();
+
+  const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
+    const persistedUri = await persistImage(imageObj?.uri);
+    setAttachments([persistedUri]);
+    return persistedUri;
+  };
+
+  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+    uploader: persistImageOnPhoneStorage,
+  });
 
   const handleDeleteTodo = async () => {
     try {
@@ -139,6 +161,32 @@ export const EditTodoOptionsListItem = ({
           <AppText style={styles.sectionActionLabel}>
             {priority || 'None'}
           </AppText>
+        );
+      case EditTodoActionType.TodoAttachments:
+        return (
+          <TouchableOpacity
+            hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
+            style={styles.galleryPicker}
+            onPress={pickAndUpload}
+          >
+            <Conditional
+              ifTrue={attachments?.length! > 0}
+              elseChildren={
+                <AppIcon
+                  name={AppIconName.image}
+                  color={Colors.white}
+                  iconSize={AppIconSize.xlarge}
+                />
+              }
+            >
+              <CustomImage
+                uri={attachments?.[0]}
+                imageStyles={styles.attachment}
+                placeHolder={Images.DefaultTodo}
+                resizeMode="cover"
+              />
+            </Conditional>
+          </TouchableOpacity>
         );
       case EditTodoActionType.TodoSubTask:
         return (

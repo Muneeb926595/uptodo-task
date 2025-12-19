@@ -55,6 +55,11 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       leftIconName: AppIconName.tree,
     },
     {
+      id: EditTodoActionType.TodoAttachments,
+      title: LocaleProvider.formatMessage(LocaleProvider.IDs.label.attachments),
+      leftIconName: AppIconName.image,
+    },
+    {
       id: EditTodoActionType.DeleteTodo,
       title: LocaleProvider.formatMessage(LocaleProvider.IDs.label.deleteTask),
       leftIconName: AppIconName.trash,
@@ -78,6 +83,9 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const [isCompleted, setIsCompleted] = useState<boolean>(
     todo?.isCompleted ?? false,
   );
+  const [attachments, setAttachments] = useState<string[] | undefined>(
+    todo?.attachments,
+  );
 
   useLayoutEffect(() => {
     if (todo) {
@@ -87,6 +95,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       setCategory(todo?.category as Category);
       setPriority(todo?.priority);
       setIsCompleted(todo?.isCompleted ?? false);
+      setAttachments(todo?.attachments);
     }
   }, [todo]);
 
@@ -204,6 +213,8 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
               setSelectedDate={setSelectedDate}
               setCategory={setCategory}
               setPriority={setPriority}
+              attachments={attachments}
+              setAttachments={setAttachments}
               selectedDate={selectedDate}
               category={category}
               priority={priority}

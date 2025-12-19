@@ -43,6 +43,15 @@ export const useStyles = themed(tokens =>
       height: Layout.widthPercentageToDP(5),
       borderRadius: Layout.widthPercentageToDP(1),
     },
+    galleryPicker: {
+      width: Layout.widthPercentageToDP(20),
+      height: Layout.heightPercentageToDP(4),
+    },
+    attachment: {
+      height: '100%',
+      width: '100%',
+      borderRadius: 8,
+    },
   }),
 );
 

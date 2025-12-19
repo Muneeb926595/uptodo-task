@@ -113,6 +113,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly profile: string;
   readonly createNewCategory: string;
   readonly categoryName: string;
+  readonly attachments: string;
   readonly categoryNameWithoutColon: string;
   readonly categoryIcon: string;
   readonly chooseiconFromlibrary: string;
