@@ -60,6 +60,7 @@ export type Todo = {
   status: TodoStatus;
 
   categoryId: string; // FK -> Category.id
+  category?: Category; // Populated category
 
   // Hierarchy
   parentId?: string | null; // for sub-tasks

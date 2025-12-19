@@ -9,7 +9,11 @@ export const useStyles = themed(tokens =>
       backgroundColor: tokens.colors.surface['100'],
       marginBottom: Layout.heightPercentageToDP(1.8),
       padding: Layout.heightPercentageToDP(2),
+      paddingHorizontal: Layout.widthPercentageToDP(3),
       borderRadius: 4,
+      flexDirection: 'row',
+      alignItems: 'center',
+      columnGap: Layout.widthPercentageToDP(1),
     },
     todoItemLabel: {
       ...Fonts.latoRegular,

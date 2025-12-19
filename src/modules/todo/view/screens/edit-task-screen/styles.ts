@@ -8,7 +8,28 @@ export const useStyles = themed(tokens =>
     container: {
       flex: 1,
       backgroundColor: tokens.colors.background,
-      paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    rowBetween: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    todoItemLabel: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(20),
+      marginBottom: Layout.heightPercentageToDP(1.4),
+    },
+    todoItemTime: {
+      ...Fonts.latoRegular,
+      fontWeight: '400',
+      color: tokens.colors.white,
+      fontSize: Layout.RFValue(14),
     },
   }),
 );
