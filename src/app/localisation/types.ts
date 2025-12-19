@@ -87,6 +87,7 @@ export interface IErrorMessages extends IMessageGroup {
 
 export interface IInstructionMessages extends IMessageGroup {
   readonly underProgress: string;
+  readonly areYouSureYouWantToDeleteThisTask: string;
 }
 
 export interface ILabelTexts extends IMessageGroup {
@@ -105,7 +106,9 @@ export interface ILabelTexts extends IMessageGroup {
   readonly addCategory: string;
   readonly index: string;
   readonly calendar: string;
+  readonly delete: string;
   readonly focus: string;
+  readonly taskTitle: string;
   readonly profile: string;
   readonly createNewCategory: string;
   readonly categoryName: string;
@@ -122,6 +125,7 @@ export interface ILabelTexts extends IMessageGroup {
   readonly subTask: string;
   readonly deleteTask: string;
   readonly editTask: string;
+  readonly addSubTask: string;
   readonly createCategory: string;
   readonly taskPriority: string;
   readonly tapToAddYourTasks: string;

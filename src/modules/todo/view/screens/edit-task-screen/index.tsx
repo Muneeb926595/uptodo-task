@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
-import { EditTaskHeader } from '../../components';
+import {
+  DeleteTaskConfirmation,
+  EditTaskHeader,
+  TaskPriorityPicker,
+} from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { ScreenProps } from '../../../../../app/navigation';
-import { Constants, Layout } from '../../../../../app/globals';
+import { Constants, Images, Layout } from '../../../../../app/globals';
 import CheckBox from '@react-native-community/checkbox';
 import { Colors } from '../../../../../app/theme';
 import { AppText } from '../../../../../app/components/text';
@@ -18,6 +22,10 @@ import {
 import { EditTodoActionType, EditTodoOptions } from './types';
 import { Conditional } from '../../../../../app/components/conditional';
 import { Button } from '../../../../../app/components/button';
+import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
+import { CustomImage } from '../../../../../app/components/custom-image';
+import { magicModal } from 'react-native-magic-modal';
+import { TaskCategoryPicker } from '../../../../categories/view/components';
 
 export const EditTaskScreen = (props: ScreenProps<'EditTaskScreen'>) => {
   const styles = useStyles();
@@ -65,10 +73,85 @@ export const EditTaskScreen = (props: ScreenProps<'EditTaskScreen'>) => {
     switch (selectedOp) {
       case EditTodoActionType.TaskDueDate:
         break;
+      case EditTodoActionType.TaskCategory:
+        await magicModal.show(() => (
+          <TaskCategoryPicker
+            onConfirm={() => {
+              magicModal.hideAll();
+            }}
+          />
+        )).promise;
+        break;
+      case EditTodoActionType.TaskPriority:
+        await magicModal.show(() => (
+          <TaskPriorityPicker
+            onCancel={() => {
+              magicModal.hideAll();
+            }}
+            onConfirm={() => {
+              magicModal.hideAll();
+            }}
+          />
+        )).promise;
+        break;
+      case EditTodoActionType.DeleteTask:
+        await magicModal.show(() => (
+          <DeleteTaskConfirmation
+            todoTitle={todo?.title!}
+            onCancel={() => {
+              magicModal.hideAll();
+            }}
+            onConfirm={() => {
+              magicModal.hideAll();
+            }}
+          />
+        )).promise;
+        break;
     }
   };
 
   const handleEditTask = () => {};
+
+  const renderRightSection = (sectionId: EditTodoActionType) => {
+    switch (sectionId) {
+      case EditTodoActionType.TaskDueDate:
+        return (
+          <AppText style={styles.sectionActionLabel}>
+            {formatTodoDateTime(todo?.dueDate)}
+          </AppText>
+        );
+      case EditTodoActionType.TaskCategory:
+        return (
+          <View
+            style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}
+          >
+            <CustomImage
+              uri={todo?.category?.icon}
+              imageStyles={styles.categoryIcon}
+              placeHolder={Images.DefaultTodo}
+              resizeMode="cover"
+            />
+            <AppText style={styles.sectionActionLabel}>
+              {todo?.category?.name || 'None'}
+            </AppText>
+          </View>
+        );
+      case EditTodoActionType.TaskPriority:
+        return (
+          <AppText style={styles.sectionActionLabel}>
+            {todo?.priority || 'None'}
+          </AppText>
+        );
+      case EditTodoActionType.TaskSubTask:
+        return (
+          <AppText style={styles.sectionActionLabel}>
+            <FormattedMessage id={LocaleProvider.IDs.label.addSubTask} />
+          </AppText>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <Container
@@ -148,9 +231,7 @@ export const EditTaskScreen = (props: ScreenProps<'EditTaskScreen'>) => {
               </View>
               <Conditional ifTrue={!item?.isDanger}>
                 <View style={styles.sectionActionContainer}>
-                  <AppText style={styles.sectionActionLabel}>
-                    {formatTodoDateTime(todo?.dueDate)}
-                  </AppText>
+                  {renderRightSection(item?.id as EditTodoActionType)}
                 </View>
               </Conditional>
             </TouchableOpacity>

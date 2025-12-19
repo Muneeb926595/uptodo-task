@@ -55,6 +55,11 @@ export const useStyles = themed(tokens =>
       color: tokens.colors.white,
       fontSize: Layout.RFValue(12),
     },
+    categoryIcon: {
+      width: Layout.widthPercentageToDP(5),
+      height: Layout.widthPercentageToDP(5),
+      borderRadius: Layout.widthPercentageToDP(1),
+    },
   }),
 );
 
