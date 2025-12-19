@@ -14,7 +14,7 @@ import { useTheme } from '../theme/provider';
 import { TabsNavigator } from './tab-navigator';
 import { notificationService } from '../../modules/services/notifications';
 import { todoRepository } from '../../modules/todo/repository';
-import { EditTaskScreen } from '../../modules/todo/view/screens';
+import { EditTodoScreen } from '../../modules/todo/view/screens';
 import { CreateNewCategoryScreen } from '../../modules/categories/view/screens/create-new-category-screen';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
@@ -86,8 +86,8 @@ const ScreensWithoutBottomTab = (
     }}
   >
     <MainAppStack.Screen
-      name="EditTaskScreen"
-      component={EditTaskScreen}
+      name="EditTodoScreen"
+      component={EditTodoScreen}
       options={{
         headerShown: false,
       }}

@@ -13,11 +13,11 @@ import {
 import { Colors } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
 
-type EditTaskHeaderProps = {
+type EditTodoHeaderProps = {
   title: string;
 };
 
-export const EditTaskHeader = ({ title }: EditTaskHeaderProps) => {
+export const EditTodoHeader = ({ title }: EditTodoHeaderProps) => {
   const styles = useStyles();
 
   const handleFilterPress = () => {

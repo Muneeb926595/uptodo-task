@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import { AppIconName } from '../../../../../app/components/icon/types';
 
 export enum EditTodoActionType {
-  TaskDueDate = 'TaskDueDate',
-  TaskCategory = 'TaskCategory',
-  TaskPriority = 'TaskPriority',
-  TaskSubTask = 'TaskSubTask',
-  DeleteTask = 'DeleteTask',
+  TodoDueDate = 'TodoDueDate',
+  TodoCategory = 'TodoCategory',
+  TodoPriority = 'TodoPriority',
+  TodoSubTask = 'TodoSubTask',
+  DeleteTodo = 'DeleteTodo',
 }
 export type EditTodoOptions = {
   id: string;

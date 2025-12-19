@@ -15,13 +15,13 @@ import { Colors } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
 import { Conditional } from '../../../../../app/components/conditional';
 
-export const TasksListitem = ({ item }: { item: Todo }) => {
+export const TodoListItem = ({ item }: { item: Todo }) => {
   const styles = useStyles();
   const handleItemPress = () => {
-    navigationRef.navigate('EditTaskScreen', { todoItem: item });
+    navigationRef.navigate('EditTodoScreen', { todoItem: item });
   };
 
-  const handleCompleteTask = () => {};
+  const handleCompleteTodo = () => {};
   return (
     <View style={styles.todoItem}>
       <Conditional ifTrue={!item?.isCompleted}>
@@ -34,7 +34,7 @@ export const TasksListitem = ({ item }: { item: Todo }) => {
             true: Colors.brand['DEFAULT'],
             false: Colors.white,
           }}
-          onValueChange={handleCompleteTask}
+          onValueChange={handleCompleteTodo}
         />
       </Conditional>
       <TouchableOpacity style={{ flex: 1 }} onPress={handleItemPress}>

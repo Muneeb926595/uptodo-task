@@ -17,8 +17,6 @@ import {
 import { Colors } from '../../../../../app/theme';
 import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CalendarPicker } from '../../../../../app/components/calendar-picker';
-import { TaskPriorityPicker } from '../task-priority-picker';
-import { TaskCategoryPicker } from '../../../../categories/view/components';
 import { magicSheet } from 'react-native-magic-sheet';
 import { useCreateTodo } from '../../../react-query';
 import dayjs from 'dayjs';
@@ -30,6 +28,8 @@ import {
   persistImage,
   PickedImage,
 } from '../../../../../app/services/media/mediaService';
+import { TodoPriorityPicker } from '../todo-priority-picker';
+import { TodoCategoryPicker } from '../../../../categories/view/components';
 
 type Props = {
   userName?: string;
@@ -79,7 +79,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
 
   const handleOpenPriorityPicker = async () => {
     const result = await magicModal.show(() => (
-      <TaskPriorityPicker
+      <TodoPriorityPicker
         onCancel={() => magicModal.hideAll()}
         onConfirm={priority => {
           setPriority(priority);
@@ -91,7 +91,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
 
   const handleOpenCategoryPicker = async () => {
     const result = await magicModal.show(() => (
-      <TaskCategoryPicker
+      <TodoCategoryPicker
         onConfirm={category => {
           setCategoryId(category?.id);
           magicModal.hideAll();

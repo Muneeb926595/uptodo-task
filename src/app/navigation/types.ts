@@ -10,13 +10,13 @@ export type MainStackParamList = {
   Tabs: undefined;
 
   // Tabs screens
-  HomeScreen: undefined;
+  TodoListingScreen: undefined;
   CalendarScreen: undefined;
   FocusScreen: undefined;
   ProfileScreen: undefined;
 
   // Tasks screens
-  EditTaskScreen: { todoItem: Todo };
+  EditTodoScreen: { todoItem: Todo };
 
   // Categories screens
   CategoriesScreen: undefined;

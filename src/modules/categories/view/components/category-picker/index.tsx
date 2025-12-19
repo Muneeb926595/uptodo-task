@@ -53,7 +53,7 @@ const RenderCategoryItem = ({ item, onPress }: CategoryItemProps) => {
   );
 };
 
-export const TaskCategoryPicker = ({ onConfirm }: Props) => {
+export const TodoCategoryPicker = ({ onConfirm }: Props) => {
   const styles = useStyles();
 
   const { data: categories, isLoading } = useCategories();

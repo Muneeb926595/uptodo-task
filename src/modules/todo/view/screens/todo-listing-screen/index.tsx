@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FlatList, SectionList, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
-import { HomeHeader, TasksListitem } from '../../components';
+import { HomeHeader, TodoListItem } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { Conditional } from '../../../../../app/components/conditional';
@@ -108,10 +108,10 @@ const RenderSectionList = ({
     );
   }
 
-  return <TasksListitem item={item.todo} />;
+  return <TodoListItem item={item.todo} />;
 };
 
-export const HomeScreen = (props: ScreenProps<'HomeScreen'>) => {
+export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
   const styles = useStyles();
 
   const { data: todos, isLoading } = useTodos();

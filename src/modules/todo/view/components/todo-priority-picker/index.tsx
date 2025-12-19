@@ -52,7 +52,7 @@ const RenderPriorityItem = ({
   );
 };
 
-export const TaskPriorityPicker = ({ onCancel, onConfirm }: Props) => {
+export const TodoPriorityPicker = ({ onCancel, onConfirm }: Props) => {
   const styles = useStyles();
 
   const [selectedPriority, setSelectedPriority] = useState<PriorityLevel>(1);
