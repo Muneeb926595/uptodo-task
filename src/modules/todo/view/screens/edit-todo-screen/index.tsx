@@ -75,6 +75,9 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     todo?.dueDate ? new Date(todo.dueDate) : null,
   );
+  const [isCompleted, setIsCompleted] = useState<boolean>(
+    todo?.isCompleted ?? false,
+  );
 
   useLayoutEffect(() => {
     if (todo) {
@@ -83,11 +86,13 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       setSelectedDate(todo?.dueDate ? new Date(todo.dueDate) : null);
       setCategory(todo?.category as Category);
       setPriority(todo?.priority);
-      setSelectedDate(todo?.dueDate ? new Date(todo.dueDate) : null);
+      setIsCompleted(todo?.isCompleted ?? false);
     }
   }, [todo]);
 
-  const handleCompleteTodo = () => {};
+  const handleCompleteTodo = (value: boolean) => {
+    setIsCompleted(value);
+  };
 
   const handleEditTitle = async () => {
     await magicModal.show(() => (
@@ -127,6 +132,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       todoTime: dayjs(selectedDate).format('HH:mm'),
       priority,
       categoryId: category?.id,
+      isCompleted,
     };
 
     try {
@@ -162,6 +168,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
             style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}
           >
             <CheckBox
+              value={isCompleted}
               boxType="circle"
               style={{
                 transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
