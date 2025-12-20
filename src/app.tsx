@@ -14,7 +14,7 @@ import {
 } from 'react-native-safe-area-context';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { LocaleProvider } from './app/localisation/locale-provider';
 import { Constants } from './app/globals';
 import { store } from './app/stores';
@@ -81,12 +81,14 @@ function App() {
             />
             <GestureHandlerRootView style={{ flex: 1 }}>
               <BottomSheetModalProvider>
-                <MagicSheetPortal />
                 <SafeAreaProvider initialMetrics={initialWindowMetrics}>
                   <AppNavigator />
-                  <MagicModalPortal />
                 </SafeAreaProvider>
+                <MagicSheetPortal />
               </BottomSheetModalProvider>
+              <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 9999, elevation: 9999 }} pointerEvents="box-none">
+                <MagicModalPortal />
+              </View>
             </GestureHandlerRootView>
           </ToastProvider>
         </LocaleProvider>

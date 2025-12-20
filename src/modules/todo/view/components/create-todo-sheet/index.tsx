@@ -24,10 +24,7 @@ import { PriorityLevel } from '../../../types';
 import { useImagePicker } from '../../../../../app/hooks';
 import { Conditional } from '../../../../../app/components/conditional';
 import { CustomImage } from '../../../../../app/components/custom-image';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 import { TodoPriorityPicker } from '../todo-priority-picker';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
 
