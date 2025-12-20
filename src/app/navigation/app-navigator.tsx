@@ -21,7 +21,10 @@ import { useFirstTimeAppOpen } from '../hooks';
 import { Conditional } from '../components/conditional';
 import { OnboardingScreen } from '../../modules/auth/view/screens/onboarding-screen';
 import { StorageKeys, storageService } from '../../modules/services/storage';
-import { ProfileSetupScreen, EditProfileScreen } from '../../modules/profile/view/screens';
+import {
+  ProfileSetupScreen,
+  EditProfileScreen,
+} from '../../modules/profile/view/screens';
 import { profileRepository } from '../../modules/profile/repository/profile-repository';
 import { LockScreen } from '../screens/lock-screen';
 import { biometricService } from '../../modules/services/biometric';
@@ -49,7 +52,8 @@ export const AppNavigator = () => {
     }
 
     // Check if profile is set up
-    const profileSetupComplete = await profileRepository.isProfileSetupComplete();
+    const profileSetupComplete =
+      await profileRepository.isProfileSetupComplete();
     setIsProfileSetup(profileSetupComplete);
 
     // Check if app lock is enabled

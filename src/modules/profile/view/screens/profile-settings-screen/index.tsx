@@ -140,7 +140,7 @@ export const ProfileSettingsScreen = () => {
             try {
               await profileRepository.deleteProfile();
               await profileRepository.disableAppLock();
-              
+
               // Close app - user will see profile setup on next launch
               Alert.alert(
                 'Profile Cleared',
@@ -159,7 +159,9 @@ export const ProfileSettingsScreen = () => {
   if (loading) {
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
           <AppText>Loading...</AppText>
         </View>
       </SafeAreaView>
@@ -201,7 +203,9 @@ export const ProfileSettingsScreen = () => {
               />
             </TouchableOpacity>
           </View>
-          <AppText style={styles.profileName}>{profile?.name || 'User'}</AppText>
+          <AppText style={styles.profileName}>
+            {profile?.name || 'User'}
+          </AppText>
           {profile?.email && (
             <AppText style={styles.profileEmail}>{profile.email}</AppText>
           )}

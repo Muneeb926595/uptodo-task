@@ -13,7 +13,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useStyles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
-import { AppIconName, AppIconSize } from '../../../../../app/components/icon/types';
+import {
+  AppIconName,
+  AppIconSize,
+} from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { mediaService } from '../../../../services/media';
@@ -52,7 +55,10 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
 
   const handleContinue = async () => {
     if (!isNameValid) {
-      Alert.alert('Invalid Name', 'Please enter a valid name (at least 2 characters)');
+      Alert.alert(
+        'Invalid Name',
+        'Please enter a valid name (at least 2 characters)',
+      );
       return;
     }
 

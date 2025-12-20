@@ -79,7 +79,9 @@ export const LockScreen = ({ onUnlock }: LockScreenProps) => {
         activeOpacity={0.7}
       >
         <AppText style={styles.unlockButtonText}>
-          {isAuthenticating ? 'Authenticating...' : `Unlock with ${biometricType}`}
+          {isAuthenticating
+            ? 'Authenticating...'
+            : `Unlock with ${biometricType}`}
         </AppText>
       </TouchableOpacity>
 

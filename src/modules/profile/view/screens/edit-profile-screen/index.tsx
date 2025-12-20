@@ -12,7 +12,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useStyles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
-import { AppIconName, AppIconSize } from '../../../../../app/components/icon/types';
+import {
+  AppIconName,
+  AppIconSize,
+} from '../../../../../app/components/icon/types';
 import { Colors } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { navigationRef } from '../../../../../app/navigation';
@@ -41,11 +44,15 @@ export const EditProfileScreen = () => {
   };
 
   const isNameValid = name.trim().length >= 2;
-  const hasChanges = name.trim() !== profile?.name || email.trim() !== (profile?.email || '');
+  const hasChanges =
+    name.trim() !== profile?.name || email.trim() !== (profile?.email || '');
 
   const handleSave = async () => {
     if (!isNameValid) {
-      Alert.alert('Invalid Name', 'Please enter a valid name (at least 2 characters)');
+      Alert.alert(
+        'Invalid Name',
+        'Please enter a valid name (at least 2 characters)',
+      );
       return;
     }
 
@@ -126,7 +133,8 @@ export const EditProfileScreen = () => {
           <TouchableOpacity
             style={[
               styles.continueButton,
-              (!isNameValid || !hasChanges || isSubmitting) && styles.continueButtonDisabled,
+              (!isNameValid || !hasChanges || isSubmitting) &&
+                styles.continueButtonDisabled,
             ]}
             onPress={handleSave}
             disabled={!isNameValid || !hasChanges || isSubmitting}
