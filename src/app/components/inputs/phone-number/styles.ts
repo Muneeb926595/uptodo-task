@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { Colors } from '../../../theme';

@@ -2,10 +2,11 @@
 import './app/theme/unistyles';
 
 import React, { useEffect, useState } from 'react';
-import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import isToday from 'dayjs/plugin/isToday';
+import isTomorrow from 'dayjs/plugin/isTomorrow';
+import isYesterday from 'dayjs/plugin/isYesterday';
 import './app/utils/ignore-warnings';
 import { MagicModalPortal } from 'react-native-magic-modal';
 import {
@@ -25,17 +26,19 @@ import { storageService, StorageKeys } from './modules/services/storage';
 import { initializeTheme } from './app/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
-import isToday from 'dayjs/plugin/isToday';
-import isTomorrow from 'dayjs/plugin/isTomorrow';
-import isYesterday from 'dayjs/plugin/isYesterday';
 import { ToastProvider } from './app/context/toast-context';
 
-dayjs.extend(relativeTime);
+// Load critical dayjs plugins immediately (needed for UI rendering)
 dayjs.extend(utc);
-dayjs.extend(timezone);
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 dayjs.extend(isYesterday);
+
+// Defer less critical dayjs plugins to improve startup time
+setTimeout(() => {
+  import('dayjs/plugin/relativeTime').then(m => dayjs.extend(m.default));
+  import('dayjs/plugin/timezone').then(m => dayjs.extend(m.default));
+}, 0);
 
 if (__DEV__) {
   //   require('../ReactotronConfig');
@@ -63,10 +66,9 @@ function App() {
     } catch (e) {
       //   throw new AppError('App.tsx', 'initLocaleProvider', e);
     }
-    await LocaleProvider.init(appLocale);
 
-    // Initialize theme from storage
-    await initializeTheme();
+    // Parallelize initialization for faster startup
+    await Promise.all([LocaleProvider.init(appLocale), initializeTheme()]);
   };
 
   return appLocaleProviderReady ? (

@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import { View } from 'react-native';
 import { styles } from './styles';
 import { Images } from '../../../../../app/globals';
@@ -21,7 +20,6 @@ type CarouselData = {
   imageStyles?: any;
 };
 export const OnboardingScreen = (props: any) => {
-
   const carouselData: CarouselData[] = [
     {
       id: 1,

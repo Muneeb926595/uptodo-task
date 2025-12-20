@@ -1,5 +1,4 @@
 import { Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
-import { isIphoneX } from 'react-native-iphone-x-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -235,7 +234,7 @@ export const Layout = {
       width > height ? 0 : Platform.OS === 'ios' ? 78 : StatusBar.currentHeight; // iPhone X style SafeAreaView size in portrait
 
     const deviceHeight =
-      isIphoneX() || Platform.OS === 'android'
+      (Platform.OS === 'ios' && height >= 812) || Platform.OS === 'android'
         ? standardLength - offset
         : standardLength;
 

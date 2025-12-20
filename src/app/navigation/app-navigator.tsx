@@ -71,22 +71,25 @@ export const AppNavigator = () => {
 
     hideSplash();
 
-    // Initialize services
-    (async () => {
-      // Notifications
-      await notificationService.ensurePermissions();
+    // Defer service initialization to improve startup time
+    // Show UI first, then load services in the background
+    setImmediate(() => {
+      (async () => {
+        // Notifications
+        await notificationService.ensurePermissions();
 
-      const todos = await todoRepository.getAll();
-      await notificationService.resyncAll(todos);
+        const todos = await todoRepository.getAll();
+        await notificationService.resyncAll(todos);
 
-      // Check for expired focus sessions and restore notifications
-      // if user turned on the focus mode then all notification will get canceled and saved to mmkv so we need to restore them later but if app closed then this below snipet will do that on app startup
-      try {
-        await focusRepository.getActiveSession();
-      } catch (e) {
-        console.error('Failed to check focus session on startup:', e);
-      }
-    })();
+        // Check for expired focus sessions and restore notifications
+        // if user turned on the focus mode then all notification will get canceled and saved to mmkv so we need to restore them later but if app closed then this below snipet will do that on app startup
+        try {
+          await focusRepository.getActiveSession();
+        } catch (e) {
+          console.error('Failed to check focus session on startup:', e);
+        }
+      })();
+    });
   };
 
   // Show nothing while checking first-time status or profile setup

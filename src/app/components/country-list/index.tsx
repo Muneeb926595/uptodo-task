@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { styles, pressableStyle, itemLayout } from './styles';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import { AppIconName } from '../icon/types';
 import { Country } from '../inputs/phone-number/types';
 import { AppText } from '../text';
@@ -62,7 +62,7 @@ export const CountryList = (props: Props) => {
 
   const renderSeparator = () => <View style={styles.separator} />;
 
-  const onTextChanged = _.debounce((text: string) => {
+  const onTextChanged = debounce((text: string) => {
     const filtered = COUNTRIES.filter(v => {
       const searchValue = text.toLowerCase();
       return (
