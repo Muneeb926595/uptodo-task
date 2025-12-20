@@ -1,8 +1,8 @@
 'use strict';
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
+import { getTranslationService } from './translation-provider';
 import {
   DateTimeFormatOptions,
   HTMLFormatOptions,
@@ -69,13 +69,26 @@ export const FormattedDate = function (props: DateTimeFormatOptions) {
 
 /**
  * Produces a locale-aware component for rendering an HTML value.
+ * Auto-updates when language changes
  * @param props
  */
 export const FormattedHTMLMessage = function (props: HTMLFormatOptions) {
+  // Subscribe to language changes via TranslationService
+  const [, setLanguage] = useState('');
+
+  useEffect(() => {
+    const translationService = getTranslationService();
+    const unsubscribe = translationService.onLanguageChanged(locale => {
+      setLanguage(locale);
+    });
+    return unsubscribe;
+  }, []);
+
   const message = LocaleProvider.formatMessage(
     props.id as string,
     (props as any).values,
   );
+
   if (Array.isArray(message)) {
     return React.createElement(React.Fragment, null, message);
   }
@@ -92,39 +105,23 @@ export const FormattedHTMLMessage = function (props: HTMLFormatOptions) {
 
 /**
  * Produces a locale-aware component for rendering some text
+ * Auto-updates when language changes
  * @param props
  */
 export const FormattedMessage = function (props: MessageFormatOptions) {
-  /**
-   * setup default message
-   */
-  const formattedMessageProps = Object.assign({}, props);
+  // Subscribe to language changes via TranslationService
+  const [, setLanguage] = useState('');
 
-  if (!formattedMessageProps.id) {
-    formattedMessageProps.id = '?missing?';
-  }
+  useEffect(() => {
+    const translationService = getTranslationService();
+    const unsubscribe = translationService.onLanguageChanged(locale => {
+      setLanguage(locale);
+    });
+    return unsubscribe;
+  }, []);
 
-  if (!formattedMessageProps.defaultMessage) {
-    formattedMessageProps.defaultMessage = LocaleProvider.formatMessage(
-      props.id || '?missing?',
-      props.values,
-    );
-  }
-  // subscribe to language changes so component re-renders when language is changed
-  try {
-    // useTranslation triggers updates on language change
-    const { i18n } = useTranslation();
-    // ensure i18n is available — we don't directly use it here because
-    // LocaleProvider.formatMessage delegates to i18next under the hood
-    void i18n;
-  } catch (e) {
-    // ignore errors when hooks can't be used (e.g., server-side render fallback)
-  }
-
-  const formatted = LocaleProvider.formatMessage(
-    formattedMessageProps.id as string,
-    formattedMessageProps.values,
-  );
+  const messageId = props?.id || '?missing?';
+  const formatted = LocaleProvider.formatMessage(messageId, props.values);
 
   if (Array.isArray(formatted)) {
     // formatted already contains Text nodes

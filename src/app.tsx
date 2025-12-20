@@ -16,7 +16,7 @@ import {
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar, View } from 'react-native';
-import { LocaleProvider } from './app/localisation/locale-provider';
+import { getTranslationService, TranslationProvider } from './app/localisation';
 import { Constants } from './app/globals';
 import { store } from './app/stores';
 import { Provider } from 'react-redux';
@@ -55,7 +55,7 @@ function App() {
   }, []);
 
   /**
-   * Setup and init Locale provider, api, and repositories
+   * Setup and init translation service, theme
    */
   const initAppAssets = async () => {
     let appLocale = Constants.defaults.DEFAULT_APP_LOCALE;
@@ -64,17 +64,22 @@ function App() {
         StorageKeys.SELECTED_APP_LANGUAGE,
       )) as string;
     } catch (e) {
-      //   throw new AppError('App.tsx', 'initLocaleProvider', e);
+      // Use default locale on error
     }
 
+    const translationService = getTranslationService();
+
     // Parallelize initialization for faster startup
-    await Promise.all([LocaleProvider.init(appLocale), initializeTheme()]);
+    await Promise.all([
+      translationService.initialize(appLocale),
+      initializeTheme(),
+    ]);
   };
 
   return appLocaleProviderReady ? (
     <Provider store={store}>
       <ReactQueryProvider>
-        <LocaleProvider>
+        <TranslationProvider>
           <ToastProvider>
             <StatusBar
               barStyle="light-content"
@@ -104,7 +109,7 @@ function App() {
               </View>
             </GestureHandlerRootView>
           </ToastProvider>
-        </LocaleProvider>
+        </TranslationProvider>
       </ReactQueryProvider>
     </Provider>
   ) : null;

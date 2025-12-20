@@ -25,6 +25,7 @@ import {
   ProfileSetupScreen,
   EditProfileScreen,
   ThemePickerScreen,
+  LanguagePickerScreen,
 } from '../../modules/profile/view/screens';
 import { profileRepository } from '../../modules/profile/repository/profile-repository';
 import { LockScreen } from '../screens/lock-screen';
@@ -212,6 +213,13 @@ const ScreensWithoutBottomTab = (
     <MainAppStack.Screen
       name="ThemePickerScreen"
       component={ThemePickerScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <MainAppStack.Screen
+      name="LanguagePickerScreen"
+      component={LanguagePickerScreen}
       options={{
         headerShown: false,
       }}

@@ -176,6 +176,61 @@ class TodoRepository {
     todos?.forEach?.(t => (map[t.id] = t));
     await this.save(map);
   }
+
+  /**
+   * Import todos with merge strategy
+   * @param todos - Todos to import
+   * @param strategy - 'merge' (keep existing + add new) or 'replace' (delete all, import new)
+   */
+  async importTodos(
+    todos: Todo[],
+    strategy: 'merge' | 'replace' = 'merge',
+  ): Promise<{ imported: number; skipped: number; errors: number }> {
+    const map = await this.load();
+    let imported = 0;
+    let skipped = 0;
+    let errors = 0;
+
+    if (strategy === 'replace') {
+      // Clear existing todos
+      Object.keys(map).forEach(key => delete map[key]);
+    }
+
+    for (const todo of todos) {
+      try {
+        if (strategy === 'merge' && map[todo.id]) {
+          // Skip if already exists in merge mode
+          skipped++;
+          continue;
+        }
+
+        // Clean up the todo (remove derived fields)
+        const cleanTodo: Todo = {
+          ...todo,
+          category: undefined,
+          isOverdue: undefined,
+          updatedAt: Date.now(),
+        };
+
+        // Reschedule notifications for future todos
+        if (cleanTodo.dueDate > Date.now() && !cleanTodo.isCompleted) {
+          const notificationId = await notificationService.scheduleForTodo(
+            cleanTodo,
+          );
+          cleanTodo.notificationId = notificationId ?? undefined;
+        }
+
+        map[todo.id] = cleanTodo;
+        imported++;
+      } catch (error) {
+        console.error(`Error importing todo ${todo.id}:`, error);
+        errors++;
+      }
+    }
+
+    await this.save(map);
+    return { imported, skipped, errors };
+  }
 }
 
 export const todoRepository = new TodoRepository();

@@ -1585,6 +1585,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/hooks/-/hooks-100.1.0.tgz#34cfa9e986b84a8babfe667dc3ec497954aef8f1"
   integrity sha512-aXESGr6WcnwyeIl+SiCLNFpbApzTmupyYzm2OkGjMuwHr42+a3G65xxTxN/xHuNdTVWO0dXbOwyLgEkQ0i/qZg==
 
+"@react-native-documents/picker@^11.0.3":
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/@react-native-documents/picker/-/picker-11.0.3.tgz#69206889c0d1029a0113d59deed0d3c854d5d192"
+  integrity sha512-q+vQNT1NtZcFGwsDpTwMKNNcgOEq6foFDGlPQVt8H7KaEjCjC+wTGdXuVSe8JJr2uO9xZR6kJ7aRHReZ4XDRBw==
+
 "@react-native/assets-registry@0.83.0":
   version "0.83.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.83.0.tgz#81a4a3c48069f4e2e4e9d55dbd4fbcb8102246be"

@@ -159,7 +159,7 @@ export interface IUserGuideMessages extends IMessageGroup {
   readonly profileSettings: string;
 }
 
-export interface IAccessablityMessages extends IMessageGroup {
+export interface IAccessibilityMessages extends IMessageGroup {
   readonly onboardingFirstImage: string;
 }
 
@@ -174,5 +174,5 @@ export interface ISystemMessages {
   readonly instruction: IInstructionMessages;
   readonly label: ILabelTexts;
   readonly userGuide: IUserGuideMessages;
-  readonly accessablity: IAccessablityMessages;
+  readonly accessibility: IAccessibilityMessages;
 }
