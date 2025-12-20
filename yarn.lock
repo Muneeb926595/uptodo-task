@@ -1082,58 +1082,6 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@formatjs/ecma402-abstract@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-3.0.1.tgz#9e6d236fa65cf5dea6201c50b9734c9b700f44af"
-  integrity sha512-EwE3qCySQHujuavW4bEEQ7FHYO9/g7LQ06YUqd8PGD8agjjmvyaey9x5EcwFX/kWBZSusyq6PPNXpseEuWA4ig==
-  dependencies:
-    "@formatjs/fast-memoize" "3.0.1"
-    "@formatjs/intl-localematcher" "0.7.1"
-    decimal.js "^10.4.3"
-    tslib "^2.8.0"
-
-"@formatjs/fast-memoize@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/fast-memoize/-/fast-memoize-3.0.1.tgz#392fae094edfc84867758b1787c131259b26e6cc"
-  integrity sha512-kzk635kEmsxrrEWQXY7uKRocFCVXR4es5OQqcqCGg2NPtQztG/OBkE9THHu6UOTxpfyIkZhh6DjPBZGRp7y3og==
-  dependencies:
-    tslib "^2.8.0"
-
-"@formatjs/icu-messageformat-parser@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-3.0.1.tgz#d149128dee075d700c212392955fca6bec102335"
-  integrity sha512-FiHfeeKYh+H9pC2cE4acMAHeGMc5Q4XBBV50Lwt32A1lSZH7TfcIJSCey6Kc7VTF/IhY3/jwiVHccG/FpdIZEw==
-  dependencies:
-    "@formatjs/ecma402-abstract" "3.0.1"
-    "@formatjs/icu-skeleton-parser" "2.0.1"
-    tslib "^2.8.0"
-
-"@formatjs/icu-skeleton-parser@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-2.0.1.tgz#bda590b809f5a7f3f428dc563d2ba3e5b6f8ada5"
-  integrity sha512-xDC1OQEQkBY0jefkURculbQtQ40FpuZl0nVjDm8ujNWsxnWEPlBjLK6PFOihovayeg57r2enIth0BcbYPz+IWw==
-  dependencies:
-    "@formatjs/ecma402-abstract" "3.0.1"
-    tslib "^2.8.0"
-
-"@formatjs/intl-localematcher@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.7.1.tgz#e83ab7c6bd876267ccc4134e73fe8a551ca41f21"
-  integrity sha512-ttTpHMIuoVCeMrbpxU0sgfdQ8YG4rOdyLhFtmLHedYDTQFx9HcWakboMa1rPUCTC+Zhb3wLYw3XV1GVkdZ2rpQ==
-  dependencies:
-    tslib "^2.8.0"
-
-"@formatjs/intl@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-4.0.1.tgz#3566dd0e26ad55849a9caf059fabef78d180d15b"
-  integrity sha512-skZWUXzNat1JfW7rn1Up0+ahl9IG4tZsihgZ4NTan6hDYA86oc5JdHIARicQScz28MUqQ50RJxwn/C+9JD3Lzg==
-  dependencies:
-    "@formatjs/ecma402-abstract" "3.0.1"
-    "@formatjs/fast-memoize" "3.0.1"
-    "@formatjs/icu-messageformat-parser" "3.0.1"
-    intl-messageformat "11.0.1"
-    tslib "^2.8.0"
-
 "@gorhom/bottom-sheet@^5.2.8":
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-5.2.8.tgz#25e49122c30ffe83d3813b3bcf3dec39f3359aeb"
@@ -2003,13 +1951,6 @@
   version "2.0.46"
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.46.tgz#381daaca1360ff8a7c8dff63f32e69745b9fb1e1"
   integrity sha512-ynRvcq6wvqexJ9brDMS4BnBLzmr0e14d6ZJTEShTBWKymQiHwlAyGu0ZPEFI2Fh1U53F7tN9ufClWM5KvqkKOw==
-
-"@types/hoist-non-react-statics@^3.3.1":
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.7.tgz#306e3a3a73828522efa1341159da4846e7573a6c"
-  integrity sha512-PQTyIulDkIDro8P+IHbKCsw7U2xxBYflVzW/FgWdCAePD9xGSidgA76/GeJ6lBKoblyhf9pBY763gbrN+1dI8g==
-  dependencies:
-    hoist-non-react-statics "^3.3.0"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
@@ -3038,11 +2979,6 @@ decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==
 
-decimal.js@^10.4.3:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.6.0.tgz#e649a43e3ab953a72192ff5983865e509f37ed9a"
-  integrity sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==
-
 decode-uri-component@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
@@ -4006,7 +3942,7 @@ hermes-parser@^0.25.1:
   dependencies:
     hermes-estree "0.25.1"
 
-hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -4132,16 +4068,6 @@ internal-slot@^1.1.0:
     es-errors "^1.3.0"
     hasown "^2.0.2"
     side-channel "^1.1.0"
-
-intl-messageformat@11.0.1:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-11.0.1.tgz#105b2c155b28298078b7f9df7c50b742bd03a3ec"
-  integrity sha512-bBqwqPySm3kKW/tztXzGyg7kY6mZuY4rYdS2QLBJlYRCtJEP4wmRTwrmcOL5fSfOGy3k30p0iUeV6Tbha7++pg==
-  dependencies:
-    "@formatjs/ecma402-abstract" "3.0.1"
-    "@formatjs/fast-memoize" "3.0.1"
-    "@formatjs/icu-messageformat-parser" "3.0.1"
-    tslib "^2.8.0"
 
 invariant@^2.2.4:
   version "2.2.4"
@@ -5786,19 +5712,6 @@ react-i18next@^16.5.0:
     html-parse-stringify "^3.0.1"
     use-sync-external-store "^1.6.0"
 
-react-intl@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-8.0.1.tgz#7604feaccf4afefef4cac21d5016c2f5e9013a80"
-  integrity sha512-0vcB2kyh3it71ktzWugp1TdTkTNpPASkEy30ukSC0/Zk6RwFxjTWV8toU+Js0+L/RZCkxJI9rV/PuFuXL/hP1A==
-  dependencies:
-    "@formatjs/ecma402-abstract" "3.0.1"
-    "@formatjs/icu-messageformat-parser" "3.0.1"
-    "@formatjs/intl" "4.0.1"
-    "@types/hoist-non-react-statics" "^3.3.1"
-    hoist-non-react-statics "^3.3.2"
-    intl-messageformat "11.0.1"
-    tslib "^2.8.0"
-
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -5876,11 +5789,6 @@ react-native-image-picker@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-8.2.1.tgz#1ac7826563cbaa5d5298d9f2acc53c69805e5393"
   integrity sha512-FBeGYJGFDjMdGCcyubDJgBAPCQ4L1D3hwLXyUU91jY9ahOZMTbluceVvRmrEKqnDPFJ0gF1NVhJ0nr1nROFLdg==
-
-react-native-iphone-x-helper@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
-  integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
 react-native-is-edge-to-edge@1.2.1:
   version "1.2.1"
@@ -5961,6 +5869,11 @@ react-native-swipe-gestures@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
   integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
+
+react-native-theme-switch-animation@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-theme-switch-animation/-/react-native-theme-switch-animation-0.8.0.tgz#d9f69d5e41a00697d368897216d318d9430aff0d"
+  integrity sha512-z4f3QGSuUP4tagycls2mekng/7uxAbr75Gn0GGm7JRkrviyao++V2CtJ8VUDx+hSOsgfjEhD9D5JubsGbbHB5w==
 
 react-native-unistyles@^3.0.20:
   version "3.0.20"
@@ -6739,11 +6652,6 @@ ts-object-utils@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/ts-object-utils/-/ts-object-utils-0.0.5.tgz#95361cdecd7e52167cfc5e634c76345e90a26077"
   integrity sha512-iV0GvHqOmilbIKJsfyfJY9/dNHCs969z3so90dQWsO1eMMozvTpnB1MEaUbb3FYtZTGjv5sIy/xmslEz0Rg2TA==
-
-tslib@^2.8.0:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
-  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
