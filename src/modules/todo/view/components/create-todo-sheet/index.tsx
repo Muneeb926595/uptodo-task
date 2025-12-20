@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BottomSheetWrapper } from '../../../../../app/components/bottom-sheet-wrapper';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { Controller, useForm } from 'react-hook-form';
 import { AuthInput } from '../../../../../app/components/inputs';
 import { AppText } from '../../../../../app/components/text';
@@ -37,7 +37,6 @@ type Props = {
 };
 
 export const CreateTodoBottomSheet = (props: Props) => {
-  const styles = useStyles();
   const {
     control,
     handleSubmit,

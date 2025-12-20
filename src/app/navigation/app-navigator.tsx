@@ -10,7 +10,7 @@ import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
 import { AuthFlow } from '../../modules/auth/view/navigation/auth';
 import { hideSplash } from 'react-native-splash-view';
-import { useTheme } from '../theme/provider';
+import { useTheme, UnistylesRuntime } from '../theme';
 import { TabsNavigator } from './tab-navigator';
 import { notificationService } from '../../modules/services/notifications';
 import { todoRepository } from '../../modules/todo/repository';
@@ -24,6 +24,7 @@ import { StorageKeys, storageService } from '../../modules/services/storage';
 import {
   ProfileSetupScreen,
   EditProfileScreen,
+  ThemePickerScreen,
 } from '../../modules/profile/view/screens';
 import { profileRepository } from '../../modules/profile/repository/profile-repository';
 import { LockScreen } from '../screens/lock-screen';
@@ -33,7 +34,7 @@ const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = () => {
   const routeNameRef = useRef<any>(null);
-  const { active } = useTheme();
+  const currentTheme = UnistylesRuntime.themeName;
 
   const isFirstTime = useFirstTimeAppOpen();
   const [showOnboarding, setShowOnboarding] = useState<boolean>(true);
@@ -151,7 +152,7 @@ export const AppNavigator = () => {
       ref={navigationRef}
       onReady={handleNavContainerReady}
       onStateChange={handleNavStateChanged}
-      theme={active === 'dark' ? DarkTheme : DefaultTheme}
+      theme={DarkTheme}
     >
       <MainAppStack.Navigator>
         {true ? (
@@ -201,6 +202,13 @@ const ScreensWithoutBottomTab = (
     <MainAppStack.Screen
       name="EditProfileScreen"
       component={EditProfileScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <MainAppStack.Screen
+      name="ThemePickerScreen"
+      component={ThemePickerScreen}
       options={{
         headerShown: false,
       }}

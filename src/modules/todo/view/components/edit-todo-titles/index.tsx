@@ -1,6 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
 import React, { useLayoutEffect } from 'react';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -28,7 +28,6 @@ export const EditTodoTitles = ({
   onCancel,
   onConfirm,
 }: Props) => {
-  const styles = useStyles();
 
   const {
     control,

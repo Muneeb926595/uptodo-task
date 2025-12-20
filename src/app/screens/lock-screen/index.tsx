@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../components/text';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
@@ -13,7 +13,6 @@ interface LockScreenProps {
 }
 
 export const LockScreen = ({ onUnlock }: LockScreenProps) => {
-  const styles = useStyles();
   const [biometricType, setBiometricType] = useState<string>('Biometric');
   const [error, setError] = useState<string>('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);

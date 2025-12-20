@@ -12,7 +12,7 @@ import Animated, {
   withTiming,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { HomeHeader, TodoListItem } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
@@ -27,7 +27,7 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
 import { Todo } from '../../../types';
 import { useTodos } from '../../../react-query';
@@ -90,7 +90,7 @@ const SectionHeader = ({
   title: string;
   isCollapsed: boolean;
 }) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const rotation = useSharedValue(isCollapsed ? 180 : 0);
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const SectionHeader = ({
         <AppIcon
           name={AppIconName.arrowDown}
           iconSize={AppIconSize.mini}
-          color={Colors.white}
+          color={theme.colors.white}
           style={{ marginLeft: Layout.widthPercentageToDP(2) }}
         />
       </Animated.View>
@@ -153,8 +153,6 @@ const RenderSectionList = ({
 };
 
 export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
-  const styles = useStyles();
-
   const { data: todos, isLoading, refetch } = useTodos();
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');

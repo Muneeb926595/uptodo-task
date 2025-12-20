@@ -12,8 +12,10 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { styles } from './styles';
 import { Props } from './types';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../theme';
 
 export const Container = (props: Props) => {
+  const { theme } = useTheme();
   const {
     hasScroll,
     bounces,
@@ -47,7 +49,11 @@ export const Container = (props: Props) => {
 
   return (
     <SafeAreaView
-      style={[styles.screenContainer, screenBackgroundStyle]}
+      style={[
+        styles.screenContainer,
+        { backgroundColor: theme.colors.background },
+        screenBackgroundStyle,
+      ]}
       edges={insetsToHandle ?? ['top', 'bottom', 'left', 'right']}
     >
       <KeyboardAvoidingView

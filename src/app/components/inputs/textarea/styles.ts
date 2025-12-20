@@ -1,17 +1,18 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../globals';
 import { Colors } from '../../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   textArea: {
     borderRadius: Layout.widthPercentageToDP(1),
-    color: Colors.surface['DEFAULT'],
-    backgroundColor: Colors.white,
+    color: theme.colors.surface['DEFAULT'],
+    backgroundColor: theme.colors.white,
     paddingVertical: Layout.heightPercentageToDP(
       (Platform.select({ ios: Layout.small, android: Layout.mini }) ?? 1) /
         Layout.divisionFactorForHeight,
     ),
-    borderColor: Colors.borders['DEFAULT'],
+    borderColor: theme.colors.borders['DEFAULT'],
     borderWidth: 1,
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.medium / Layout.divisionFactorForWidth,
@@ -25,4 +26,4 @@ export const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingTop: Layout.heightPercentageToDP(1),
   },
-});
+}));

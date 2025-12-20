@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Colors } from '../../theme';
 import { Layout } from '../../globals';
 
@@ -6,14 +6,14 @@ const ITEM_HEIGHT = 44;
 const VISIBLE_ITEMS = 5;
 const CENTER_OFFSET = Math.floor(VISIBLE_ITEMS / 2);
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   root: {
     padding: Layout.widthPercentageToDP(4),
   },
   title: {
     textAlign: 'center',
     fontSize: Layout.RFValue(16),
-    color: Colors.white,
+    color: theme.colors.white,
     marginBottom: Layout.widthPercentageToDP(3),
   },
   divider: {
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: Layout.RFValue(22),
-    color: Colors.white,
+    color: theme.colors.white,
   },
   selectionOverlay: {
     position: 'absolute',
@@ -45,11 +45,11 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     borderRadius: 10,
-    backgroundColor: Colors.modalBackground,
+    backgroundColor: theme.colors.modalBackground,
   },
   colon: {
     fontSize: Layout.RFValue(28),
-    color: Colors.white,
+    color: theme.colors.white,
     marginHorizontal: Layout.widthPercentageToDP(2),
   },
   actionRow: {
@@ -59,15 +59,15 @@ export const styles = StyleSheet.create({
     marginTop: Layout.widthPercentageToDP(5),
   },
   cancel: {
-    color: Colors.brand['DEFAULT'],
+    color: theme.colors.brand['DEFAULT'],
   },
   chooseBtn: {
-    backgroundColor: Colors.brand['DEFAULT'],
+    backgroundColor: theme.colors.brand['DEFAULT'],
     paddingVertical: Layout.widthPercentageToDP(2.5),
     paddingHorizontal: Layout.widthPercentageToDP(3),
     borderRadius: 6,
   },
   chooseText: {
-    color: Colors.white,
+    color: theme.colors.white,
   },
-});
+}));

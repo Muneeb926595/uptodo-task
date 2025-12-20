@@ -3,7 +3,7 @@ import { Alert, TouchableOpacity, View } from 'react-native';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { HomeHeader } from '../../../../todo/view/components';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { ScreenProps } from '../../../../../app/navigation';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
@@ -14,10 +14,7 @@ import { useImagePicker } from '../../../../../app/hooks';
 import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -33,8 +30,6 @@ const CATEGORY_COLORS = [
 export const CreateNewCategoryScreen = (
   props: ScreenProps<'CreateNewCategoryScreen'>,
 ) => {
-  const styles = useStyles();
-
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
     const persistedUri = await mediaService.persistImage(imageObj?.uri);
     console.log('persistedUri', persistedUri);

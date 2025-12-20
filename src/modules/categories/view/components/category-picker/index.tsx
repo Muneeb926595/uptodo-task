@@ -5,12 +5,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
 import { useCategories } from '../../../react-query/hooks';
 import { Category } from '../../../types/categories.types';
-import { Colors } from '../../../../../app/theme';
 import { Images, Layout } from '../../../../../app/globals';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -29,8 +28,6 @@ type CategoryItemProps = {
 };
 
 const RenderCategoryItem = ({ item, onPress }: CategoryItemProps) => {
-  const styles = useStyles();
-
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}
@@ -54,8 +51,6 @@ const RenderCategoryItem = ({ item, onPress }: CategoryItemProps) => {
 };
 
 export const TodoCategoryPicker = ({ onConfirm }: Props) => {
-  const styles = useStyles();
-
   const { data: categories, isLoading } = useCategories();
 
   const handleAddCategory = () => {

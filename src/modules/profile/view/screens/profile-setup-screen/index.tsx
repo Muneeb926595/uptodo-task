@@ -10,14 +10,14 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { mediaService } from '../../../../services/media';
 import { navigationRef } from '../../../../../app/navigation';
@@ -27,7 +27,7 @@ interface ProfileSetupScreenProps {
 }
 
 export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState<string | undefined>();
@@ -125,7 +125,7 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
                 <AppIcon
                   name={AppIconName.user}
                   iconSize={AppIconSize.huge}
-                  color={Colors.typography[300]}
+                  color={theme.colors.typography['300']}
                   style={styles.avatarPlaceholder}
                 />
               )}
@@ -149,7 +149,7 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
               value={name}
               onChangeText={setName}
               placeholder="Enter your name"
-              placeholderTextColor={Colors.typography[400]}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setNameFocused(true)}
               onBlur={() => setNameFocused(false)}
               autoCapitalize="words"
@@ -166,7 +166,7 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
               value={email}
               onChangeText={setEmail}
               placeholder="Enter your email"
-              placeholderTextColor={Colors.typography[400]}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
               keyboardType="email-address"

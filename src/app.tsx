@@ -1,3 +1,6 @@
+// Initialize Unistyles FIRST before any other imports
+import './app/theme/unistyles';
+
 import React, { useEffect, useState } from 'react';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
@@ -13,14 +16,13 @@ import {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { LocaleProvider } from './app/localisation/locale-provider';
-import { ThemeProvider } from './app/theme/provider';
 import { Constants } from './app/globals';
 import { store } from './app/stores';
 import { Provider } from 'react-redux';
 import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
 import { AppNavigator } from './app/navigation';
 import { storageService, StorageKeys } from './modules/services/storage';
-import { Colors } from './app/theme';
+import { initializeTheme } from './app/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
 import isToday from 'dayjs/plugin/isToday';
@@ -62,30 +64,32 @@ function App() {
       //   throw new AppError('App.tsx', 'initLocaleProvider', e);
     }
     await LocaleProvider.init(appLocale);
+
+    // Initialize theme from storage
+    await initializeTheme();
   };
 
   return appLocaleProviderReady ? (
     <Provider store={store}>
       <ReactQueryProvider>
-        <ThemeProvider>
-          <LocaleProvider>
-            <ToastProvider>
-              <StatusBar
-                barStyle="light-content"
-                backgroundColor={Colors.white}
-              />
-              <GestureHandlerRootView style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                  <MagicSheetPortal />
-                  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                    <AppNavigator />
-                    <MagicModalPortal />
-                  </SafeAreaProvider>
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </ToastProvider>
-          </LocaleProvider>
-        </ThemeProvider>
+        <LocaleProvider>
+          <ToastProvider>
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor="transparent"
+              translucent
+            />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <BottomSheetModalProvider>
+                <MagicSheetPortal />
+                <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                  <AppNavigator />
+                  <MagicModalPortal />
+                </SafeAreaProvider>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </ToastProvider>
+        </LocaleProvider>
       </ReactQueryProvider>
     </Provider>
   ) : null;

@@ -24,6 +24,7 @@ export type MainStackParamList = {
 
   // Profile screens
   EditProfileScreen: undefined;
+  ThemePickerScreen: undefined;
 };
 
 export type MainBottomTabsParamList = {

@@ -1,21 +1,20 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     container: {
       position: 'absolute',
       bottom: Layout.heightPercentageToDP(10),
       left: Layout.widthPercentageToDP(5),
       right: Layout.widthPercentageToDP(5),
-      backgroundColor: tokens.colors.surface['DEFAULT'],
+      backgroundColor: theme.colors.surface['DEFAULT'],
       borderRadius: 8,
       padding: Layout.heightPercentageToDP(2),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      shadowColor: tokens.colors.black,
+      shadowColor: theme.colors.black,
       shadowOffset: {
         width: 0,
         height: 2,
@@ -27,7 +26,7 @@ export const useStyles = themed(tokens =>
     },
     message: {
       flex: 1,
-      color: tokens.colors.typography['DEFAULT'],
+      color: theme.colors.typography['DEFAULT'],
       fontSize: Layout.RFValue(14),
       marginRight: Layout.widthPercentageToDP(2),
     },
@@ -36,7 +35,7 @@ export const useStyles = themed(tokens =>
       paddingVertical: Layout.heightPercentageToDP(1),
     },
     actionLabel: {
-      color: tokens.colors.brand['DEFAULT'],
+      color: theme.colors.brand['DEFAULT'],
       fontSize: Layout.RFValue(14),
       fontWeight: '600',
     },

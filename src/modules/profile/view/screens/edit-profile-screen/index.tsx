@@ -8,21 +8,21 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from '../profile-setup-screen/styles';
+import { styles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { navigationRef } from '../../../../../app/navigation';
 import { UserProfile } from '../../../types/profile.types';
+import { Container } from '../../../../../app/components/container';
 
 export const EditProfileScreen = () => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -76,7 +76,11 @@ export const EditProfileScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <Container
+      insetsToHandle={['top']}
+      screenBackgroundStyle={{ flex: 1 }}
+      containerStyles={{ flex: 1 }}
+    >
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -102,7 +106,7 @@ export const EditProfileScreen = () => {
               value={name}
               onChangeText={setName}
               placeholder="Enter your name"
-              placeholderTextColor={Colors.typography[400]}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setNameFocused(true)}
               onBlur={() => setNameFocused(false)}
               autoCapitalize="words"
@@ -119,7 +123,7 @@ export const EditProfileScreen = () => {
               value={email}
               onChangeText={setEmail}
               placeholder="Enter your email"
-              placeholderTextColor={Colors.typography[400]}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
               keyboardType="email-address"
@@ -146,6 +150,6 @@ export const EditProfileScreen = () => {
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Container>
   );
 };

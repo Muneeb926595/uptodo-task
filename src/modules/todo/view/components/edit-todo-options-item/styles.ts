@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Constants, Fonts, Layout } from '../../../../../app/globals';
-import { Colors } from '../../../../../app/theme';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     row: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -22,20 +20,20 @@ export const useStyles = themed(tokens =>
     },
     sectionActionContainer: {
       borderRadius: 8,
-      backgroundColor: tokens.colors.surface['DEFAULT'],
+      backgroundColor: theme.colors.surface['DEFAULT'],
       paddingVertical: Layout.heightPercentageToDP(1.6),
       paddingHorizontal: Layout.widthPercentageToDP(3),
     },
     sectionLabel: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(16),
     },
     sectionActionLabel: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(12),
     },
     categoryIcon: {

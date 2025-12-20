@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
@@ -10,7 +10,7 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
 
 type HomeHeaderProps = {
@@ -18,7 +18,7 @@ type HomeHeaderProps = {
 };
 
 export const HomeHeader = ({ title }: HomeHeaderProps) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
 
   const handleFilterPress = () => {
     navigationRef.navigate('CreateNewCategoryScreen');
@@ -26,7 +26,10 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
   const handlePressProfile = () => {};
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.transparent }]}
+      edges={['top']}
+    >
       <View style={styles.wrapper}>
         <TouchableOpacity
           hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
@@ -34,7 +37,7 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
         >
           <AppIcon
             name={AppIconName.filter}
-            color={Colors.white}
+            color={theme.colors.white}
             iconSize={AppIconSize.xxlarge}
           />
         </TouchableOpacity>

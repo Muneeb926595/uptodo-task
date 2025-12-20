@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Colors } from '../../theme';
+import { useTheme } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
 import { TouchableOpacity, View } from 'react-native';
@@ -79,6 +79,7 @@ const ProfileStack = () => (
 );
 
 const AddButton = () => {
+  const { theme } = useTheme();
   const handleOpenSheet = async () => {
     await magicSheet.show(() => <CreateTodoBottomSheet />, {
       ...CommonBottomSheetStyle,
@@ -90,23 +91,24 @@ const AddButton = () => {
       <AppIcon
         name={AppIconName.add}
         iconSize={AppIconSize.xlarge}
-        color={Colors.white}
+        color={theme.colors.white}
       />
     </TouchableOpacity>
   );
 };
 
 export const TabsNavigator = () => {
+  const { theme } = useTheme();
   return (
     <MainTabs.Navigator
       id={undefined}
       screenOptions={({ route }) => ({
         headerShown: true,
         lazy: true,
-        tabBarActiveTintColor: Colors.brand['DEFAULT'],
-        tabBarInactiveTintColor: Colors.white,
+        tabBarActiveTintColor: theme.colors.brand.DEFAULT,
+        tabBarInactiveTintColor: theme.colors.white,
         tabBarStyle: {
-          backgroundColor: Colors.surface['100'],
+          backgroundColor: theme.colors.surface['100'],
           paddingTop: Layout.heightPercentageToDP(0.6),
         },
         tabBarIcon: ({ focused, color, size }) => {

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { styles } from './styles';
 import { Props } from './types';
 import { AppText } from '../text';
-import { Colors } from '../../theme';
+import { useUnistyles } from 'react-native-unistyles';
 
 export const Button = (props: Props) => {
   const {
@@ -21,9 +21,11 @@ export const Button = (props: Props) => {
     rightIcon,
   } = props;
 
+  const { theme } = useUnistyles();
+
   const renderButtonContent = () => {
     if (loading) {
-      return <ActivityIndicator color={loaderColor || Colors.white} />;
+      return <ActivityIndicator color={loaderColor || theme.colors.white} />;
     }
 
     return (
@@ -46,7 +48,7 @@ export const Button = (props: Props) => {
         styles.buttonContainer,
         buttonContainer,
         disabled && {
-          backgroundColor: disableBgColor ?? Colors.surface['100'],
+          backgroundColor: disableBgColor ?? theme.colors.surface['100'],
         },
       ]}
       disabled={disabled || loading}

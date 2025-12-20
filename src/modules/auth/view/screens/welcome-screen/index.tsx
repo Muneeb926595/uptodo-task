@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useLogin } from '../../../react-query/hooks';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/authSlice';
-import { useTheme } from '../../../../../app/theme/provider';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { Images } from '../../../../../app/globals';
 import { Text } from 'react-native-gesture-handler';
@@ -13,9 +12,6 @@ import { AppText } from '../../../../../app/components/text';
 import { ScreenProps } from '../../../../../app/navigation';
 
 export const WelcomeScreen = (props: ScreenProps<'WelcomeScreen'>) => {
-  const { colors, mode, setMode } = useTheme();
-  const styles = useStyles();
-
   const handleLogin = () => {
     props.navigation.navigate('LoginScreen');
   };

@@ -8,14 +8,19 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import {
+  useTheme,
+  themeMetadata,
+  UnistylesRuntime,
+  setTheme,
+} from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { biometricService } from '../../../../services/biometric';
 import { mediaService } from '../../../../services/media';
@@ -23,7 +28,13 @@ import { UserProfile } from '../../../types/profile.types';
 import { navigationRef } from '../../../../../app/navigation';
 
 export const ProfileSettingsScreen = () => {
-  const styles = useStyles();
+  const { theme } = useTheme();
+  const currentTheme = UnistylesRuntime.themeName as
+    | 'purpleDream'
+    | 'oceanBlue'
+    | 'forestGreen'
+    | 'sunsetOrange'
+    | 'rosePink';
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [appLockEnabled, setAppLockEnabled] = useState(false);
   const [biometricType, setBiometricType] = useState<string>('');
@@ -75,6 +86,10 @@ export const ProfileSettingsScreen = () => {
 
   const handleEditProfile = () => {
     navigationRef.navigate('EditProfileScreen');
+  };
+
+  const handleThemePicker = () => {
+    navigationRef.navigate('ThemePickerScreen');
   };
 
   const handleToggleAppLock = async (value: boolean) => {
@@ -158,7 +173,10 @@ export const ProfileSettingsScreen = () => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container} edges={['top']}>
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+        edges={['top']}
+      >
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
@@ -169,7 +187,10 @@ export const ProfileSettingsScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      edges={['top']}
+    >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -187,7 +208,7 @@ export const ProfileSettingsScreen = () => {
               <AppIcon
                 name={AppIconName.user}
                 iconSize={AppIconSize.huge}
-                color={Colors.typography[300]}
+                color={theme.colors.typography[300]}
                 style={styles.avatarPlaceholder}
               />
             )}
@@ -199,7 +220,7 @@ export const ProfileSettingsScreen = () => {
               <AppIcon
                 name={AppIconName.image}
                 iconSize={AppIconSize.small}
-                color={Colors.white}
+                color={theme.colors.white}
               />
             </TouchableOpacity>
           </View>
@@ -224,7 +245,7 @@ export const ProfileSettingsScreen = () => {
               <AppIcon
                 name={AppIconName.user}
                 iconSize={AppIconSize.medium}
-                color={Colors.brand.DEFAULT}
+                color={theme.colors.brand.DEFAULT}
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
@@ -237,7 +258,39 @@ export const ProfileSettingsScreen = () => {
             <AppIcon
               name={AppIconName.rightArrow}
               iconSize={AppIconSize.small}
-              color={Colors.typography[300]}
+              color={theme.colors.typography[300]}
+              style={styles.settingChevron}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Appearance Settings */}
+        <View style={styles.section}>
+          <AppText style={styles.sectionHeader}>Appearance</AppText>
+
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={handleThemePicker}
+            activeOpacity={0.7}
+          >
+            <View style={styles.settingItemLeft}>
+              <AppIcon
+                name={AppIconName.show}
+                iconSize={AppIconSize.medium}
+                color={theme.colors.brand.DEFAULT}
+                style={styles.settingIcon}
+              />
+              <View style={styles.settingTextContainer}>
+                <AppText style={styles.settingTitle}>Theme</AppText>
+                <AppText style={styles.settingSubtitle}>
+                  {themeMetadata[currentTheme]?.name || 'Select theme'}
+                </AppText>
+              </View>
+            </View>
+            <AppIcon
+              name={AppIconName.rightArrow}
+              iconSize={AppIconSize.small}
+              color={theme.colors.typography[300]}
               style={styles.settingChevron}
             />
           </TouchableOpacity>
@@ -252,7 +305,7 @@ export const ProfileSettingsScreen = () => {
               <AppIcon
                 name={AppIconName.flag}
                 iconSize={AppIconSize.medium}
-                color={Colors.brand.DEFAULT}
+                color={theme.colors.brand.DEFAULT}
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
@@ -268,10 +321,10 @@ export const ProfileSettingsScreen = () => {
               value={appLockEnabled}
               onValueChange={handleToggleAppLock}
               trackColor={{
-                false: Colors.surface[100],
-                true: Colors.brand.DEFAULT,
+                false: theme.colors.surface[100],
+                true: theme.colors.brand.DEFAULT,
               }}
-              thumbColor={Colors.white}
+              thumbColor={theme.colors.white}
             />
           </View>
         </View>
@@ -286,7 +339,7 @@ export const ProfileSettingsScreen = () => {
             <AppIcon
               name={AppIconName.trash}
               iconSize={AppIconSize.medium}
-              color={Colors.red}
+              color={theme.colors.red}
             />
             <AppText style={styles.logoutText}>Clear Profile Data</AppText>
           </TouchableOpacity>

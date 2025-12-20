@@ -1,8 +1,9 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../globals';
 import { Colors } from '../../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -16,13 +17,13 @@ export const styles = StyleSheet.create({
   },
   input: {
     borderRadius: Layout.widthPercentageToDP(2),
-    color: Colors.white,
-    backgroundColor: Colors.surface['300'],
+    color: theme.colors.white,
+    backgroundColor: theme.colors.surface['300'],
     paddingVertical: Layout.heightPercentageToDP(
       (Platform.select({ ios: Layout.small, android: Layout.mini }) ?? 1) /
         Layout.divisionFactorForHeight,
     ),
-    borderColor: Colors.surface['DEFAULT'],
+    borderColor: theme.colors.surface['DEFAULT'],
     borderWidth: 1,
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.medium / Layout.divisionFactorForWidth,
@@ -34,4 +35,4 @@ export const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontSize: Layout.RFValue(14),
   },
-});
+}));

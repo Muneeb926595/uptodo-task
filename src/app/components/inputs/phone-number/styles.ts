@@ -1,18 +1,19 @@
 import _ from 'lodash';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Colors } from '../../../theme';
 import { Fonts, Layout } from '../../../globals';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: theme.colors.white,
   },
   countryPickerButtonContainer: {
     marginRight: Layout.widthPercentageToDP(1.4),
     borderWidth: 1,
-    borderColor: Colors.surface['DEFAULT'],
+    borderColor: theme.colors.surface['DEFAULT'],
     borderRadius: Layout.widthPercentageToDP(1),
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.small / Layout.divisionFactorForWidth,
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
     }),
   },
   countryCode: {
-    color: Colors.surface['DEFAULT'],
+    color: theme.colors.surface['DEFAULT'],
     ...Fonts.latoRegular,
     fontSize: Layout.RFValue(14),
   },
@@ -46,14 +47,14 @@ export const styles = StyleSheet.create({
       ),
       android: 0,
     }),
-    borderColor: Colors.surface['DEFAULT'],
+    borderColor: theme.colors.surface['DEFAULT'],
     borderRadius: Layout.widthPercentageToDP(1),
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.small / Layout.divisionFactorForWidth,
     ),
   },
   countryPickerButton: { flexDirection: 'row', alignItems: 'center' },
-});
+}));
 
 export const inputTextStyle = (color: string) => ({
   paddingHorizontal: Layout.widthPercentageToDP(1),

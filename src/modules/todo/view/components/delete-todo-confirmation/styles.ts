@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Constants, Fonts, Layout } from '../../../../../app/globals';
-import { Colors } from '../../../../../app/theme';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     backdrop: {
       flex: 1,
-      backgroundColor: Colors.modalBackground,
+      backgroundColor: theme.colors.modalBackground,
       justifyContent: 'center',
       alignItems: 'center',
       padding: Layout.widthPercentageToDP(4),
@@ -16,18 +14,18 @@ export const useStyles = themed(tokens =>
       width: '100%',
       maxWidth: 520,
       maxHeight: Layout.heightPercentageToDP(60),
-      backgroundColor: Colors.surface['DEFAULT'],
+      backgroundColor: theme.colors.surface['DEFAULT'],
       borderRadius: 8,
       padding: Layout.widthPercentageToDP(5),
       paddingHorizontal: Layout.widthPercentageToDP(3),
       borderWidth: 2,
-      borderColor: Colors.brand['DEFAULT'],
+      borderColor: theme.colors.brand['DEFAULT'],
     },
     heading: {
       ...Fonts.latoBold,
       fontWeight: '700',
       fontSize: Layout.RFValue(16),
-      color: tokens.colors.white,
+      color: theme.colors.white,
       textAlign: 'center',
       marginBottom: Layout.heightPercentageToDP(2),
     },
@@ -35,7 +33,7 @@ export const useStyles = themed(tokens =>
       ...Fonts.latoRegular,
       fontWeight: '400',
       fontSize: Layout.RFValue(16),
-      color: tokens.colors.white,
+      color: theme.colors.white,
       textAlign: 'center',
       marginBottom: Layout.heightPercentageToDP(1),
     },
@@ -48,7 +46,7 @@ export const useStyles = themed(tokens =>
     },
     cancel: {
       textAlign: 'center',
-      color: Colors.brand['DEFAULT'],
+      color: theme.colors.brand['DEFAULT'],
     },
     cancelButton: {
       flex: 1,
@@ -56,7 +54,7 @@ export const useStyles = themed(tokens =>
       paddingHorizontal: Layout.widthPercentageToDP(3),
     },
     chooseBtn: {
-      backgroundColor: Colors.brand['DEFAULT'],
+      backgroundColor: theme.colors.brand['DEFAULT'],
       paddingVertical: Layout.widthPercentageToDP(4.5),
       paddingHorizontal: Layout.widthPercentageToDP(3),
       borderRadius: 6,
@@ -64,7 +62,7 @@ export const useStyles = themed(tokens =>
     },
     chooseText: {
       textAlign: 'center',
-      color: Colors.white,
+      color: theme.colors.white,
     },
   }),
 );

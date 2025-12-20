@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { EditTodoHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
@@ -25,7 +25,6 @@ import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item
 import { EditTodoTitles } from '../../components/edit-todo-titles';
 
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
-  const styles = useStyles();
 
   const updateTodoMutation = useUpdateTodo();
 

@@ -13,7 +13,7 @@ import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
@@ -208,7 +208,6 @@ export const EditTodoOptionsListItem = ({
     }
   };
 
-  const styles = useStyles();
   return (
     <TouchableOpacity
       onPress={() => doSelectedOperation(item?.id)}

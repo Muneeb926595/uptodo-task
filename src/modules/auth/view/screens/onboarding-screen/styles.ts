@@ -1,19 +1,18 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../../../app/globals';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     mainContainer: {
       flex: 1,
       width: '100%',
-      backgroundColor: tokens.colors.background,
+      backgroundColor: theme.colors.background,
     },
     heading: {
       ...Fonts.bold,
       fontWeight: '700',
       fontSize: Layout.RFValue(32),
-      color: tokens.colors.typography['DEFAULT'],
+      color: theme.colors.typography['DEFAULT'],
       lineHeight: 40,
       textAlign: 'center',
       marginBottom: Layout.heightPercentageToDP(2),

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../globals';
 
 export const styles = StyleSheet.create({

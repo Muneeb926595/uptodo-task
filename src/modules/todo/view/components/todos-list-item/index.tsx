@@ -7,7 +7,7 @@ import Animated, {
   interpolate,
   Extrapolation,
 } from 'react-native-reanimated';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { formatTodoDateTime } from '../../../../../app/utils';
 import { Todo } from '../../../types';
@@ -19,7 +19,7 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
 import {
   useUpdateTodo,
@@ -32,15 +32,15 @@ import { LocaleProvider } from '../../../../../app/localisation/locale-provider'
 import { useToast } from '../../../../../app/context/toast-context';
 
 export const TodoListItem = ({ item }: { item: Todo }) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const translateX = useSharedValue(0);
   const { showToast } = useToast();
 
   // Priority color based on isOverdue and priority level
   const priorityColor = item.isOverdue
-    ? Colors.red
+    ? theme.colors.red
     : item.priority >= 8
-    ? Colors.brand.DEFAULT
+    ? theme.colors.brand.DEFAULT
     : item.priority >= 5
     ? '#F4D35E'
     : '#7DDB9B';
@@ -164,7 +164,7 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
         >
           <AppIcon
             name={AppIconName.trash}
-            color={Colors.white}
+            color={theme.colors.white}
             iconSize={AppIconSize.primary}
           />
           <AppText style={styles.deleteActionLabel}>
@@ -182,8 +182,8 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
               transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
             }}
             tintColors={{
-              true: Colors.brand['DEFAULT'],
-              false: Colors.white,
+              true: theme.colors.brand.DEFAULT,
+              false: theme.colors.white,
             }}
             onValueChange={handleCompleteTodo}
           />

@@ -4,7 +4,7 @@ import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
 import { ScreenProps } from '../../../../../app/navigation';
 import Svg, { Circle } from 'react-native-svg';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { Layout } from '../../../../../app/globals';
 import Animated, {
   useSharedValue,
@@ -22,7 +22,7 @@ import {
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../app/stores';
-import { useStyles } from './styles';
+import { styles } from './styles';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -61,7 +61,7 @@ const applicationsData = [
 ];
 
 export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
 
   // React Query hooks
   const { data: stats } = useFocusStats();
@@ -206,7 +206,7 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
               cx={radius + strokeWidth}
               cy={radius + strokeWidth}
               r={radius}
-              stroke={Colors.surface['50']}
+              stroke={theme.colors.surface['50']}
               strokeWidth={strokeWidth}
               fill="none"
             />
@@ -215,7 +215,7 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
               cx={radius + strokeWidth}
               cy={radius + strokeWidth}
               r={radius}
-              stroke={Colors.brand['DEFAULT']}
+              stroke={theme.colors.brand.DEFAULT}
               strokeWidth={strokeWidth}
               fill="none"
               strokeDasharray={circumference}
@@ -287,8 +287,8 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
                           {
                             height: barHeight,
                             backgroundColor: isToday
-                              ? Colors.brand['DEFAULT']
-                              : Colors.surface['50'],
+                              ? theme.colors.brand.DEFAULT
+                              : theme.colors.surface['50'],
                           },
                         ]}
                       />

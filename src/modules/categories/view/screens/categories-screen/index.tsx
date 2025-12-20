@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { Conditional } from '../../../../../app/components/conditional';
@@ -13,8 +13,6 @@ import { CalendarPicker } from '../../../../../app/components/calendar-picker';
 const todos = [];
 
 export const CategoriesScreen = () => {
-  const styles = useStyles();
-
   const RenderTodosList = <View>{/* Render the list of todos here */}</View>;
 
   const RenderEmptySection = (
