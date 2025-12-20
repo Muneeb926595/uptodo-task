@@ -21,6 +21,9 @@ export type MainStackParamList = {
   // Categories screens
   CategoriesScreen: undefined;
   CreateNewCategoryScreen: undefined;
+
+  // Profile screens
+  EditProfileScreen: undefined;
 };
 
 export type MainBottomTabsParamList = {

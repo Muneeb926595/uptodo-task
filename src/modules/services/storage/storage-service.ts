@@ -18,6 +18,9 @@ export enum StorageKeys {
   APP_THEME = 'app_theme',
   SETTINGS = 'app_settings',
   IS_APP_OPEND_FIRSTTIME = 'is_app_opened_firsttime',
+  IS_PROFILE_SETUP_COMPLETE = 'is_profile_setup_complete',
+  APP_LOCK_ENABLED = 'app_lock_enabled',
+  BIOMETRIC_TYPE = 'biometric_type',
 
   // Todo Module
   TODOS = 'todos',

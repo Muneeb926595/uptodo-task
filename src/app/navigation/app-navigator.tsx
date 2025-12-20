@@ -21,6 +21,10 @@ import { useFirstTimeAppOpen } from '../hooks';
 import { Conditional } from '../components/conditional';
 import { OnboardingScreen } from '../../modules/auth/view/screens/onboarding-screen';
 import { StorageKeys, storageService } from '../../modules/services/storage';
+import { ProfileSetupScreen, EditProfileScreen } from '../../modules/profile/view/screens';
+import { profileRepository } from '../../modules/profile/repository/profile-repository';
+import { LockScreen } from '../screens/lock-screen';
+import { biometricService } from '../../modules/services/biometric';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
@@ -30,13 +34,39 @@ export const AppNavigator = () => {
 
   const isFirstTime = useFirstTimeAppOpen();
   const [showOnboarding, setShowOnboarding] = useState<boolean>(true);
+  const [isProfileSetup, setIsProfileSetup] = useState<boolean | null>(null);
+  const [isLocked, setIsLocked] = useState<boolean>(true);
+  const [appLockEnabled, setAppLockEnabled] = useState<boolean>(false);
 
   useEffect(() => {
+    initializeApp();
+  }, [isFirstTime]);
+
+  const initializeApp = async () => {
     // Only hide splash once we know if it's first time or not
-    if (isFirstTime !== null) {
-      hideSplash();
+    if (isFirstTime === null) {
+      return;
     }
 
+    // Check if profile is set up
+    const profileSetupComplete = await profileRepository.isProfileSetupComplete();
+    setIsProfileSetup(profileSetupComplete);
+
+    // Check if app lock is enabled
+    const lockEnabled = await profileRepository.isAppLockEnabled();
+    setAppLockEnabled(lockEnabled);
+
+    // If lock is enabled, authenticate
+    if (lockEnabled) {
+      const result = await biometricService.authenticate(undefined, false);
+      setIsLocked(!result.success);
+    } else {
+      setIsLocked(false);
+    }
+
+    hideSplash();
+
+    // Initialize services
     (async () => {
       // Notifications
       await notificationService.ensurePermissions();
@@ -52,11 +82,49 @@ export const AppNavigator = () => {
         console.error('Failed to check focus session on startup:', e);
       }
     })();
-  }, [isFirstTime]);
+  };
 
-  // Show nothing while checking first-time status
-  if (isFirstTime === null) {
+  // Show nothing while checking first-time status or profile setup
+  if (isFirstTime === null || isProfileSetup === null) {
     return null;
+  }
+
+  // Show lock screen if app lock is enabled and not authenticated
+  if (appLockEnabled && isLocked) {
+    return <LockScreen onUnlock={() => setIsLocked(false)} />;
+  }
+
+  // Show onboarding if first time
+  if (isFirstTime && showOnboarding) {
+    return (
+      <OnboardingScreen
+        onComplete={async () => {
+          await storageService.setItem(
+            StorageKeys.IS_APP_OPEND_FIRSTTIME,
+            'false',
+          );
+          setShowOnboarding(false);
+        }}
+        onSkip={async () => {
+          await storageService.setItem(
+            StorageKeys.IS_APP_OPEND_FIRSTTIME,
+            'false',
+          );
+          setShowOnboarding(false);
+        }}
+      />
+    );
+  }
+
+  // Show profile setup if not completed
+  if (!isProfileSetup) {
+    return (
+      <ProfileSetupScreen
+        onComplete={() => {
+          setIsProfileSetup(true);
+        }}
+      />
+    );
   }
 
   // to debug react-navigation with flipper
@@ -98,29 +166,7 @@ export const AppNavigator = () => {
     </NavigationContainer>
   );
 
-  return (
-    <Conditional
-      ifTrue={isFirstTime && showOnboarding}
-      elseChildren={RenderAppNavigations}
-    >
-      <OnboardingScreen
-        onComplete={async () => {
-          await storageService.setItem(
-            StorageKeys.IS_APP_OPEND_FIRSTTIME,
-            'false',
-          );
-          setShowOnboarding(false);
-        }}
-        onSkip={async () => {
-          await storageService.setItem(
-            StorageKeys.IS_APP_OPEND_FIRSTTIME,
-            'false',
-          );
-          setShowOnboarding(false);
-        }}
-      />
-    </Conditional>
-  );
+  return RenderAppNavigations;
 };
 
 const ScreensWithoutBottomTab = (
@@ -144,6 +190,13 @@ const ScreensWithoutBottomTab = (
     <MainAppStack.Screen
       name="CreateNewCategoryScreen"
       component={CreateNewCategoryScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <MainAppStack.Screen
+      name="EditProfileScreen"
+      component={EditProfileScreen}
       options={{
         headerShown: false,
       }}

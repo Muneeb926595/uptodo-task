@@ -1,0 +1,143 @@
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useStyles } from '../profile-setup-screen/styles';
+import { AppText } from '../../../../../app/components/text';
+import { AppIcon } from '../../../../../app/components/icon';
+import { AppIconName, AppIconSize } from '../../../../../app/components/icon/types';
+import { Colors } from '../../../../../app/theme';
+import { profileRepository } from '../../../repository/profile-repository';
+import { navigationRef } from '../../../../../app/navigation';
+import { UserProfile } from '../../../types/profile.types';
+
+export const EditProfileScreen = () => {
+  const styles = useStyles();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nameFocused, setNameFocused] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
+  const loadProfile = async () => {
+    const userProfile = await profileRepository.getProfile();
+    if (userProfile) {
+      setProfile(userProfile);
+      setName(userProfile.name);
+      setEmail(userProfile.email || '');
+    }
+  };
+
+  const isNameValid = name.trim().length >= 2;
+  const hasChanges = name.trim() !== profile?.name || email.trim() !== (profile?.email || '');
+
+  const handleSave = async () => {
+    if (!isNameValid) {
+      Alert.alert('Invalid Name', 'Please enter a valid name (at least 2 characters)');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await profileRepository.updateProfile({
+        name: name.trim(),
+        email: email.trim() || undefined,
+      });
+
+      Alert.alert('Success', 'Profile updated successfully', [
+        { text: 'OK', onPress: () => navigationRef.goBack() },
+      ]);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      Alert.alert('Error', 'Failed to update profile. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header */}
+          <View style={styles.header}>
+            <AppText style={styles.title}>Edit Profile</AppText>
+            <AppText style={styles.subtitle}>
+              Update your personal information
+            </AppText>
+          </View>
+
+          {/* Name Input */}
+          <View style={styles.inputSection}>
+            <AppText style={styles.label}>Name *</AppText>
+            <TextInput
+              style={[styles.input, nameFocused && styles.inputFocused]}
+              value={name}
+              onChangeText={setName}
+              placeholder="Enter your name"
+              placeholderTextColor={Colors.typography[400]}
+              onFocus={() => setNameFocused(true)}
+              onBlur={() => setNameFocused(false)}
+              autoCapitalize="words"
+              returnKeyType="next"
+              maxLength={50}
+            />
+          </View>
+
+          {/* Email Input */}
+          <View style={styles.inputSection}>
+            <AppText style={styles.label}>Email (Optional)</AppText>
+            <TextInput
+              style={[styles.input, emailFocused && styles.inputFocused]}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Enter your email"
+              placeholderTextColor={Colors.typography[400]}
+              onFocus={() => setEmailFocused(true)}
+              onBlur={() => setEmailFocused(false)}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              returnKeyType="done"
+              maxLength={100}
+            />
+          </View>
+
+          {/* Save Button */}
+          <TouchableOpacity
+            style={[
+              styles.continueButton,
+              (!isNameValid || !hasChanges || isSubmitting) && styles.continueButtonDisabled,
+            ]}
+            onPress={handleSave}
+            disabled={!isNameValid || !hasChanges || isSubmitting}
+            activeOpacity={0.7}
+          >
+            <AppText style={styles.continueButtonText}>
+              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            </AppText>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};

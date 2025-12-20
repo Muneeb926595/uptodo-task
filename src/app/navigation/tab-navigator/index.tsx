@@ -18,6 +18,7 @@ import {
   CalendarScreen,
 } from '../../../modules/todo/view/screens';
 import { FocusScreen } from '../../../modules/focus/view/screens';
+import { ProfileSettingsScreen } from '../../../modules/profile/view/screens';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -66,16 +67,10 @@ const FocusStack = () => (
 );
 
 const ProfileStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: true }}>
+  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="ProfileScreen"
-      component={() => {
-        return (
-          <View>
-            <AppText>Calendar screen</AppText>
-          </View>
-        );
-      }}
+      component={ProfileSettingsScreen}
       options={{
         headerShown: false,
       }}

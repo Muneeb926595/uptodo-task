@@ -1,0 +1,131 @@
+import { StyleSheet } from 'react-native';
+import { themed } from '../../../../../app/theme/utils';
+import { Fonts, Layout } from '../../../../../app/globals';
+
+export const useStyles = themed(tokens =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: tokens.colors.background,
+    },
+    scrollContent: {
+      paddingBottom: Layout.heightPercentageToDP(4),
+    },
+    section: {
+      paddingHorizontal: Layout.widthPercentageToDP(5),
+      paddingVertical: Layout.heightPercentageToDP(3),
+    },
+    profileSection: {
+      alignItems: 'center',
+      paddingTop: Layout.heightPercentageToDP(4),
+    },
+    avatarContainer: {
+      width: Layout.widthPercentageToDP(25),
+      height: Layout.widthPercentageToDP(25),
+      borderRadius: Layout.widthPercentageToDP(12.5),
+      backgroundColor: tokens.colors.surface.DEFAULT,
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'hidden',
+      borderWidth: 3,
+      borderColor: tokens.colors.brand.DEFAULT,
+      marginBottom: Layout.heightPercentageToDP(2),
+    },
+    avatar: {
+      width: '100%',
+      height: '100%',
+    },
+    avatarPlaceholder: {
+      width: Layout.widthPercentageToDP(10),
+      height: Layout.widthPercentageToDP(10),
+    },
+    editAvatarButton: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      backgroundColor: tokens.colors.brand.DEFAULT,
+      width: Layout.widthPercentageToDP(9),
+      height: Layout.widthPercentageToDP(9),
+      borderRadius: Layout.widthPercentageToDP(4.5),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 2,
+      borderColor: tokens.colors.background,
+    },
+    profileName: {
+      ...Fonts.latoBold,
+      fontSize: Layout.RFValue(20),
+      color: tokens.colors.typography.DEFAULT,
+      marginBottom: Layout.heightPercentageToDP(0.5),
+    },
+    profileEmail: {
+      ...Fonts.latoRegular,
+      fontSize: Layout.RFValue(13),
+      color: tokens.colors.typography[300],
+    },
+    sectionHeader: {
+      ...Fonts.latoBold,
+      fontSize: Layout.RFValue(12),
+      color: tokens.colors.typography[300],
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+      marginBottom: Layout.heightPercentageToDP(1.5),
+    },
+    settingItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: tokens.colors.surface.DEFAULT,
+      borderRadius: 12,
+      paddingHorizontal: Layout.widthPercentageToDP(4),
+      paddingVertical: Layout.heightPercentageToDP(2),
+      marginBottom: Layout.heightPercentageToDP(1.5),
+    },
+    settingItemLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+    },
+    settingIcon: {
+      marginRight: Layout.widthPercentageToDP(3),
+    },
+    settingTextContainer: {
+      flex: 1,
+    },
+    settingTitle: {
+      ...Fonts.latoRegular,
+      fontSize: Layout.RFValue(15),
+      color: tokens.colors.typography.DEFAULT,
+      marginBottom: 2,
+    },
+    settingSubtitle: {
+      ...Fonts.latoRegular,
+      fontSize: Layout.RFValue(12),
+      color: tokens.colors.typography[300],
+    },
+    settingChevron: {
+      marginLeft: Layout.widthPercentageToDP(2),
+    },
+    divider: {
+      height: 1,
+      backgroundColor: tokens.colors.borders[50],
+      marginVertical: Layout.heightPercentageToDP(2),
+    },
+    logoutButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: tokens.colors.surface.DEFAULT,
+      borderRadius: 12,
+      paddingVertical: Layout.heightPercentageToDP(2),
+      borderWidth: 1,
+      borderColor: tokens.colors.red,
+    },
+    logoutText: {
+      ...Fonts.latoBold,
+      fontSize: Layout.RFValue(15),
+      color: tokens.colors.red,
+      marginLeft: Layout.widthPercentageToDP(2),
+    },
+  }),
+);

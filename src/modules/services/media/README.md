@@ -2,16 +2,6 @@
 
 Centralized media management using the adapter pattern for image picking, compression, and uploading.
 
-## Architecture
-
-```
-media/
-├── media-adapter.ts                          # Interface definition
-├── react-native-image-picker-adapter.ts     # React Native implementation
-├── media-service.ts                         # Service class with business logic
-└── index.ts                                 # Singleton export
-```
-
 ## Usage
 
 ```typescript
