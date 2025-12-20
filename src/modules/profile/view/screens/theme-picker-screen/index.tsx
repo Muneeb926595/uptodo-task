@@ -6,8 +6,8 @@ import {
   themeMetadata,
   type ThemeName,
   createStyles,
-  setTheme,
   UnistylesRuntime,
+  themeService,
 } from '../../../../../app/theme';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
@@ -22,8 +22,29 @@ export const ThemePickerScreen = () => {
   const currentTheme = UnistylesRuntime.themeName as ThemeName;
   const { theme } = useTheme();
 
-  const handleThemeSelect = (themeName: ThemeName) => {
-    setTheme(themeName);
+  const handleThemeSelect = (themeName: ThemeName, event: any) => {
+    if (currentTheme === themeName) return;
+
+    // Get the touch coordinates for circular animation
+    event.currentTarget.measure(
+      (
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        px: number,
+        py: number,
+      ) => {
+        themeService.setTheme(themeName, {
+          animationType: 'circular',
+          duration: 900,
+          startingPoint: {
+            cx: px + width / 2,
+            cy: py + height / 2,
+          },
+        });
+      },
+    );
   };
 
   const handleBack = () => {
@@ -70,7 +91,7 @@ export const ThemePickerScreen = () => {
             <TouchableOpacity
               key={themeName}
               style={[styles.themeCard, isSelected && styles.themeCardSelected]}
-              onPress={() => handleThemeSelect(themeName)}
+              onPress={e => handleThemeSelect(themeName, e)}
               activeOpacity={0.7}
             >
               {/* Theme Info */}

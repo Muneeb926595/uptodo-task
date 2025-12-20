@@ -7,6 +7,20 @@
 import { storageService, StorageKeys } from '../../modules/services/storage';
 import { ThemeAdapter, ThemeName, ThemeMetadata } from './theme-adapter';
 import { UnistylesThemeAdapter } from './unistyles-theme-adapter';
+import switchTheme from 'react-native-theme-switch-animation';
+
+export type AnimationType = 'fade' | 'circular' | 'inverted-circular';
+
+export interface ThemeSwitchOptions {
+  animationType?: AnimationType;
+  duration?: number;
+  startingPoint?: {
+    cx?: number;
+    cy?: number;
+    cxRatio?: number;
+    cyRatio?: number;
+  };
+}
 
 class ThemeService {
   private adapter: ThemeAdapter;
@@ -32,10 +46,28 @@ class ThemeService {
   /**
    * Set the active theme and persist to storage
    * @param name - Theme name to activate
+   * @param options - Animation options (optional)
    */
-  async setTheme(name: ThemeName): Promise<void> {
+  async setTheme(name: ThemeName, options?: ThemeSwitchOptions): Promise<void> {
     try {
-      this.adapter.setTheme(name);
+      if (options) {
+        // Use animated theme switch
+        switchTheme({
+          switchThemeFunction: () => {
+            this.adapter.setTheme(name);
+          },
+          animationConfig: {
+            type: options.animationType || 'circular',
+            duration: options.duration || 900,
+            ...(options.startingPoint && {
+              startingPoint: options.startingPoint,
+            }),
+          },
+        });
+      } else {
+        // Direct theme switch without animation
+        this.adapter.setTheme(name);
+      }
       await storageService.setItem(StorageKeys.APP_THEME, name);
     } catch (error) {
       console.error('Failed to save theme:', error);

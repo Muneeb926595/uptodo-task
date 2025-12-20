@@ -86,7 +86,18 @@ function App() {
                 </SafeAreaProvider>
                 <MagicSheetPortal />
               </BottomSheetModalProvider>
-              <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: 9999, elevation: 9999 }} pointerEvents="box-none">
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  zIndex: 9999,
+                  elevation: 9999,
+                }}
+                pointerEvents="box-none"
+              >
                 <MagicModalPortal />
               </View>
             </GestureHandlerRootView>

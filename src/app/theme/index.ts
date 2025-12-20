@@ -11,6 +11,7 @@ export * from './context';
 
 // Re-export service for advanced usage
 export { themeService } from './service';
+export type { AnimationType, ThemeSwitchOptions } from './service';
 
 // Re-export adapter types for extensibility
 export type { ThemeAdapter } from './theme-adapter';
