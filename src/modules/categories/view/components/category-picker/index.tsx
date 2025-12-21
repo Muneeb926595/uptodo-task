@@ -4,7 +4,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
@@ -15,7 +15,6 @@ import { FormattedMessage } from '../../../../../app/localisation/locale-formatt
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { navigationRef } from '../../../../../app/navigation';
 import { magicModal } from 'react-native-magic-modal';
-import { magicSheet } from 'react-native-magic-sheet';
 import { CustomImage } from '../../../../../app/components/custom-image';
 
 type Props = {
@@ -54,7 +53,6 @@ export const TodoCategoryPicker = ({ onConfirm }: Props) => {
   const { data: categories, isLoading } = useCategories();
 
   const handleAddCategory = () => {
-    magicSheet.hide();
     magicModal.hideAll();
     navigationRef.navigate('CreateNewCategoryScreen');
   };

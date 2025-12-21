@@ -201,6 +201,7 @@ const ScreensWithoutBottomTab = (
       component={CreateNewCategoryScreen}
       options={{
         headerShown: false,
+        presentation: 'transparentModal',
       }}
     />
     <MainAppStack.Screen
