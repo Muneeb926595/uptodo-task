@@ -81,7 +81,7 @@ export const CreateNewCategoryScreen = (
 
   return (
     <Container
-      insetsToHandle={['top', 'left', 'right']}
+      insetsToHandle={['top', 'left', 'right', 'bottom']}
       screenBackgroundStyle={{
         flex: 1,
         paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,

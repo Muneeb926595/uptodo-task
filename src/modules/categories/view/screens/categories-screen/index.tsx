@@ -36,7 +36,7 @@ export const CategoriesScreen = () => {
 
   return (
     <Container
-      insetsToHandle={['left', 'right']}
+      insetsToHandle={['left', 'right', 'bottom']}
       screenBackgroundStyle={{ flex: 1 }}
       containerStyles={{ flex: 1 }}
     >

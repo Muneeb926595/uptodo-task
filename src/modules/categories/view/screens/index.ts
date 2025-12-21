@@ -1,1 +1,1 @@
-export * from './categories-screen';
+export * from './create-new-category-screen';

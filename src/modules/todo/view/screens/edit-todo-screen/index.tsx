@@ -159,7 +159,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
 
   return (
     <Container
-      insetsToHandle={['left', 'right']}
+      insetsToHandle={['left', 'right', 'bottom']}
       screenBackgroundStyle={{
         flex: 1,
         paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,

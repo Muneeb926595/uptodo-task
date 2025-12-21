@@ -11,7 +11,6 @@ import { Layout } from '../../globals';
 import { styles } from './styles';
 import { getCommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
-import { CategoriesScreen } from '../../../modules/categories/view/screens';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
 import {
   TodoListingScreen,
@@ -29,13 +28,6 @@ const HomeStack = () => (
     <Stack.Screen
       name="TodoListingScreen"
       component={TodoListingScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <Stack.Screen
-      name="CategoriesScreen"
-      component={CategoriesScreen}
       options={{
         headerShown: false,
       }}
