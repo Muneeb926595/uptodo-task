@@ -25,7 +25,6 @@ import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item
 import { EditTodoTitles } from '../../components/edit-todo-titles';
 
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
-
   const updateTodoMutation = useUpdateTodo();
 
   const [totoActions] = useState<EditTodoOptions[]>([

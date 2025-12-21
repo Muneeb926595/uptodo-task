@@ -9,7 +9,7 @@ import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { styles } from './styles';
-import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
+import { getCommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
 import { CategoriesScreen } from '../../../modules/categories/view/screens';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
@@ -82,8 +82,11 @@ const AddButton = () => {
   const { theme } = useTheme();
   const handleOpenSheet = async () => {
     await magicSheet.show(() => <CreateTodoBottomSheet />, {
-      ...CommonBottomSheetStyle,
+      ...getCommonBottomSheetStyle(theme.colors.surface['DEFAULT']),
       snapPoints: [Layout.heightPercentageToDP(54)],
+      android_keyboardInputMode: 'adjustResize',
+      keyboardBehavior: 'interactive',
+      keyboardBlurBehavior: 'restore',
     });
   };
   return (

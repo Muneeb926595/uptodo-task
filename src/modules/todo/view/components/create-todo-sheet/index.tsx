@@ -150,6 +150,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                   LocaleProvider.IDs.label.taskName,
                 )}
                 isError={errors?.title}
+                useBottomSheetTextInput
               />
             )}
             name="title"
@@ -174,6 +175,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                   LocaleProvider.IDs.label.description,
                 )}
                 isError={errors?.description}
+                useBottomSheetTextInput
               />
             )}
             name="description"

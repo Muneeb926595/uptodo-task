@@ -21,21 +21,9 @@ export const styles = StyleSheet.create(theme => ({
   },
 }));
 
-export const getCommonBottomSheetStyle = () => {
-  const { Colors } = require('../../theme');
+export const getCommonBottomSheetStyle = (backgroundColor: string) => {
   return {
-    handleStyle: { display: 'none' },
-    backgroundStyle: { backgroundColor: Colors.surface['DEFAULT'] },
+    handleStyle: { display: 'none' as const },
+    backgroundStyle: { backgroundColor },
   };
 };
-
-// Lazy initialization
-let _commonBottomSheetStyleCache: any = null;
-export const CommonBottomSheetStyle = new Proxy({} as any, {
-  get: (_, prop) => {
-    if (!_commonBottomSheetStyleCache) {
-      _commonBottomSheetStyleCache = getCommonBottomSheetStyle();
-    }
-    return _commonBottomSheetStyleCache[prop as string];
-  },
-});
