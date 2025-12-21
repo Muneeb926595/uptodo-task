@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
@@ -12,6 +12,9 @@ import {
 } from '../../../../../app/components/icon/types';
 import { useTheme } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
+import { profileRepository } from '../../../../profile/repository/profile-repository';
+import { UserProfile } from '../../../../profile/types/profile.types';
+import { Conditional } from '../../../../../app/components/conditional';
 
 type HomeHeaderProps = {
   title: string;
@@ -20,10 +23,28 @@ type HomeHeaderProps = {
 export const HomeHeader = ({ title }: HomeHeaderProps) => {
   const { theme } = useTheme();
 
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
+  const loadProfile = async () => {
+    try {
+      const userProfile = await profileRepository.getProfile();
+      setProfile(userProfile);
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    }
+  };
+
   const handleFilterPress = () => {
     navigationRef.navigate('CreateNewCategoryScreen');
   };
-  const handlePressProfile = () => {};
+  const handlePressProfile = () => {
+    // @ts-ignore
+    navigationRef.navigate('Profile');
+  };
 
   return (
     <SafeAreaView
@@ -49,16 +70,27 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
           onPress={handlePressProfile}
           style={{ flex: 0.2 }}
         >
-          <CustomImage
-            uri={undefined}
-            imageStyles={styles.headerImage}
-            placeHolder={Images.Avatar}
-            resizeMode="cover"
-            svgDimensions={{
-              width: Layout.widthPercentageToDP(8),
-              height: Layout.widthPercentageToDP(8),
-            }}
-          />
+          <Conditional
+            ifTrue={profile?.avatar}
+            elseChildren={
+              <AppIcon
+                name={AppIconName.user}
+                iconSize={AppIconSize.primary}
+                color={theme.colors.white}
+              />
+            }
+          >
+            <CustomImage
+              uri={profile?.avatar}
+              imageStyles={styles.headerImage}
+              placeHolder={Images.Avatar}
+              resizeMode="cover"
+              svgDimensions={{
+                width: Layout.widthPercentageToDP(8),
+                height: Layout.widthPercentageToDP(8),
+              }}
+            />
+          </Conditional>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
