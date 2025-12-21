@@ -7,6 +7,12 @@ export const styles = StyleSheet.create(theme => ({
     ...Fonts.latoBold,
     fontSize: Layout.RFValue(26),
   },
+  addButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: Layout.heightPercentageToDP(4),
+  },
   floatingButton: {
     width: Layout.widthPercentageToDP(16),
     height: Layout.widthPercentageToDP(16),
@@ -14,7 +20,6 @@ export const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.colors.brand.DEFAULT,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: Layout.heightPercentageToDP(4),
     ...createNeonEffect(theme.colors.brand.DEFAULT, 'high'),
   },
 }));

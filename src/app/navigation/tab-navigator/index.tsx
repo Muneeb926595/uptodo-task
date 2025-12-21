@@ -90,13 +90,15 @@ const AddButton = () => {
     });
   };
   return (
-    <TouchableOpacity onPress={handleOpenSheet} style={styles.floatingButton}>
-      <AppIcon
-        name={AppIconName.add}
-        iconSize={AppIconSize.xlarge}
-        color={theme.colors.white}
-      />
-    </TouchableOpacity>
+    <View style={styles.addButtonContainer}>
+      <TouchableOpacity onPress={handleOpenSheet} style={styles.floatingButton}>
+        <AppIcon
+          name={AppIconName.add}
+          iconSize={AppIconSize.xlarge}
+          color={theme.colors.white}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 
