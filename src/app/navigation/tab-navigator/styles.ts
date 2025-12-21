@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../globals';
+import { createNeonEffect } from '../../theme/neon-effects';
 
 export const styles = StyleSheet.create(theme => ({
   headerTitle: {
@@ -14,5 +15,6 @@ export const styles = StyleSheet.create(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: Layout.heightPercentageToDP(4),
+    ...createNeonEffect(theme.colors.brand.DEFAULT, 'high'),
   },
 }));

@@ -19,6 +19,9 @@ export type { ThemeAdapter } from './theme-adapter';
 // Re-export Unistyles runtime for advanced cases
 export { UnistylesRuntime } from 'react-native-unistyles';
 
+// Re-export neon effects
+export * from './neon-effects';
+
 // Backwards compatibility: Colors getter
 import { UnistylesRuntime } from 'react-native-unistyles';
 export const Colors = new Proxy({} as any, {
