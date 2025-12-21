@@ -20,6 +20,8 @@ export const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.colors.brand.DEFAULT,
     justifyContent: 'center',
     alignItems: 'center',
-    ...createNeonEffect(theme.colors.brand.DEFAULT, 'high'),
+    shadowColor: theme.colors.brand.DEFAULT,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.9,
   },
 }));

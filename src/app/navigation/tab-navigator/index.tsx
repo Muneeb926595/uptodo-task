@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
-import { TouchableOpacity, View } from 'react-native';
+import { Animated, TouchableOpacity, View } from 'react-native';
 import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
@@ -19,6 +19,7 @@ import {
 } from '../../../modules/todo/view/screens';
 import { FocusScreen } from '../../../modules/focus/view/screens';
 import { ProfileSettingsScreen } from '../../../modules/profile/view/screens';
+import { useEffect, useRef } from 'react';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -80,6 +81,31 @@ const ProfileStack = () => (
 
 const AddButton = () => {
   const { theme } = useTheme();
+  const glowAnim = useRef(new Animated.Value(15)).current;
+
+  useEffect(() => {
+    const glow = Animated.loop(
+      Animated.sequence([
+        Animated.timing(glowAnim, {
+          toValue: 30,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(glowAnim, {
+          toValue: 15,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+
+    glow.start();
+
+    return () => {
+      glow.stop();
+    };
+  }, []);
+
   const handleOpenSheet = async () => {
     await magicSheet.show(() => <CreateTodoBottomSheet />, {
       ...getCommonBottomSheetStyle(theme.colors.surface['DEFAULT']),
@@ -89,15 +115,26 @@ const AddButton = () => {
       keyboardBlurBehavior: 'restore',
     });
   };
+
   return (
     <View style={styles.addButtonContainer}>
-      <TouchableOpacity onPress={handleOpenSheet} style={styles.floatingButton}>
-        <AppIcon
-          name={AppIconName.add}
-          iconSize={AppIconSize.xlarge}
-          color={theme.colors.white}
-        />
-      </TouchableOpacity>
+      <Animated.View
+        style={[
+          styles.floatingButton,
+          {
+            shadowRadius: glowAnim,
+            elevation: glowAnim,
+          },
+        ]}
+      >
+        <TouchableOpacity onPress={handleOpenSheet}>
+          <AppIcon
+            name={AppIconName.add}
+            iconSize={AppIconSize.xlarge}
+            color={theme.colors.white}
+          />
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };
