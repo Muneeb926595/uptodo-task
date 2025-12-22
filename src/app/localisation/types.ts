@@ -188,6 +188,14 @@ export interface ILabelTexts extends IMessageGroup {
   readonly emailOptional: string;
   readonly saveChanges: string;
   readonly saving: string;
+  readonly sortTasks: string;
+  readonly sortDefault: string;
+  readonly sortPriorityHighToLow: string;
+  readonly sortPriorityLowToHigh: string;
+  readonly sortDateNewest: string;
+  readonly sortDateOldest: string;
+  readonly sortTitleAZ: string;
+  readonly sortTitleZA: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {
@@ -277,6 +285,14 @@ export interface IMessageTexts extends IMessageGroup {
   readonly upTodoIsLocked: string;
   readonly somethingWentWrong: string;
   readonly pressMeToLogin: string;
+  readonly sortTasks: string;
+  readonly sortDefault: string;
+  readonly sortPriorityHighToLow: string;
+  readonly sortPriorityLowToHigh: string;
+  readonly sortDateNewest: string;
+  readonly sortDateOldest: string;
+  readonly sortTitleAZ: string;
+  readonly sortTitleZA: string;
 }
 
 export interface ISystemMessages {

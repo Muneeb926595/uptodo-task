@@ -188,6 +188,14 @@
     "chooseLanguage": "Choose Language",
     "upTodoIsLocked": "UpTodo is Locked",
     "somethingWentWrong": "Something went wrong!",
-    "pressMeToLogin": "Press Me to Login"
+    "pressMeToLogin": "Press Me to Login",
+    "sortTasks": "Sort Tasks",
+    "sortDefault": "Default",
+    "sortPriorityHighToLow": "Priority: High to Low",
+    "sortPriorityLowToHigh": "Priority: Low to High",
+    "sortDateNewest": "Date: Newest First",
+    "sortDateOldest": "Date: Oldest First",
+    "sortTitleAZ": "Title: A to Z",
+    "sortTitleZA": "Title: Z to A"
   }
 }

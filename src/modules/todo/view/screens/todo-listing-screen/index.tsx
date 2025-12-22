@@ -32,6 +32,12 @@ import { ScreenProps } from '../../../../../app/navigation';
 import { Todo } from '../../../types';
 import { useTodos } from '../../../react-query';
 import { AuthInput } from '../../../../../app/components/inputs';
+import {
+  TodoSortModal,
+  TodoSortOption,
+} from '../../components/todo-sort-modal';
+import { sortTodos } from '../../../utils/sort-todos';
+import { magicModal } from 'react-native-magic-modal';
 
 export const buildTodoListItems = (
   todos: Todo[],
@@ -156,6 +162,9 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
   const { data: todos, isLoading, refetch } = useTodos();
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [currentSort, setCurrentSort] = useState<TodoSortOption>(
+    TodoSortOption.DEFAULT,
+  );
 
   const [collapsed, setCollapsed] = useState({
     today: false,
@@ -172,15 +181,32 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
     );
   }, [todos, searchText]);
 
+  const sortedTodos = useMemo(() => {
+    return sortTodos(filteredTodos as Todo[], currentSort);
+  }, [filteredTodos, currentSort]);
+
   const listItems = useMemo(
-    () => buildTodoListItems(filteredTodos as Todo[], collapsed),
-    [filteredTodos, collapsed],
+    () => buildTodoListItems(sortedTodos as Todo[], collapsed),
+    [sortedTodos, collapsed],
   );
 
   const handleRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setTimeout(() => setRefreshing(false), 500);
+  };
+
+  const handleSortChange = (sort: TodoSortOption) => {
+    setCurrentSort(sort);
+  };
+
+  const handleFilterPress = () => {
+    magicModal.show(() => (
+      <TodoSortModal
+        currentSort={currentSort}
+        onSelectSort={handleSortChange}
+      />
+    ));
   };
 
   const RenderTodosList = (
@@ -231,6 +257,7 @@ export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
     >
       <HomeHeader
         title={LocaleProvider.formatMessage(LocaleProvider.IDs.label.index)}
+        onFilterPress={handleFilterPress}
       />
       <View style={styles.container}>
         <Conditional

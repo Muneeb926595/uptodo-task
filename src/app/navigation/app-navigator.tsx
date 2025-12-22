@@ -28,7 +28,7 @@ import {
   LanguagePickerScreen,
 } from '../../modules/profile/view/screens';
 import { profileRepository } from '../../modules/profile/repository/profile-repository';
-import { LockScreen } from '../screens/lock-screen';
+import { LockScreen } from '../../modules/auth/view/screens/lock-screen';
 import { biometricService } from '../../modules/services/biometric';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();

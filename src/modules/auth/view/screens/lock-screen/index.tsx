@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { AppText } from '../../components/text';
-import { AppIcon } from '../../components/icon';
-import { AppIconName, AppIconSize } from '../../components/icon/types';
-import { Colors } from '../../theme';
-import { biometricService } from '../../../modules/services/biometric';
-import { LocaleProvider } from '../../localisation';
+import { AppText } from '../../../../../app/components/text';
+import { AppIcon } from '../../../../../app/components/icon';
+import {
+  AppIconName,
+  AppIconSize,
+} from '../../../../../app/components/icon/types';
+import { Colors } from '../../../../../app/theme';
+import { biometricService } from '../../../../services/biometric';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 interface LockScreenProps {
   onUnlock: () => void;

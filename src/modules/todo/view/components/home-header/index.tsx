@@ -18,9 +18,10 @@ import { Conditional } from '../../../../../app/components/conditional';
 
 type HomeHeaderProps = {
   title: string;
+  onFilterPress?: () => void;
 };
 
-export const HomeHeader = ({ title }: HomeHeaderProps) => {
+export const HomeHeader = ({ title, onFilterPress }: HomeHeaderProps) => {
   const { theme } = useTheme();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -39,7 +40,11 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
   };
 
   const handleFilterPress = () => {
-    navigationRef.navigate('CreateNewCategoryScreen');
+    if (onFilterPress) {
+      onFilterPress();
+    } else {
+      navigationRef.navigate('CreateNewCategoryScreen');
+    }
   };
   const handlePressProfile = () => {
     // @ts-ignore
