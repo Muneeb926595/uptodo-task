@@ -79,7 +79,17 @@ class FocusRepository {
   async completeSession(id: string, completed: boolean): Promise<void> {
     const map = await this.loadSessions();
     if (map[id]) {
-      map[id].completed = completed;
+      const session = map[id];
+      const now = Date.now();
+
+      // Calculate actual duration in seconds
+      const actualDuration = Math.floor((now - session.startTime) / 1000);
+
+      // Use the minimum of actual duration or planned duration
+      // (in case session runs past endTime, cap it at planned duration)
+      session.duration = Math.min(actualDuration, session.duration);
+      session.completed = completed;
+
       await this.saveSessions(map);
     }
     await storageService.removeItem(this.ACTIVE_SESSION_KEY);
