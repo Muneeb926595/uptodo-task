@@ -140,6 +140,17 @@ export interface ILabelTexts extends IMessageGroup {
   readonly deleteTask: string;
   readonly editTask: string;
   readonly addSubTask: string;
+  readonly focusSessionComplete: string;
+  readonly focusSessionCompleteMessage: string;
+  readonly stopFocusMode: string;
+  readonly stop: string;
+  readonly focusMode: string;
+  readonly notificationWillBeOffWhileYourFocusModeIsOn: string;
+  readonly stopFocusing: string;
+  readonly overview: string;
+  readonly thisWeek: string;
+  readonly startFocusing: string;
+  readonly areYourSureYouWantToStop: string;
   readonly createCategory: string;
   readonly taskPriority: string;
   readonly tapToAddYourTasks: string;
