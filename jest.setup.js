@@ -72,7 +72,7 @@ jest.mock('react-native-mmkv', () => ({
   }),
 }));
 
-// Mock Biometrics with default export
+// Mock Biometrics with default export and BiometryTypes
 jest.mock('react-native-biometrics', () => {
   const mockBiometrics = jest.fn(function () {
     return {
@@ -86,6 +86,11 @@ jest.mock('react-native-biometrics', () => {
   return {
     __esModule: true,
     default: mockBiometrics,
+    BiometryTypes: {
+      FaceID: 'FaceID',
+      TouchID: 'TouchID',
+      Biometrics: 'Biometrics',
+    },
   };
 });
 
@@ -115,10 +120,30 @@ jest.mock('react-native-image-picker', () => ({
 
 // Mock Notifee
 jest.mock('@notifee/react-native', () => ({
-  createChannel: jest.fn(),
-  displayNotification: jest.fn(),
-  cancelNotification: jest.fn(),
-  getTriggerNotifications: jest.fn(() => Promise.resolve([])),
+  __esModule: true,
+  default: {
+    requestPermission: jest.fn(),
+    createTriggerNotification: jest.fn(),
+    cancelNotification: jest.fn(),
+    cancelAllNotifications: jest.fn(),
+    getTriggerNotifications: jest.fn(() => Promise.resolve([])),
+    createChannel: jest.fn(),
+    displayNotification: jest.fn(),
+  },
+  TriggerType: {
+    TIMESTAMP: 0,
+    INTERVAL: 1,
+  },
+}));
+
+// Mock React Native Compressor
+jest.mock('react-native-compressor', () => ({
+  Image: {
+    compress: jest.fn(),
+  },
+  Video: {
+    compress: jest.fn(),
+  },
 }));
 
 // Mock Axios
@@ -146,6 +171,19 @@ jest.mock('axios', () => {
     },
   };
 });
+
+// Mock React Native File System (RNFS)
+jest.mock('react-native-fs', () => ({
+  TemporaryDirectoryPath: '/tmp',
+  DocumentDirectoryPath: '/documents',
+  DownloadDirectoryPath: '/downloads',
+  readFile: jest.fn(),
+  writeFile: jest.fn(),
+  unlink: jest.fn(),
+  exists: jest.fn(),
+  mkdir: jest.fn(),
+  copyFile: jest.fn(),
+}));
 
 // Silence console errors in tests (optional)
 global.console = {
