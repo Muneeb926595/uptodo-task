@@ -68,7 +68,9 @@ export const LockScreen = ({ onUnlock }: LockScreenProps) => {
       </View>
 
       <AppText style={styles.title}>
-        {LocaleProvider.formatMessage(LocaleProvider.IDs.message.upTodoIsLocked)}
+        {LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.upTodoIsLocked,
+        )}
       </AppText>
       <AppText style={styles.subtitle}>
         Use {biometricType} to unlock and access your tasks

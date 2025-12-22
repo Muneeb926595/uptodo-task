@@ -63,14 +63,18 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
         } catch (err) {
           Alert.alert(
             LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-            LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToRestoreTask),
+            LocaleProvider.formatMessage(
+              LocaleProvider.IDs.message.unableToRestoreTask,
+            ),
           );
         }
       });
     } catch (err) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToDeleteTodo),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToDeleteTodo,
+        ),
       );
     }
   };
@@ -90,7 +94,9 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
       } catch (err) {
         Alert.alert(
           LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToMarkTodoAsCompleted),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.unableToMarkTodoAsCompleted,
+          ),
         );
       }
     }, 600);

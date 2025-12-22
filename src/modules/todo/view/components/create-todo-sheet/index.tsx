@@ -126,7 +126,9 @@ export const CreateTodoBottomSheet = (props: Props) => {
     } catch (err) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToCreateTodo),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToCreateTodo,
+        ),
       );
     }
   };

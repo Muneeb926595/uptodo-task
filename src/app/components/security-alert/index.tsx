@@ -20,9 +20,18 @@ export const SecurityAlert = () => {
       if (warning) {
         hasShownAlert.current = true;
         Alert.alert(
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.securityWarning),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.securityWarning,
+          ),
           warning,
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.message.iUnderstand), style: 'default' }],
+          [
+            {
+              text: LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.iUnderstand,
+              ),
+              style: 'default',
+            },
+          ],
         );
       }
     };

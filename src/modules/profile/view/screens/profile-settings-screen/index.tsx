@@ -90,7 +90,9 @@ export const ProfileSettingsScreen = () => {
       console.error('Error changing avatar:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToUpdateAvatar)
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToUpdateAvatar,
+        ),
       );
     }
   };
@@ -114,7 +116,9 @@ export const ProfileSettingsScreen = () => {
 
       if (!isAvailable) {
         Alert.alert(
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.biometricUnavailable),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.biometricUnavailable,
+          ),
           biometricService.getSetupInstructions(),
           [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
@@ -131,15 +135,22 @@ export const ProfileSettingsScreen = () => {
         setBiometricType(type);
 
         Alert.alert(
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockEnabled),
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockEnabledMessage, { type }),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.appLockEnabled,
+          ),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.appLockEnabledMessage,
+            { type },
+          ),
           [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
       }
     } else {
       // Disable app lock - require authentication first
       const result = await biometricService.authenticate(
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.verifyToDisableAppLock),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.verifyToDisableAppLock,
+        ),
       );
 
       if (result.success) {
@@ -148,9 +159,13 @@ export const ProfileSettingsScreen = () => {
         setBiometricType('');
 
         Alert.alert(
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockDisabled),
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockDisabledMessage),
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.appLockDisabled,
+          ),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.appLockDisabledMessage,
+          ),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
       }
     }
@@ -165,8 +180,10 @@ export const ProfileSettingsScreen = () => {
       if (todos.length === 0) {
         Alert.alert(
           LocaleProvider.formatMessage(LocaleProvider.IDs.message.noTodos),
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.noTodosToExport),
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.noTodosToExport,
+          ),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
         return;
       }
@@ -175,7 +192,10 @@ export const ProfileSettingsScreen = () => {
     } catch (error: any) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.exportFailed),
-        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToExportTodos)
+        error.message ||
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.failedToExportTodos,
+          ),
       );
     } finally {
       setExportingData(false);
@@ -205,9 +225,11 @@ export const ProfileSettingsScreen = () => {
 
       if (!validation.valid) {
         Alert.alert(
-          LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidBackupFile),
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.invalidBackupFile,
+          ),
           validation.errors.join('\n'),
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
         return;
       }
@@ -216,11 +238,17 @@ export const ProfileSettingsScreen = () => {
 
       // Ask user for import strategy
       Alert.alert(
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importTodosTitle),
-        `${summary}\n\n${LocaleProvider.formatMessage(LocaleProvider.IDs.message.howToImport)}`,
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.importTodosTitle,
+        ),
+        `${summary}\n\n${LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.howToImport,
+        )}`,
         [
           {
-            text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
+            text: LocaleProvider.formatMessage(
+              LocaleProvider.IDs.general.cancel,
+            ),
             style: 'cancel',
           },
           {
@@ -228,7 +256,9 @@ export const ProfileSettingsScreen = () => {
             onPress: () => performImport(data, 'merge'),
           },
           {
-            text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.replaceAll),
+            text: LocaleProvider.formatMessage(
+              LocaleProvider.IDs.label.replaceAll,
+            ),
             onPress: () => confirmReplaceImport(data),
             style: 'destructive',
           },
@@ -245,7 +275,10 @@ export const ProfileSettingsScreen = () => {
       }
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.importFailed),
-        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToImportTodos),
+        error.message ||
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.failedToImportTodos,
+          ),
       );
     } finally {
       setImportingData(false);
@@ -255,14 +288,18 @@ export const ProfileSettingsScreen = () => {
   const confirmReplaceImport = (data: any) => {
     Alert.alert(
       LocaleProvider.formatMessage(LocaleProvider.IDs.message.replaceAllTodos),
-      LocaleProvider.formatMessage(LocaleProvider.IDs.message.replaceAllTodosWarning),
+      LocaleProvider.formatMessage(
+        LocaleProvider.IDs.message.replaceAllTodosWarning,
+      ),
       [
         {
           text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
           style: 'cancel',
         },
         {
-          text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.replaceAll),
+          text: LocaleProvider.formatMessage(
+            LocaleProvider.IDs.label.replaceAll,
+          ),
           style: 'destructive',
           onPress: () => performImport(data, 'replace'),
         },
@@ -294,36 +331,41 @@ export const ProfileSettingsScreen = () => {
 
       let message = LocaleProvider.formatMessage(
         LocaleProvider.IDs.message.successfullyImported,
-        { count: todosResult.imported }
+        { count: todosResult.imported },
       );
       if (categoriesResult.imported > 0) {
         message += LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.andCategories,
-          { count: categoriesResult.imported }
+          { count: categoriesResult.imported },
         );
       }
       if (totalSkipped > 0) {
         message += `\\n${LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.itemsSkipped,
-          { count: totalSkipped }
+          { count: totalSkipped },
         )}`;
       }
       if (todosResult.errors > 0) {
         message += `\\n${LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.errorsOccurred,
-          { count: todosResult.errors }
+          { count: todosResult.errors },
         )}`;
       }
 
       Alert.alert(
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importSuccessful),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.importSuccessful,
+        ),
         message,
-        [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+        [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
       );
     } catch (error: any) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.importFailed),
-        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToImportTodos)
+        error.message ||
+          LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.failedToImportTodos,
+          ),
       );
     } finally {
       setImportingData(false);
@@ -333,7 +375,9 @@ export const ProfileSettingsScreen = () => {
   const handleLogout = () => {
     Alert.alert(
       LocaleProvider.formatMessage(LocaleProvider.IDs.label.clearProfileData),
-      LocaleProvider.formatMessage(LocaleProvider.IDs.message.clearProfileDataConfirm),
+      LocaleProvider.formatMessage(
+        LocaleProvider.IDs.message.clearProfileDataConfirm,
+      ),
       [
         {
           text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
@@ -349,14 +393,26 @@ export const ProfileSettingsScreen = () => {
 
               // Close app - user will see profile setup on next launch
               Alert.alert(
-                LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileCleared),
-                LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileClearedMessage),
-                [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
+                LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.message.profileCleared,
+                ),
+                LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.message.profileClearedMessage,
+                ),
+                [
+                  {
+                    text: LocaleProvider.formatMessage(
+                      LocaleProvider.IDs.label.ok,
+                    ),
+                  },
+                ],
               );
             } catch (error) {
               Alert.alert(
                 LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-                LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToClearProfileData)
+                LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.message.failedToClearProfileData,
+                ),
               );
             }
           },
@@ -374,7 +430,9 @@ export const ProfileSettingsScreen = () => {
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <AppText>{LocaleProvider.formatMessage(LocaleProvider.IDs.label.loading)}</AppText>
+          <AppText>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.loading)}
+          </AppText>
         </View>
       </SafeAreaView>
     );
@@ -446,10 +504,14 @@ export const ProfileSettingsScreen = () => {
               />
               <View style={styles.settingTextContainer}>
                 <AppText style={styles.settingTitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.editProfile)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.editProfile,
+                  )}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.changeYourNameAndEmail)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.changeYourNameAndEmail,
+                  )}
                 </AppText>
               </View>
             </View>
@@ -485,7 +547,10 @@ export const ProfileSettingsScreen = () => {
                   {LocaleProvider.formatMessage(LocaleProvider.IDs.label.theme)}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {themeMetadata[currentTheme]?.name || LocaleProvider.formatMessage(LocaleProvider.IDs.message.selectTheme)}
+                  {themeMetadata[currentTheme]?.name ||
+                    LocaleProvider.formatMessage(
+                      LocaleProvider.IDs.message.selectTheme,
+                    )}
                 </AppText>
               </View>
             </View>
@@ -511,10 +576,14 @@ export const ProfileSettingsScreen = () => {
               />
               <View style={styles.settingTextContainer}>
                 <AppText style={styles.settingTitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.language)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.language,
+                  )}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.chooseAppLanguage)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.chooseAppLanguage,
+                  )}
                 </AppText>
               </View>
             </View>
@@ -543,12 +612,19 @@ export const ProfileSettingsScreen = () => {
               />
               <View style={styles.settingTextContainer}>
                 <AppText style={styles.settingTitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.appLock)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.appLock,
+                  )}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
                   {appLockEnabled
-                    ? LocaleProvider.formatMessage(LocaleProvider.IDs.message.protectedWith, { type: biometricType })
-                    : LocaleProvider.formatMessage(LocaleProvider.IDs.message.protectAppWithBiometric)}
+                    ? LocaleProvider.formatMessage(
+                        LocaleProvider.IDs.message.protectedWith,
+                        { type: biometricType },
+                      )
+                    : LocaleProvider.formatMessage(
+                        LocaleProvider.IDs.message.protectAppWithBiometric,
+                      )}
                 </AppText>
               </View>
             </View>
@@ -567,7 +643,9 @@ export const ProfileSettingsScreen = () => {
         {/* Data Management */}
         <View style={styles.section}>
           <AppText style={styles.sectionHeader}>
-            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.dataManagement)}
+            {LocaleProvider.formatMessage(
+              LocaleProvider.IDs.label.dataManagement,
+            )}
           </AppText>
 
           <TouchableOpacity
@@ -585,10 +663,14 @@ export const ProfileSettingsScreen = () => {
               />
               <View style={styles.settingTextContainer}>
                 <AppText style={styles.settingTitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.exportTodos)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.exportTodos,
+                  )}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.backupYourTodosToFile)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.backupYourTodosToFile,
+                  )}
                 </AppText>
               </View>
             </View>
@@ -619,10 +701,14 @@ export const ProfileSettingsScreen = () => {
               />
               <View style={styles.settingTextContainer}>
                 <AppText style={styles.settingTitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.importTodos)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.importTodos,
+                  )}
                 </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.restoreTodosFromBackup)}
+                  {LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.restoreTodosFromBackup,
+                  )}
                 </AppText>
               </View>
             </View>
@@ -652,7 +738,9 @@ export const ProfileSettingsScreen = () => {
               color={theme.colors.red}
             />
             <AppText style={styles.logoutText}>
-              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.clearProfileData)}
+              {LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.clearProfileData,
+              )}
             </AppText>
           </TouchableOpacity>
         </View>

@@ -55,7 +55,9 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
       console.error('Error picking avatar:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToSelectImage),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToSelectImage,
+        ),
       );
     }
   };
@@ -64,7 +66,9 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
     if (!isNameValid) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseEnterValidName),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterValidName,
+        ),
       );
       return;
     }
@@ -91,7 +95,9 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
       console.error('Error creating profile:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToCreateProfile),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToCreateProfile,
+        ),
       );
     } finally {
       setIsSubmitting(false);

@@ -52,7 +52,9 @@ export const EditProfileScreen = () => {
     if (!isNameValid) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseEnterValidName),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterValidName,
+        ),
       );
       return;
     }
@@ -67,16 +69,23 @@ export const EditProfileScreen = () => {
 
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.success),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileUpdatedSuccessfully),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.profileUpdatedSuccessfully,
+        ),
         [
-          { text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok), onPress: () => navigationRef.goBack() },
+          {
+            text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok),
+            onPress: () => navigationRef.goBack(),
+          },
         ],
       );
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToUpdateProfile),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToUpdateProfile,
+        ),
       );
     } finally {
       setIsSubmitting(false);
@@ -101,10 +110,14 @@ export const EditProfileScreen = () => {
           {/* Header */}
           <View style={styles.header}>
             <AppText style={styles.title}>
-              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.editProfile)}
+              {LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.editProfile,
+              )}
             </AppText>
             <AppText style={styles.subtitle}>
-              {LocaleProvider.formatMessage(LocaleProvider.IDs.message.updateYourPersonalInformation)}
+              {LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.updateYourPersonalInformation,
+              )}
             </AppText>
           </View>
 
@@ -117,7 +130,9 @@ export const EditProfileScreen = () => {
               style={[styles.input, nameFocused && styles.inputFocused]}
               value={name}
               onChangeText={setName}
-              placeholder={LocaleProvider.formatMessage(LocaleProvider.IDs.message.enterYourNamePlaceholder)}
+              placeholder={LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.enterYourNamePlaceholder,
+              )}
               placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setNameFocused(true)}
               onBlur={() => setNameFocused(false)}
@@ -130,13 +145,17 @@ export const EditProfileScreen = () => {
           {/* Email Input */}
           <View style={styles.inputSection}>
             <AppText style={styles.label}>
-              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.emailOptional)}
+              {LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.emailOptional,
+              )}
             </AppText>
             <TextInput
               style={[styles.input, emailFocused && styles.inputFocused]}
               value={email}
               onChangeText={setEmail}
-              placeholder={LocaleProvider.formatMessage(LocaleProvider.IDs.message.enterYourEmailPlaceholder)}
+              placeholder={LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.enterYourEmailPlaceholder,
+              )}
               placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
@@ -159,9 +178,11 @@ export const EditProfileScreen = () => {
             activeOpacity={0.7}
           >
             <AppText style={styles.continueButtonText}>
-              {isSubmitting 
+              {isSubmitting
                 ? LocaleProvider.formatMessage(LocaleProvider.IDs.label.saving)
-                : LocaleProvider.formatMessage(LocaleProvider.IDs.label.saveChanges)}
+                : LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.saveChanges,
+                  )}
             </AppText>
           </TouchableOpacity>
         </ScrollView>

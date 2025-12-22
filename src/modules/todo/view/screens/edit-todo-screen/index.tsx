@@ -126,21 +126,27 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     if (!title?.trim?.()) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseEnterTaskTitle),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterTaskTitle,
+        ),
       );
     }
 
     if (!category?.id) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseSelectCategory),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseSelectCategory,
+        ),
       );
     }
 
     if (!selectedDate) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseSelectDueDate),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseSelectDueDate,
+        ),
       );
     }
 
@@ -164,7 +170,9 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     } catch (err) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToUpdateTodo),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToUpdateTodo,
+        ),
       );
     }
   };

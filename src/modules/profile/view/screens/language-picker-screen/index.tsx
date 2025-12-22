@@ -79,7 +79,9 @@ export const LanguagePickerScreen = (
       // Show success and go back
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.success),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.languageChangeRestart),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.languageChangeRestart,
+        ),
         [
           {
             text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok),
@@ -97,7 +99,9 @@ export const LanguagePickerScreen = (
       console.error('Error changing language:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToChangeLanguage),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToChangeLanguage,
+        ),
       );
     } finally {
       setLoading(false);
@@ -123,7 +127,9 @@ export const LanguagePickerScreen = (
           />
         </TouchableOpacity>
         <AppText style={styles.headerTitle}>
-          {LocaleProvider.formatMessage(LocaleProvider.IDs.message.chooseLanguage)}
+          {LocaleProvider.formatMessage(
+            LocaleProvider.IDs.message.chooseLanguage,
+          )}
         </AppText>
         <View style={styles.placeholder} />
       </View>

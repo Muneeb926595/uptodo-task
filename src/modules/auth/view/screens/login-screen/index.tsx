@@ -39,7 +39,9 @@ export const LoginScreen = () => {
       >
         <TouchableOpacity onPress={handleLogin}>
           <AppText style={styles.lable}>
-            {LocaleProvider.formatMessage(LocaleProvider.IDs.message.pressMeToLogin)}
+            {LocaleProvider.formatMessage(
+              LocaleProvider.IDs.message.pressMeToLogin,
+            )}
           </AppText>
         </TouchableOpacity>
       </Conditional>

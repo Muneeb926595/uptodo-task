@@ -10,7 +10,9 @@ export const ErrorFallback = ({ error, resetError }: any) => {
   return (
     <View style={styles.container}>
       <AppText style={styles.title}>
-        {LocaleProvider.formatMessage(LocaleProvider.IDs.message.somethingWentWrong)}
+        {LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.somethingWentWrong,
+        )}
       </AppText>
       <AppText style={styles.errorMessage}>
         {error.message ??

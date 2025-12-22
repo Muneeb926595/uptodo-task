@@ -26,10 +26,7 @@ import { TodoPriorityPicker } from '../todo-priority-picker';
 import { useDeleteTodo } from '../../../react-query';
 import { magicSheet } from 'react-native-magic-sheet';
 import { navigationRef } from '../../../../../app/navigation';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 import { useImagePicker } from '../../../../../app/hooks';
 
 type ListItemProps = {
@@ -78,7 +75,9 @@ export const EditTodoOptionsListItem = ({
     } catch (err) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToDeleteTodo),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToDeleteTodo,
+        ),
       );
     }
   };
