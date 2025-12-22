@@ -1,6 +1,6 @@
 /**
  * Import/Export Service Test Suite
- * 
+ *
  * Tests import and export functionality for todos and categories
  */
 
@@ -162,9 +162,9 @@ describe('ImportExportService', () => {
       );
 
       // Act & Assert
-      await expect(
-        importExportService.exportTodos(mockTodos),
-      ).rejects.toThrow('Failed to export todos. Please try again.');
+      await expect(importExportService.exportTodos(mockTodos)).rejects.toThrow(
+        'Failed to export todos. Please try again.',
+      );
     });
 
     it('should clean up temporary file on iOS after delay', async () => {
