@@ -110,16 +110,3 @@ export const useStopFocus = () => {
     },
   });
 };
-
-export const useCancelFocus = () => {
-  const qc = useQueryClient();
-  const dispatch = useDispatch();
-
-  return useMutation<void, any, void>({
-    mutationFn: () => focusRepository.cancelActiveSession(),
-    onSuccess: () => {
-      qc.setQueryData(focusKeys.activeSession(), null);
-      dispatch(stopFocusMode());
-    },
-  });
-};

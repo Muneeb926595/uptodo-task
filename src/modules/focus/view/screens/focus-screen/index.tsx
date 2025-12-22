@@ -15,7 +15,6 @@ import {
   useFocusStats,
   useStartFocus,
   useStopFocus,
-  useCancelFocus,
   useFocusTimer,
 } from '../../../react-query';
 import dayjs from 'dayjs';
@@ -35,7 +34,6 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
   const timer = useFocusTimer();
   const startFocus = useStartFocus();
   const stopFocus = useStopFocus();
-  const cancelFocus = useCancelFocus();
 
   const progress = useSharedValue(0);
 
@@ -109,7 +107,7 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
           text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.stop),
           style: 'destructive',
           onPress: () => {
-            cancelFocus.mutate();
+            stopFocus.mutate({ completed: true });
           },
         },
       ],

@@ -4,7 +4,6 @@ import { styles } from './styles';
 import { Button } from '../button';
 import { AppText } from '../text';
 import { LocaleProvider } from '../../localisation';
-import { LocaleProvider } from '../../localisation/locale-provider';
 
 export const ErrorFallback = ({ error, resetError }: any) => {
   return (

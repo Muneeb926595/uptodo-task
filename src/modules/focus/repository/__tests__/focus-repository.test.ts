@@ -177,37 +177,6 @@ describe('FocusRepository', () => {
     });
   });
 
-  describe('cancelActiveSession', () => {
-    it('should cancel the active session', async () => {
-      // Arrange
-      const activeSession = { ...mockSession, endTime: Date.now() + 10000 };
-      (storageService.getItem as jest.Mock)
-        .mockResolvedValueOnce(activeSession) // For getActiveSession
-        .mockResolvedValueOnce({ [activeSession.id]: activeSession }); // For loadSessions in completeSession
-      (storageService.setItem as jest.Mock).mockResolvedValue(undefined);
-      (storageService.removeItem as jest.Mock).mockResolvedValue(undefined);
-
-      // Act
-      await focusRepository.cancelActiveSession();
-
-      // Assert
-      expect(storageService.removeItem).toHaveBeenCalledWith(
-        StorageKeys.ACTIVE_FOCUS_SESSION,
-      );
-      expect(notificationService.restoreNotifications).toHaveBeenCalled();
-    });
-
-    it('should do nothing if no active session', async () => {
-      // Arrange
-      (storageService.getItem as jest.Mock).mockResolvedValue(null);
-
-      // Act & Assert
-      await expect(
-        focusRepository.cancelActiveSession(),
-      ).resolves.not.toThrow();
-    });
-  });
-
   describe('getStats', () => {
     it('should calculate today stats correctly', async () => {
       // Arrange

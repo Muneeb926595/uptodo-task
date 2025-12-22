@@ -68,9 +68,9 @@ class FocusRepository {
       return session;
     }
 
-    // Clean up expired session
+    // Clean up expired session - mark as completed since user finished the full duration
     if (session) {
-      await this.completeSession(session.id, false);
+      await this.completeSession(session.id, true);
     }
 
     return null;
@@ -88,16 +88,9 @@ class FocusRepository {
     await notificationService.restoreNotifications();
   }
 
-  async cancelActiveSession(): Promise<void> {
-    const session = await this.getActiveSession();
-    if (session) {
-      await this.completeSession(session.id, false);
-      // Note: completeSession already restores notifications
-    }
-  }
-
   async getStats(): Promise<FocusStats> {
     const map = await this.loadSessions();
+    console.log('map', map);
     const sessions = Object.values(map).filter(s => s.completed);
 
     // Today's stats
@@ -110,12 +103,15 @@ class FocusRepository {
 
     // This week's stats (Sunday to Saturday)
     const weekStart = dayjs().startOf('week').valueOf();
+    const weekEnd = dayjs().endOf('week').valueOf();
     const thisWeekData = new Array(7).fill(0);
-
+    console.log('sessions', sessions);
     sessions.forEach(session => {
-      const sessionDay = dayjs(session.startTime);
-      if (sessionDay.isAfter(weekStart)) {
-        const dayIndex = sessionDay.day(); // 0 = Sunday, 6 = Saturday
+      const sessionTime = session.startTime;
+      console.log('sessionTime', sessionTime);
+      // Check if session is within this week (inclusive)
+      if (sessionTime >= weekStart && sessionTime <= weekEnd) {
+        const dayIndex = dayjs(sessionTime).day(); // 0 = Sunday, 6 = Saturday
         thisWeekData[dayIndex] += session.duration;
       }
     });

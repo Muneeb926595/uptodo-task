@@ -6,10 +6,10 @@
 
 import {
   BiometricAdapter,
-  BiometricType,
-  BiometricAvailability,
   BiometricAuthResult,
-} from '../biometric-adapter';
+  BiometricAvailability,
+  BiometricType,
+} from '../../biometric-adapter';
 
 /**
  * Mock successful availability responses
