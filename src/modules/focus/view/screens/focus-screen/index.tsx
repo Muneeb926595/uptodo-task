@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
@@ -28,9 +28,10 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
   const { theme } = useTheme();
+  const [selectedWeek, setSelectedWeek] = useState(0); // 0 = this week, -1 = last week, etc.
 
   // React Query hooks
-  const { data: stats } = useFocusStats();
+  const { data: stats } = useFocusStats(selectedWeek);
   const timer = useFocusTimer();
   const startFocus = useStartFocus();
   const stopFocus = useStopFocus();
@@ -90,6 +91,35 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
   const handleStartFocus = () => {
     const defaultDuration = 1800; // 30 minutes in seconds
     startFocus.mutate(defaultDuration);
+  };
+
+  const handleWeekSelect = () => {
+    Alert.alert(
+      'Select Week',
+      'Choose a week to view statistics',
+      [
+        {
+          text: 'This Week',
+          onPress: () => setSelectedWeek(0),
+        },
+        {
+          text: 'Last Week',
+          onPress: () => setSelectedWeek(-1),
+        },
+        {
+          text: '2 Weeks Ago',
+          onPress: () => setSelectedWeek(-2),
+        },
+        {
+          text: '3 Weeks Ago',
+          onPress: () => setSelectedWeek(-3),
+        },
+        {
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
+          style: 'cancel',
+        },
+      ],
+    );
   };
 
   const handleStopFocus = () => {
@@ -237,9 +267,12 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
             <AppText style={styles.overviewTitle}>
               <FormattedMessage id={LocaleProvider.IDs.label.overview} />
             </AppText>
-            <TouchableOpacity style={styles.weekDropdown}>
+            <TouchableOpacity style={styles.weekDropdown} onPress={handleWeekSelect}>
               <AppText style={styles.weekDropdownText}>
-                <FormattedMessage id={LocaleProvider.IDs.label.thisWeek} />
+                {selectedWeek === 0 && <FormattedMessage id={LocaleProvider.IDs.label.thisWeek} />}
+                {selectedWeek === -1 && 'Last Week'}
+                {selectedWeek === -2 && '2 Weeks Ago'}
+                {selectedWeek === -3 && '3 Weeks Ago'}
               </AppText>
               <AppText style={styles.dropdownArrow}>▼</AppText>
             </TouchableOpacity>

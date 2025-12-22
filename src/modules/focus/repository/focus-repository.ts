@@ -98,9 +98,8 @@ class FocusRepository {
     await notificationService.restoreNotifications();
   }
 
-  async getStats(): Promise<FocusStats> {
+  async getStats(weekOffset: number = 0): Promise<FocusStats> {
     const map = await this.loadSessions();
-    console.log('map', map);
     const sessions = Object.values(map).filter(s => s.completed);
 
     // Today's stats
@@ -111,15 +110,14 @@ class FocusRepository {
     );
     const todayTotal = todaySessions.reduce((sum, s) => sum + s.duration, 0);
 
-    // This week's stats (Sunday to Saturday)
-    const weekStart = dayjs().startOf('week').valueOf();
-    const weekEnd = dayjs().endOf('week').valueOf();
+    // Week stats with offset (0 = this week, -1 = last week, etc.)
+    const weekStart = dayjs().add(weekOffset, 'week').startOf('week').valueOf();
+    const weekEnd = dayjs().add(weekOffset, 'week').endOf('week').valueOf();
     const thisWeekData = new Array(7).fill(0);
-    console.log('sessions', sessions);
+
     sessions.forEach(session => {
       const sessionTime = session.startTime;
-      console.log('sessionTime', sessionTime);
-      // Check if session is within this week (inclusive)
+      // Check if session is within the specified week (inclusive)
       if (sessionTime >= weekStart && sessionTime <= weekEnd) {
         const dayIndex = dayjs(sessionTime).day(); // 0 = Sunday, 6 = Saturday
         thisWeekData[dayIndex] += session.duration;

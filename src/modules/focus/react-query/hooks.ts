@@ -66,10 +66,10 @@ export const useFocusTimer = () => {
   };
 };
 
-export const useFocusStats = () => {
+export const useFocusStats = (weekOffset: number = 0) => {
   return useQuery<FocusStats>({
-    queryKey: focusKeys.stats(),
-    queryFn: () => focusRepository.getStats(),
+    queryKey: focusKeys.stats(weekOffset),
+    queryFn: () => focusRepository.getStats(weekOffset),
   });
 };
 
