@@ -27,6 +27,7 @@ import { initializeTheme } from './app/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
 import { ToastProvider } from './app/context/toast-context';
+import { SecurityAlert } from './app/components/security-alert';
 
 // Load critical dayjs plugins immediately (needed for UI rendering)
 dayjs.extend(utc);
@@ -89,6 +90,7 @@ function App() {
             <GestureHandlerRootView style={{ flex: 1 }}>
               <BottomSheetModalProvider>
                 <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+                  <SecurityAlert />
                   <AppNavigator />
                 </SafeAreaProvider>
                 <MagicSheetPortal />

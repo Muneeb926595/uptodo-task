@@ -26,6 +26,7 @@
     "dayjs": "^1.11.19",
     "flat": "^6.0.1",
     "i18next": "^25.7.3",
+    "jail-monkey": "^2.8.4",
     "lodash": "^4.17.21",
     "react": "19.2.0",
     "react-hook-form": "^7.68.0",
