@@ -76,7 +76,10 @@ export const EditTodoOptionsListItem = ({
       magicSheet.hide();
       navigationRef.goBack();
     } catch (err) {
-      Alert.alert('Error', 'Unable to delete todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToDeleteTodo),
+      );
     }
   };
 

@@ -124,15 +124,24 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     magicSheet.hide();
 
     if (!title?.trim?.()) {
-      return Alert.alert('Error', 'Please enter a task title');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseEnterTaskTitle),
+      );
     }
 
     if (!category?.id) {
-      return Alert.alert('Error', 'Please select a category');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseSelectCategory),
+      );
     }
 
     if (!selectedDate) {
-      return Alert.alert('Error', 'Please select a due date');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseSelectDueDate),
+      );
     }
 
     const payload = {
@@ -153,7 +162,10 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       });
       props.navigation.goBack();
     } catch (err) {
-      Alert.alert('Error', 'Unable to update todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToUpdateTodo),
+      );
     }
   };
 

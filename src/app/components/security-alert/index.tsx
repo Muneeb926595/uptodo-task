@@ -6,6 +6,7 @@
 import { useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
 import { securityService } from '../../../modules/services/security/security-service';
+import { LocaleProvider } from '../../localisation';
 
 export const SecurityAlert = () => {
   const hasShownAlert = useRef(false);
@@ -18,9 +19,11 @@ export const SecurityAlert = () => {
 
       if (warning) {
         hasShownAlert.current = true;
-        Alert.alert('Security Warning', warning, [
-          { text: 'I Understand', style: 'default' },
-        ]);
+        Alert.alert(
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.securityWarning),
+          warning,
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.message.iUnderstand), style: 'default' }],
+        );
       }
     };
 

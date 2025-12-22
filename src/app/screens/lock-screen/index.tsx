@@ -7,6 +7,7 @@ import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
 import { Colors } from '../../theme';
 import { biometricService } from '../../../modules/services/biometric';
+import { LocaleProvider } from '../../localisation';
 
 interface LockScreenProps {
   onUnlock: () => void;
@@ -66,7 +67,9 @@ export const LockScreen = ({ onUnlock }: LockScreenProps) => {
         />
       </View>
 
-      <AppText style={styles.title}>UpTodo is Locked</AppText>
+      <AppText style={styles.title}>
+        {LocaleProvider.formatMessage(LocaleProvider.IDs.message.upTodoIsLocked)}
+      </AppText>
       <AppText style={styles.subtitle}>
         Use {biometricType} to unlock and access your tasks
       </AppText>

@@ -149,12 +149,45 @@ export interface ILabelTexts extends IMessageGroup {
   readonly stopFocusing: string;
   readonly overview: string;
   readonly thisWeek: string;
+  readonly chooseTheme: string;
+  readonly personalizeYourExperience: string;
+  readonly changePhoto: string;
+  readonly addPhoto: string;
+  readonly creatingProfile: string;
+  readonly continue: string;
+  readonly enterYourEmail: string;
+  readonly enterYourName: string;
+  readonly createYourProfile: string;
   readonly startFocusing: string;
   readonly areYourSureYouWantToStop: string;
   readonly createCategory: string;
   readonly taskPriority: string;
   readonly tapToAddYourTasks: string;
   readonly edit: string;
+  readonly ok: string;
+  readonly error: string;
+  readonly success: string;
+  readonly loading: string;
+  readonly today: string;
+  readonly clear: string;
+  readonly merge: string;
+  readonly replaceAll: string;
+  readonly editProfile: string;
+  readonly theme: string;
+  readonly language: string;
+  readonly appLock: string;
+  readonly exportTodos: string;
+  readonly importTodos: string;
+  readonly clearProfileData: string;
+  readonly account: string;
+  readonly appearance: string;
+  readonly security: string;
+  readonly dataManagement: string;
+  readonly name: string;
+  readonly email: string;
+  readonly emailOptional: string;
+  readonly saveChanges: string;
+  readonly saving: string;
 }
 
 export interface IGeneralMessages extends IMessageGroup {
@@ -178,6 +211,74 @@ export interface IApiErrorMessages extends IMessageGroup {
   readonly authTokenExpired: string;
 }
 
+export interface IMessageTexts extends IMessageGroup {
+  readonly failedToUpdateAvatar: string;
+  readonly failedToSelectImage: string;
+  readonly failedToCreateProfile: string;
+  readonly biometricUnavailable: string;
+  readonly appLockEnabled: string;
+  readonly appLockEnabledMessage: string;
+  readonly verifyToDisableAppLock: string;
+  readonly appLockDisabled: string;
+  readonly appLockDisabledMessage: string;
+  readonly noTodos: string;
+  readonly noTodosToExport: string;
+  readonly exportFailed: string;
+  readonly failedToExportTodos: string;
+  readonly invalidBackupFile: string;
+  readonly importTodosTitle: string;
+  readonly howToImport: string;
+  readonly importFailed: string;
+  readonly failedToImportTodos: string;
+  readonly replaceAllTodos: string;
+  readonly replaceAllTodosWarning: string;
+  readonly importSuccessful: string;
+  readonly successfullyImported: string;
+  readonly andCategories: string;
+  readonly itemsSkipped: string;
+  readonly errorsOccurred: string;
+  readonly clearProfileDataConfirm: string;
+  readonly profileCleared: string;
+  readonly profileClearedMessage: string;
+  readonly failedToClearProfileData: string;
+  readonly pleaseEnterName: string;
+  readonly pleaseEnterEmail: string;
+  readonly profileUpdatedSuccessfully: string;
+  readonly failedToUpdateProfile: string;
+  readonly languageChangeRestart: string;
+  readonly failedToChangeLanguage: string;
+  readonly pleaseEnterTaskTitle: string;
+  readonly pleaseSelectCategory: string;
+  readonly pleaseSelectDueDate: string;
+  readonly unableToUpdateTodo: string;
+  readonly unableToCreateTodo: string;
+  readonly unableToDeleteTodo: string;
+  readonly unableToRestoreTask: string;
+  readonly pleaseEnterCategoryName: string;
+  readonly pleaseSelectImage: string;
+  readonly pleaseChooseColor: string;
+  readonly unableToCreateCategory: string;
+  readonly securityWarning: string;
+  readonly changeYourNameAndEmail: string;
+  readonly chooseAppLanguage: string;
+  readonly protectAppWithBiometric: string;
+  readonly protectedWith: string;
+  readonly backupYourTodosToFile: string;
+  readonly restoreTodosFromBackup: string;
+  readonly selectTheme: string;
+  readonly invalidName: string;
+  readonly pleaseEnterValidName: string;
+  readonly updateYourPersonalInformation: string;
+  readonly enterYourNamePlaceholder: string;
+  readonly enterYourEmailPlaceholder: string;
+  readonly unableToMarkTodoAsCompleted: string;
+  readonly iUnderstand: string;
+  readonly chooseLanguage: string;
+  readonly upTodoIsLocked: string;
+  readonly somethingWentWrong: string;
+  readonly pressMeToLogin: string;
+}
+
 export interface ISystemMessages {
   readonly apiError: IApiErrorMessages;
   readonly error: IErrorMessages;
@@ -186,4 +287,5 @@ export interface ISystemMessages {
   readonly label: ILabelTexts;
   readonly userGuide: IUserGuideMessages;
   readonly accessibility: IAccessibilityMessages;
+  readonly message: IMessageTexts;
 }

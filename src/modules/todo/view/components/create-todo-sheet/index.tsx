@@ -124,7 +124,10 @@ export const CreateTodoBottomSheet = (props: Props) => {
     try {
       await createTodoMutation.mutateAsync(payload);
     } catch (err) {
-      Alert.alert('Error', 'Unable to create todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToCreateTodo),
+      );
     }
   };
 

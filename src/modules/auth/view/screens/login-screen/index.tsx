@@ -7,6 +7,7 @@ import { useTheme } from '../../../../../app/theme';
 import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Conditional } from '../../../../../app/components/conditional';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 export const LoginScreen = () => {
   const { theme } = useTheme();
@@ -37,7 +38,9 @@ export const LoginScreen = () => {
         }
       >
         <TouchableOpacity onPress={handleLogin}>
-          <AppText style={styles.lable}>Press Me to Login</AppText>
+          <AppText style={styles.lable}>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.message.pressMeToLogin)}
+          </AppText>
         </TouchableOpacity>
       </Conditional>
     </View>

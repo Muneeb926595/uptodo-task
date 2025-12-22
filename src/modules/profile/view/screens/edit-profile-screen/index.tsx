@@ -20,6 +20,7 @@ import { profileRepository } from '../../../repository/profile-repository';
 import { navigationRef } from '../../../../../app/navigation';
 import { UserProfile } from '../../../types/profile.types';
 import { Container } from '../../../../../app/components/container';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 export const EditProfileScreen = () => {
   const { theme } = useTheme();
@@ -50,8 +51,8 @@ export const EditProfileScreen = () => {
   const handleSave = async () => {
     if (!isNameValid) {
       Alert.alert(
-        'Invalid Name',
-        'Please enter a valid name (at least 2 characters)',
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.pleaseEnterValidName),
       );
       return;
     }
@@ -64,12 +65,19 @@ export const EditProfileScreen = () => {
         email: email.trim() || undefined,
       });
 
-      Alert.alert('Success', 'Profile updated successfully', [
-        { text: 'OK', onPress: () => navigationRef.goBack() },
-      ]);
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.success),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileUpdatedSuccessfully),
+        [
+          { text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok), onPress: () => navigationRef.goBack() },
+        ],
+      );
     } catch (error) {
       console.error('Error updating profile:', error);
-      Alert.alert('Error', 'Failed to update profile. Please try again.');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToUpdateProfile),
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -92,20 +100,24 @@ export const EditProfileScreen = () => {
         >
           {/* Header */}
           <View style={styles.header}>
-            <AppText style={styles.title}>Edit Profile</AppText>
+            <AppText style={styles.title}>
+              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.editProfile)}
+            </AppText>
             <AppText style={styles.subtitle}>
-              Update your personal information
+              {LocaleProvider.formatMessage(LocaleProvider.IDs.message.updateYourPersonalInformation)}
             </AppText>
           </View>
 
           {/* Name Input */}
           <View style={styles.inputSection}>
-            <AppText style={styles.label}>Name *</AppText>
+            <AppText style={styles.label}>
+              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.name)} *
+            </AppText>
             <TextInput
               style={[styles.input, nameFocused && styles.inputFocused]}
               value={name}
               onChangeText={setName}
-              placeholder="Enter your name"
+              placeholder={LocaleProvider.formatMessage(LocaleProvider.IDs.message.enterYourNamePlaceholder)}
               placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setNameFocused(true)}
               onBlur={() => setNameFocused(false)}
@@ -117,12 +129,14 @@ export const EditProfileScreen = () => {
 
           {/* Email Input */}
           <View style={styles.inputSection}>
-            <AppText style={styles.label}>Email (Optional)</AppText>
+            <AppText style={styles.label}>
+              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.emailOptional)}
+            </AppText>
             <TextInput
               style={[styles.input, emailFocused && styles.inputFocused]}
               value={email}
               onChangeText={setEmail}
-              placeholder="Enter your email"
+              placeholder={LocaleProvider.formatMessage(LocaleProvider.IDs.message.enterYourEmailPlaceholder)}
               placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
@@ -145,7 +159,9 @@ export const EditProfileScreen = () => {
             activeOpacity={0.7}
           >
             <AppText style={styles.continueButtonText}>
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
+              {isSubmitting 
+                ? LocaleProvider.formatMessage(LocaleProvider.IDs.label.saving)
+                : LocaleProvider.formatMessage(LocaleProvider.IDs.label.saveChanges)}
             </AppText>
           </TouchableOpacity>
         </ScrollView>

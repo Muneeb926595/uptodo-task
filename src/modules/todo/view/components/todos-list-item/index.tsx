@@ -61,11 +61,17 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
         try {
           await restoreTodoMutation.mutateAsync(item?.id);
         } catch (err) {
-          Alert.alert('Error', 'Unable to restore task');
+          Alert.alert(
+            LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+            LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToRestoreTask),
+          );
         }
       });
     } catch (err) {
-      Alert.alert('Error', 'Unable to delete todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToDeleteTodo),
+      );
     }
   };
 
@@ -83,8 +89,8 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
         });
       } catch (err) {
         Alert.alert(
-          'Error',
-          'Unable to maek todo as completed. Please try again.',
+          LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.unableToMarkTodoAsCompleted),
         );
       }
     }, 600);

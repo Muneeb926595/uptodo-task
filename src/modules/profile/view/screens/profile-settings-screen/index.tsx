@@ -31,6 +31,7 @@ import { navigationRef } from '../../../../../app/navigation';
 import { todoRepository } from '../../../../todo/repository';
 import { categoriesRepository } from '../../../../categories/repository';
 import { importExportService } from '../../../../services/import-export';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 export const ProfileSettingsScreen = () => {
   const { theme } = useTheme();
@@ -87,7 +88,10 @@ export const ProfileSettingsScreen = () => {
       }
     } catch (error) {
       console.error('Error changing avatar:', error);
-      Alert.alert('Error', 'Failed to update avatar. Please try again.');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToUpdateAvatar)
+      );
     }
   };
 
@@ -110,9 +114,9 @@ export const ProfileSettingsScreen = () => {
 
       if (!isAvailable) {
         Alert.alert(
-          'Biometric Unavailable',
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.biometricUnavailable),
           biometricService.getSetupInstructions(),
-          [{ text: 'OK' }],
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
         return;
       }
@@ -127,15 +131,15 @@ export const ProfileSettingsScreen = () => {
         setBiometricType(type);
 
         Alert.alert(
-          'App Lock Enabled',
-          `${type} will be required to unlock UpTodo.`,
-          [{ text: 'OK' }],
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockEnabled),
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockEnabledMessage, { type }),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
         );
       }
     } else {
       // Disable app lock - require authentication first
       const result = await biometricService.authenticate(
-        'Verify to disable app lock',
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.verifyToDisableAppLock),
       );
 
       if (result.success) {
@@ -143,9 +147,11 @@ export const ProfileSettingsScreen = () => {
         setAppLockEnabled(false);
         setBiometricType('');
 
-        Alert.alert('App Lock Disabled', 'Your app is no longer protected.', [
-          { text: 'OK' },
-        ]);
+        Alert.alert(
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockDisabled),
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.appLockDisabledMessage),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+        );
       }
     }
   };
@@ -157,15 +163,20 @@ export const ProfileSettingsScreen = () => {
       const categories = await categoriesRepository.getAll();
 
       if (todos.length === 0) {
-        Alert.alert('No Todos', "You don't have any todos to export.", [
-          { text: 'OK' },
-        ]);
+        Alert.alert(
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.noTodos),
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.noTodosToExport),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+        );
         return;
       }
 
       await importExportService.exportTodos(todos, categories);
     } catch (error: any) {
-      Alert.alert('Export Failed', error.message || 'Failed to export todos');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.exportFailed),
+        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToExportTodos)
+      );
     } finally {
       setExportingData(false);
     }
@@ -193,9 +204,11 @@ export const ProfileSettingsScreen = () => {
       const validation = importExportService.validateImportData(data);
 
       if (!validation.valid) {
-        Alert.alert('Invalid Backup File', validation.errors.join('\n'), [
-          { text: 'OK' },
-        ]);
+        Alert.alert(
+          LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidBackupFile),
+          validation.errors.join('\n'),
+          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+        );
         return;
       }
 
@@ -203,19 +216,19 @@ export const ProfileSettingsScreen = () => {
 
       // Ask user for import strategy
       Alert.alert(
-        'Import Todos',
-        `${summary}\n\nHow would you like to import?`,
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importTodosTitle),
+        `${summary}\n\n${LocaleProvider.formatMessage(LocaleProvider.IDs.message.howToImport)}`,
         [
           {
-            text: 'Cancel',
+            text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
             style: 'cancel',
           },
           {
-            text: 'Merge',
+            text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.merge),
             onPress: () => performImport(data, 'merge'),
           },
           {
-            text: 'Replace All',
+            text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.replaceAll),
             onPress: () => confirmReplaceImport(data),
             style: 'destructive',
           },
@@ -230,7 +243,10 @@ export const ProfileSettingsScreen = () => {
         // User cancelled
         return;
       }
-      Alert.alert('Import Failed', error.message || 'Failed to import todos');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importFailed),
+        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToImportTodos),
+      );
     } finally {
       setImportingData(false);
     }
@@ -238,15 +254,15 @@ export const ProfileSettingsScreen = () => {
 
   const confirmReplaceImport = (data: any) => {
     Alert.alert(
-      'Replace All Todos?',
-      'This will delete all your existing todos and replace them with the imported ones. This action cannot be undone.',
+      LocaleProvider.formatMessage(LocaleProvider.IDs.message.replaceAllTodos),
+      LocaleProvider.formatMessage(LocaleProvider.IDs.message.replaceAllTodosWarning),
       [
         {
-          text: 'Cancel',
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
           style: 'cancel',
         },
         {
-          text: 'Replace All',
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.replaceAll),
           style: 'destructive',
           onPress: () => performImport(data, 'replace'),
         },
@@ -276,20 +292,39 @@ export const ProfileSettingsScreen = () => {
       const totalImported = todosResult.imported + categoriesResult.imported;
       const totalSkipped = todosResult.skipped + categoriesResult.skipped;
 
-      let message = `Successfully imported ${todosResult.imported} todo(s)`;
+      let message = LocaleProvider.formatMessage(
+        LocaleProvider.IDs.message.successfullyImported,
+        { count: todosResult.imported }
+      );
       if (categoriesResult.imported > 0) {
-        message += ` and ${categoriesResult.imported} category(ies)`;
+        message += LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.andCategories,
+          { count: categoriesResult.imported }
+        );
       }
       if (totalSkipped > 0) {
-        message += `\n${totalSkipped} item(s) skipped (already exist)`;
+        message += `\\n${LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.itemsSkipped,
+          { count: totalSkipped }
+        )}`;
       }
       if (todosResult.errors > 0) {
-        message += `\n${todosResult.errors} error(s) occurred`;
+        message += `\\n${LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.errorsOccurred,
+          { count: todosResult.errors }
+        )}`;
       }
 
-      Alert.alert('Import Successful', message, [{ text: 'OK' }]);
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importSuccessful),
+        message,
+        [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }]
+      );
     } catch (error: any) {
-      Alert.alert('Import Failed', error.message || 'Failed to import todos');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.importFailed),
+        error.message || LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToImportTodos)
+      );
     } finally {
       setImportingData(false);
     }
@@ -297,15 +332,15 @@ export const ProfileSettingsScreen = () => {
 
   const handleLogout = () => {
     Alert.alert(
-      'Clear Profile Data',
-      'Are you sure you want to clear all profile data? This will not delete your todos.',
+      LocaleProvider.formatMessage(LocaleProvider.IDs.label.clearProfileData),
+      LocaleProvider.formatMessage(LocaleProvider.IDs.message.clearProfileDataConfirm),
       [
         {
-          text: 'Cancel',
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
           style: 'cancel',
         },
         {
-          text: 'Clear',
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.clear),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -314,12 +349,15 @@ export const ProfileSettingsScreen = () => {
 
               // Close app - user will see profile setup on next launch
               Alert.alert(
-                'Profile Cleared',
-                'Profile data has been cleared. Please close and reopen the app to set up your profile again.',
-                [{ text: 'OK' }],
+                LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileCleared),
+                LocaleProvider.formatMessage(LocaleProvider.IDs.message.profileClearedMessage),
+                [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
               );
             } catch (error) {
-              Alert.alert('Error', 'Failed to clear profile data.');
+              Alert.alert(
+                LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+                LocaleProvider.formatMessage(LocaleProvider.IDs.message.failedToClearProfileData)
+              );
             }
           },
         },
@@ -336,7 +374,7 @@ export const ProfileSettingsScreen = () => {
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <AppText>Loading...</AppText>
+          <AppText>{LocaleProvider.formatMessage(LocaleProvider.IDs.label.loading)}</AppText>
         </View>
       </SafeAreaView>
     );
@@ -390,7 +428,9 @@ export const ProfileSettingsScreen = () => {
 
         {/* Account Settings */}
         <View style={styles.section}>
-          <AppText style={styles.sectionHeader}>Account</AppText>
+          <AppText style={styles.sectionHeader}>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.account)}
+          </AppText>
 
           <TouchableOpacity
             style={styles.settingItem}
@@ -405,9 +445,11 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>Edit Profile</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.editProfile)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  Change your name and email
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.changeYourNameAndEmail)}
                 </AppText>
               </View>
             </View>
@@ -422,7 +464,9 @@ export const ProfileSettingsScreen = () => {
 
         {/* Appearance Settings */}
         <View style={styles.section}>
-          <AppText style={styles.sectionHeader}>Appearance</AppText>
+          <AppText style={styles.sectionHeader}>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.appearance)}
+          </AppText>
 
           <TouchableOpacity
             style={styles.settingItem}
@@ -437,9 +481,11 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>Theme</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.theme)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  {themeMetadata[currentTheme]?.name || 'Select theme'}
+                  {themeMetadata[currentTheme]?.name || LocaleProvider.formatMessage(LocaleProvider.IDs.message.selectTheme)}
                 </AppText>
               </View>
             </View>
@@ -464,9 +510,11 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>Language</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.language)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  Choose app language
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.chooseAppLanguage)}
                 </AppText>
               </View>
             </View>
@@ -481,7 +529,9 @@ export const ProfileSettingsScreen = () => {
 
         {/* Security Settings */}
         <View style={styles.section}>
-          <AppText style={styles.sectionHeader}>Security</AppText>
+          <AppText style={styles.sectionHeader}>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.security)}
+          </AppText>
 
           <View style={styles.settingItem}>
             <View style={styles.settingItemLeft}>
@@ -492,11 +542,13 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>App Lock</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.appLock)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
                   {appLockEnabled
-                    ? `Protected with ${biometricType}`
-                    : 'Protect app with biometric'}
+                    ? LocaleProvider.formatMessage(LocaleProvider.IDs.message.protectedWith, { type: biometricType })
+                    : LocaleProvider.formatMessage(LocaleProvider.IDs.message.protectAppWithBiometric)}
                 </AppText>
               </View>
             </View>
@@ -514,7 +566,9 @@ export const ProfileSettingsScreen = () => {
 
         {/* Data Management */}
         <View style={styles.section}>
-          <AppText style={styles.sectionHeader}>Data Management</AppText>
+          <AppText style={styles.sectionHeader}>
+            {LocaleProvider.formatMessage(LocaleProvider.IDs.label.dataManagement)}
+          </AppText>
 
           <TouchableOpacity
             style={styles.settingItem}
@@ -530,9 +584,11 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>Export Todos</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.exportTodos)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  Backup your todos to a file
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.backupYourTodosToFile)}
                 </AppText>
               </View>
             </View>
@@ -562,9 +618,11 @@ export const ProfileSettingsScreen = () => {
                 style={styles.settingIcon}
               />
               <View style={styles.settingTextContainer}>
-                <AppText style={styles.settingTitle}>Import Todos</AppText>
+                <AppText style={styles.settingTitle}>
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.label.importTodos)}
+                </AppText>
                 <AppText style={styles.settingSubtitle}>
-                  Restore todos from a backup
+                  {LocaleProvider.formatMessage(LocaleProvider.IDs.message.restoreTodosFromBackup)}
                 </AppText>
               </View>
             </View>
@@ -593,7 +651,9 @@ export const ProfileSettingsScreen = () => {
               iconSize={AppIconSize.medium}
               color={theme.colors.red}
             />
-            <AppText style={styles.logoutText}>Clear Profile Data</AppText>
+            <AppText style={styles.logoutText}>
+              {LocaleProvider.formatMessage(LocaleProvider.IDs.label.clearProfileData)}
+            </AppText>
           </TouchableOpacity>
         </View>
       </ScrollView>
