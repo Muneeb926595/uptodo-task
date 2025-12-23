@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
-  // ✅ Splash helper
+  //  Splash helper
   private func showSplashScreen() {
     if let splashClass = NSClassFromString("SplashView") as? NSObject.Type,
        let splashInstance = splashClass.perform(NSSelectorFromString("sharedInstance"))?.takeUnretainedValue() as? NSObject {

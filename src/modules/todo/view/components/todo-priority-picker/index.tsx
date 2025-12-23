@@ -1,6 +1,6 @@
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
 import { PRIORITY_LEVELS, PriorityLevel } from '../../../types';
@@ -30,7 +30,6 @@ const RenderPriorityItem = ({
   selected,
   onPress,
 }: PriorityItemProps) => {
-  const styles = useStyles();
 
   return (
     <TouchableOpacity
@@ -53,7 +52,6 @@ const RenderPriorityItem = ({
 };
 
 export const TodoPriorityPicker = ({ onCancel, onConfirm }: Props) => {
-  const styles = useStyles();
 
   const [selectedPriority, setSelectedPriority] = useState<PriorityLevel>(1);
 

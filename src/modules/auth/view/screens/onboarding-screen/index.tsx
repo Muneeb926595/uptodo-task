@@ -1,7 +1,6 @@
 import React from 'react';
-import _ from 'lodash';
 import { View } from 'react-native';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { Images } from '../../../../../app/globals';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
@@ -21,8 +20,6 @@ type CarouselData = {
   imageStyles?: any;
 };
 export const OnboardingScreen = (props: any) => {
-  const styles = useStyles();
-
   const carouselData: CarouselData[] = [
     {
       id: 1,

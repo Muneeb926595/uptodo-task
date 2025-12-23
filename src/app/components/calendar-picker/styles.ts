@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
 import { Colors } from '../../theme';
 
-export default StyleSheet.create({
+export default StyleSheet.create(theme => ({
   backdrop: {
     flex: 1,
-    backgroundColor: Colors.modalBackground,
+    backgroundColor: theme.colors.modalBackground,
     justifyContent: 'center',
     alignItems: 'center',
     padding: Layout.widthPercentageToDP(4),
@@ -13,24 +13,24 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     maxWidth: 520,
-    backgroundColor: Colors.surface['DEFAULT'],
+    backgroundColor: theme.colors.surface['DEFAULT'],
     borderRadius: 8,
     padding: Layout.widthPercentageToDP(5),
     borderWidth: 2,
-    borderColor: Colors.brand['DEFAULT'],
+    borderColor: theme.colors.brand['DEFAULT'],
   },
   title: {
-    color: Colors.typography['DEFAULT'],
+    color: theme.colors.typography['DEFAULT'],
     fontSize: Layout.RFValue(18),
     marginBottom: Layout.widthPercentageToDP(2),
     textAlign: 'center',
   },
   calendar: {
     borderRadius: 6,
-    backgroundColor: Colors.surface['DEFAULT'],
+    backgroundColor: theme.colors.surface['DEFAULT'],
   },
   daySelected: {
-    backgroundColor: Colors.brand['DEFAULT'],
+    backgroundColor: theme.colors.brand['DEFAULT'],
   },
   dayWrapper: {
     width: Layout.widthPercentageToDP(8),
@@ -38,16 +38,16 @@ export default StyleSheet.create({
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.surface['50'],
+    backgroundColor: theme.colors.surface['50'],
   },
   dayDisabled: {
     opacity: 0.4,
   },
   dayText: {
-    color: Colors.typography['DEFAULT'],
+    color: theme.colors.typography['DEFAULT'],
   },
   dayTextDisabled: {
-    color: Colors.typography['100'],
+    color: theme.colors.typography['100'],
   },
   actionRow: {
     flexDirection: 'row',
@@ -56,15 +56,15 @@ export default StyleSheet.create({
     marginTop: Layout.widthPercentageToDP(3),
   },
   cancel: {
-    color: Colors.brand['DEFAULT'],
+    color: theme.colors.brand['DEFAULT'],
   },
   chooseBtn: {
-    backgroundColor: Colors.brand['DEFAULT'],
+    backgroundColor: theme.colors.brand['DEFAULT'],
     paddingVertical: Layout.widthPercentageToDP(2.5),
     paddingHorizontal: Layout.widthPercentageToDP(3),
     borderRadius: 6,
   },
   chooseText: {
-    color: Colors.white,
+    color: theme.colors.white,
   },
-});
+}));

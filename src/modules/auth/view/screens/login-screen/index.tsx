@@ -3,15 +3,14 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { useLogin } from '../../../react-query/hooks';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/authSlice';
-import { useTheme } from '../../../../../app/theme/provider';
-import { useStyles } from './styles';
+import { useTheme } from '../../../../../app/theme';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Conditional } from '../../../../../app/components/conditional';
-import { Colors } from '../../../../../app/theme';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 export const LoginScreen = () => {
-  const { colors, mode, setMode } = useTheme();
-  const styles = useStyles();
+  const { theme } = useTheme();
 
   const [email, setEmail] = useState('keven@mailsac.com');
   const [password, setPassword] = useState('Evolo123@');
@@ -34,10 +33,16 @@ export const LoginScreen = () => {
     <View style={styles.container}>
       <Conditional
         ifTrue={!isLoading}
-        elseChildren={<ActivityIndicator size={'large'} color={Colors.white} />}
+        elseChildren={
+          <ActivityIndicator size={'large'} color={theme.colors.white} />
+        }
       >
         <TouchableOpacity onPress={handleLogin}>
-          <AppText style={styles.lable}>Press Me to Login</AppText>
+          <AppText style={styles.lable}>
+            {LocaleProvider.formatMessage(
+              LocaleProvider.IDs.message.pressMeToLogin,
+            )}
+          </AppText>
         </TouchableOpacity>
       </Conditional>
     </View>

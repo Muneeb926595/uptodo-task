@@ -10,24 +10,28 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { mediaService } from '../../../../services/media';
 import { navigationRef } from '../../../../../app/navigation';
+import {
+  FormattedMessage,
+  LocaleProvider,
+} from '../../../../../app/localisation';
 
 interface ProfileSetupScreenProps {
   onComplete?: () => void;
 }
 
 export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState<string | undefined>();
@@ -49,15 +53,22 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
       }
     } catch (error) {
       console.error('Error picking avatar:', error);
-      Alert.alert('Error', 'Failed to select image. Please try again.');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToSelectImage,
+        ),
+      );
     }
   };
 
   const handleContinue = async () => {
     if (!isNameValid) {
       Alert.alert(
-        'Invalid Name',
-        'Please enter a valid name (at least 2 characters)',
+        LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterValidName,
+        ),
       );
       return;
     }
@@ -82,15 +93,15 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
       }
     } catch (error) {
       console.error('Error creating profile:', error);
-      Alert.alert('Error', 'Failed to create profile. Please try again.');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.failedToCreateProfile,
+        ),
+      );
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleSkip = () => {
-    // Create profile with default name
-    handleContinue();
   };
 
   return (
@@ -106,9 +117,15 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
         >
           {/* Header */}
           <View style={styles.header}>
-            <AppText style={styles.title}>Create Your Profile</AppText>
+            <AppText style={styles.title}>
+              <FormattedMessage
+                id={LocaleProvider.IDs.label.createYourProfile}
+              />
+            </AppText>
             <AppText style={styles.subtitle}>
-              Let's personalize your UpTodo experience
+              <FormattedMessage
+                id={LocaleProvider.IDs.label.personalizeYourExperience}
+              />
             </AppText>
           </View>
 
@@ -125,7 +142,7 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
                 <AppIcon
                   name={AppIconName.user}
                   iconSize={AppIconSize.huge}
-                  color={Colors.typography[300]}
+                  color={theme.colors.typography['300']}
                   style={styles.avatarPlaceholder}
                 />
               )}
@@ -136,7 +153,13 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
               activeOpacity={0.7}
             >
               <AppText style={styles.changeAvatarText}>
-                {avatar ? 'Change Photo' : 'Add Photo'}
+                {avatar
+                  ? LocaleProvider.formatMessage(
+                      LocaleProvider.IDs.label.changePhoto,
+                    )
+                  : LocaleProvider.formatMessage(
+                      LocaleProvider.IDs.label.addPhoto,
+                    )}
               </AppText>
             </TouchableOpacity>
           </View>
@@ -148,8 +171,10 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
               style={[styles.input, nameFocused && styles.inputFocused]}
               value={name}
               onChangeText={setName}
-              placeholder="Enter your name"
-              placeholderTextColor={Colors.typography[400]}
+              placeholder={LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.enterYourName,
+              )}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setNameFocused(true)}
               onBlur={() => setNameFocused(false)}
               autoCapitalize="words"
@@ -165,8 +190,10 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
               style={[styles.input, emailFocused && styles.inputFocused]}
               value={email}
               onChangeText={setEmail}
-              placeholder="Enter your email"
-              placeholderTextColor={Colors.typography[400]}
+              placeholder={LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.enterYourEmail,
+              )}
+              placeholderTextColor={theme.colors.typography['400']}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
               keyboardType="email-address"
@@ -187,21 +214,15 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
             activeOpacity={0.7}
           >
             <AppText style={styles.continueButtonText}>
-              {isSubmitting ? 'Creating Profile...' : 'Continue'}
+              {isSubmitting
+                ? LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.creatingProfile,
+                  )
+                : LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.continue,
+                  )}
             </AppText>
           </TouchableOpacity>
-
-          {/* Skip Button */}
-          {!name && (
-            <TouchableOpacity
-              style={styles.skipButton}
-              onPress={handleSkip}
-              disabled={isSubmitting}
-              activeOpacity={0.7}
-            >
-              <AppText style={styles.skipButtonText}>Skip for now</AppText>
-            </TouchableOpacity>
-          )}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

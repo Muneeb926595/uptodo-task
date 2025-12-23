@@ -1,14 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../globals';
-import { Colors } from '../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   buttonContainer: {
     marginTop: Layout.heightPercentageToDP(
       Layout.medium / Layout.divisionFactorForHeight,
     ),
     width: '100%',
-    backgroundColor: Colors.brand['DEFAULT'],
+    backgroundColor: theme.colors.brand.DEFAULT,
     paddingVertical: Layout.heightPercentageToDP(
       Layout.small / Layout.divisionFactorForHeight,
     ),
@@ -20,8 +19,8 @@ export const styles = StyleSheet.create({
   },
   btnLabel: {
     textAlign: 'center',
-    color: Colors.white,
+    color: theme.colors.white,
     fontSize: Layout.RFValue(15.5),
     ...Fonts.latoBold,
   },
-});
+}));

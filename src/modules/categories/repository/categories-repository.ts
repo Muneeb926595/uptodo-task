@@ -67,6 +67,49 @@ class CategoriesRepository {
     map[id] = existing;
     await this.save(map);
   }
+
+  /**
+   * Import categories with merge strategy
+   */
+  async importCategories(
+    categories: Category[],
+    strategy: 'merge' | 'replace' = 'merge',
+  ): Promise<{ imported: number; skipped: number }> {
+    const map = await this.load();
+    let imported = 0;
+    let skipped = 0;
+
+    if (strategy === 'replace') {
+      // Only clear non-system categories
+      Object.keys(map).forEach(key => {
+        if (!map[key].isSystem) {
+          delete map[key];
+        }
+      });
+    }
+
+    for (const category of categories) {
+      if (strategy === 'merge' && map[category.id]) {
+        skipped++;
+        continue;
+      }
+
+      // Don't import if it would overwrite a system category
+      if (map[category.id]?.isSystem) {
+        skipped++;
+        continue;
+      }
+
+      map[category.id] = {
+        ...category,
+        updatedAt: Date.now(),
+      };
+      imported++;
+    }
+
+    await this.save(map);
+    return { imported, skipped };
+  }
 }
 
 export const categoriesRepository = new CategoriesRepository();

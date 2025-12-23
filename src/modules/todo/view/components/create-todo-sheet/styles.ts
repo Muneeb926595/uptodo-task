@@ -1,14 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Constants, Fonts, Layout } from '../../../../../app/globals';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     container: {
       paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
     },
     error: {
-      color: tokens.colors.red,
+      color: theme.colors.red,
       ...Fonts.latoRegular,
       fontSize: Layout.RFValue(12),
     },

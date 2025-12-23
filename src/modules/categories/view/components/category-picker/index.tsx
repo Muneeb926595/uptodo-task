@@ -4,19 +4,17 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import React, { useState } from 'react';
-import { useStyles } from './styles';
+import React from 'react';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Divider } from '../../../../../app/components/divider';
 import { useCategories } from '../../../react-query/hooks';
 import { Category } from '../../../types/categories.types';
-import { Colors } from '../../../../../app/theme';
 import { Images, Layout } from '../../../../../app/globals';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { navigationRef } from '../../../../../app/navigation';
 import { magicModal } from 'react-native-magic-modal';
-import { magicSheet } from 'react-native-magic-sheet';
 import { CustomImage } from '../../../../../app/components/custom-image';
 
 type Props = {
@@ -29,8 +27,6 @@ type CategoryItemProps = {
 };
 
 const RenderCategoryItem = ({ item, onPress }: CategoryItemProps) => {
-  const styles = useStyles();
-
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}
@@ -54,12 +50,9 @@ const RenderCategoryItem = ({ item, onPress }: CategoryItemProps) => {
 };
 
 export const TodoCategoryPicker = ({ onConfirm }: Props) => {
-  const styles = useStyles();
-
   const { data: categories, isLoading } = useCategories();
 
   const handleAddCategory = () => {
-    magicSheet.hide();
     magicModal.hideAll();
     navigationRef.navigate('CreateNewCategoryScreen');
   };

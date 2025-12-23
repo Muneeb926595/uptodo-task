@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
 import { ScreenProps } from '../../../../../app/navigation';
 import Svg, { Circle } from 'react-native-svg';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { Layout } from '../../../../../app/globals';
 import Animated, {
   useSharedValue,
@@ -12,66 +12,29 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {
-  useActiveSession,
   useFocusStats,
   useStartFocus,
   useStopFocus,
-  useCancelFocus,
   useFocusTimer,
 } from '../../../react-query';
 import dayjs from 'dayjs';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../app/stores';
-import { useStyles } from './styles';
+import { styles } from './styles';
+import {
+  FormattedMessage,
+  LocaleProvider,
+} from '../../../../../app/localisation';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-// Mock applications data (would come from device tracking in production)
-const applicationsData = [
-  {
-    name: 'Instagram',
-    time: '4h',
-    description: 'You spent 4h on Instagram today',
-    icon: '📷',
-  },
-  {
-    name: 'Twitter',
-    time: '3h',
-    description: 'You spent 3h on Twitter today',
-    icon: '🐦',
-  },
-  {
-    name: 'Facebook',
-    time: '1h',
-    description: 'You spent 1h on Facebook today',
-    icon: '📘',
-  },
-  {
-    name: 'Telegram',
-    time: '30m',
-    description: 'You spent 30m on Telegram today',
-    icon: '✈️',
-  },
-  {
-    name: 'Gmail',
-    time: '45m',
-    description: 'You spent 45m on Gmail today',
-    icon: '✉️',
-  },
-];
-
 export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
+  const [selectedWeek, setSelectedWeek] = useState(0); // 0 = this week, -1 = last week, etc.
 
   // React Query hooks
-  const { data: stats } = useFocusStats();
+  const { data: stats } = useFocusStats(selectedWeek);
   const timer = useFocusTimer();
   const startFocus = useStartFocus();
   const stopFocus = useStopFocus();
-  const cancelFocus = useCancelFocus();
-
-  // Redux state
-  const isActive = useSelector((state: RootState) => state.focus.isActive);
 
   const progress = useSharedValue(0);
 
@@ -95,8 +58,12 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
     if (timer && timeRemaining === 0) {
       stopFocus.mutate({ completed: true });
       Alert.alert(
-        'Focus Session Complete!',
-        'Great job! You completed your focus session.',
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.label.focusSessionComplete,
+        ),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.label.focusSessionCompleteMessage,
+        ),
       );
     }
   }, [timeRemaining, timer]);
@@ -126,17 +93,51 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
     startFocus.mutate(defaultDuration);
   };
 
+  const handleWeekSelect = () => {
+    Alert.alert(
+      'Select Week',
+      'Choose a week to view statistics',
+      [
+        {
+          text: 'This Week',
+          onPress: () => setSelectedWeek(0),
+        },
+        {
+          text: 'Last Week',
+          onPress: () => setSelectedWeek(-1),
+        },
+        {
+          text: '2 Weeks Ago',
+          onPress: () => setSelectedWeek(-2),
+        },
+        {
+          text: '3 Weeks Ago',
+          onPress: () => setSelectedWeek(-3),
+        },
+        {
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
+          style: 'cancel',
+        },
+      ],
+    );
+  };
+
   const handleStopFocus = () => {
     Alert.alert(
-      'Stop Focus Mode?',
-      'Are you sure you want to stop your focus session?',
+      LocaleProvider.formatMessage(LocaleProvider.IDs.label.stopFocusMode),
+      LocaleProvider.formatMessage(
+        LocaleProvider.IDs.label.areYourSureYouWantToStop,
+      ),
       [
-        { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Stop',
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.general.cancel),
+          style: 'cancel',
+        },
+        {
+          text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.stop),
           style: 'destructive',
           onPress: () => {
-            cancelFocus.mutate();
+            stopFocus.mutate({ completed: true });
           },
         },
       ],
@@ -193,7 +194,9 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        <AppText style={styles.screenTitle}>Focus Mode</AppText>
+        <AppText style={styles.screenTitle}>
+          {LocaleProvider.formatMessage(LocaleProvider.IDs.label.focusMode)}
+        </AppText>
 
         {/* Timer Circle */}
         <View style={styles.timerContainer}>
@@ -206,7 +209,7 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
               cx={radius + strokeWidth}
               cy={radius + strokeWidth}
               r={radius}
-              stroke={Colors.surface['50']}
+              stroke={theme.colors.surface['50']}
               strokeWidth={strokeWidth}
               fill="none"
             />
@@ -215,7 +218,7 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
               cx={radius + strokeWidth}
               cy={radius + strokeWidth}
               r={radius}
-              stroke={Colors.brand['DEFAULT']}
+              stroke={theme.colors.brand.DEFAULT}
               strokeWidth={strokeWidth}
               fill="none"
               strokeDasharray={circumference}
@@ -233,8 +236,12 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
         </View>
 
         <AppText style={styles.descriptionText}>
-          While your focus mode is on, all of your{'\n'}notifications will be
-          off
+          <FormattedMessage
+            id={
+              LocaleProvider.IDs.label
+                .notificationWillBeOffWhileYourFocusModeIsOn
+            }
+          />
         </AppText>
 
         <TouchableOpacity
@@ -244,16 +251,29 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
           disabled={startFocus.isPending || stopFocus.isPending}
         >
           <AppText style={styles.focusButtonText}>
-            {activeSession ? 'Stop Focusing' : 'Start Focusing'}
+            {activeSession
+              ? LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.label.stopFocusing,
+                )
+              : LocaleProvider.formatMessage(
+                  LocaleProvider.IDs.label.startFocusing,
+                )}
           </AppText>
         </TouchableOpacity>
 
         {/* Overview Section */}
         <View style={styles.overviewContainer}>
           <View style={styles.overviewHeader}>
-            <AppText style={styles.overviewTitle}>Overview</AppText>
-            <TouchableOpacity style={styles.weekDropdown}>
-              <AppText style={styles.weekDropdownText}>This Week</AppText>
+            <AppText style={styles.overviewTitle}>
+              <FormattedMessage id={LocaleProvider.IDs.label.overview} />
+            </AppText>
+            <TouchableOpacity style={styles.weekDropdown} onPress={handleWeekSelect}>
+              <AppText style={styles.weekDropdownText}>
+                {selectedWeek === 0 && <FormattedMessage id={LocaleProvider.IDs.label.thisWeek} />}
+                {selectedWeek === -1 && 'Last Week'}
+                {selectedWeek === -2 && '2 Weeks Ago'}
+                {selectedWeek === -3 && '3 Weeks Ago'}
+              </AppText>
               <AppText style={styles.dropdownArrow}>▼</AppText>
             </TouchableOpacity>
           </View>
@@ -287,8 +307,8 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
                           {
                             height: barHeight,
                             backgroundColor: isToday
-                              ? Colors.brand['DEFAULT']
-                              : Colors.surface['50'],
+                              ? theme.colors.brand.DEFAULT
+                              : theme.colors.surface['50'],
                           },
                         ]}
                       />
@@ -307,30 +327,6 @@ export const FocusScreen = (props: ScreenProps<'FocusScreen'>) => {
               })}
             </View>
           </View>
-        </View>
-
-        {/* Applications Section */}
-        <View style={styles.applicationsContainer}>
-          <AppText style={styles.applicationsTitle}>Applications</AppText>
-          <AppText style={styles.appsSectionNote}>
-            App usage tracking coming soon
-          </AppText>
-          {applicationsData.map((app, index) => (
-            <View key={index} style={styles.appItem}>
-              <View style={styles.appIconContainer}>
-                <AppText style={styles.appIcon}>{app.icon}</AppText>
-              </View>
-              <View style={styles.appInfo}>
-                <AppText style={styles.appName}>{app.name}</AppText>
-                <AppText style={styles.appDescription}>
-                  {app.description}
-                </AppText>
-              </View>
-              <TouchableOpacity style={styles.appInfoButton}>
-                <AppText style={styles.appInfoIcon}>ⓘ</AppText>
-              </TouchableOpacity>
-            </View>
-          ))}
         </View>
       </ScrollView>
     </Container>

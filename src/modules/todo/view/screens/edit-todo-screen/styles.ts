@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Constants, Fonts, Layout } from '../../../../../app/globals';
-import { Colors } from '../../../../../app/theme';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     container: {
       flex: 1,
-      backgroundColor: tokens.colors.background,
+      backgroundColor: theme.colors.background,
     },
     row: {
       flexDirection: 'row',
@@ -21,14 +19,14 @@ export const useStyles = themed(tokens =>
     todoItemLabel: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(20),
       marginBottom: Layout.heightPercentageToDP(1.4),
     },
     todoItemTime: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(14),
     },
     sectionsContainer: {
@@ -39,20 +37,20 @@ export const useStyles = themed(tokens =>
     },
     sectionActionContainer: {
       borderRadius: 8,
-      backgroundColor: tokens.colors.surface['DEFAULT'],
+      backgroundColor: theme.colors.surface['DEFAULT'],
       paddingVertical: Layout.heightPercentageToDP(1.6),
       paddingHorizontal: Layout.widthPercentageToDP(3),
     },
     sectionLabel: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(16),
     },
     sectionActionLabel: {
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       fontSize: Layout.RFValue(12),
     },
     categoryIcon: {

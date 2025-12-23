@@ -6,9 +6,9 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import { Colors, Typography } from '../../theme';
+import { Colors } from '../../theme';
 import { Layout } from '../../globals';
-import { useStyles } from './styles';
+import { styles } from './styles';
 
 export interface ToastProps {
   message: string;
@@ -27,7 +27,6 @@ export const Toast: React.FC<ToastProps> = ({
   actionLabel,
   onActionPress,
 }) => {
-  const styles = useStyles();
   const translateY = useRef(new Animated.Value(100)).current;
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 

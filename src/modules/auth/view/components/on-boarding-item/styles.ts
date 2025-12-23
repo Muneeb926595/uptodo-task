@@ -1,9 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../../../app/globals';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     container: {
       width: Layout.window.width,
       flex: 1,
@@ -16,7 +15,7 @@ export const useStyles = themed(tokens =>
     },
     heading: {
       ...Fonts.bold,
-      color: tokens.colors.brand['DEFAULT'],
+      color: theme.colors.brand['DEFAULT'],
       textAlign: 'center',
     },
     description: {
@@ -25,10 +24,10 @@ export const useStyles = themed(tokens =>
       textAlign: 'center',
       marginTop: Layout.heightPercentageToDP(1.4),
       fontSize: Layout.RFValue(16),
-      color: tokens.colors.typography['DEFAULT'],
+      color: theme.colors.typography['DEFAULT'],
     },
     imageContainer: {
-      backgroundColor: tokens.colors.background,
+      backgroundColor: theme.colors.background,
     },
     image: {
       width: '80%',

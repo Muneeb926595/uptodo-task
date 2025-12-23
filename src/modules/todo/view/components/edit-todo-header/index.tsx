@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
@@ -18,7 +18,6 @@ type EditTodoHeaderProps = {
 };
 
 export const EditTodoHeader = ({ title }: EditTodoHeaderProps) => {
-  const styles = useStyles();
 
   const handleFilterPress = () => {
     navigationRef.goBack();

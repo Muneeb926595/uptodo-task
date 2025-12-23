@@ -13,7 +13,7 @@ import { FieldError } from 'react-hook-form';
 import { AppIcon } from '../../icon';
 import { AppIconName, AppIconSize } from '../../icon/types';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { Colors } from '../../../theme';
+import { useTheme } from '../../../theme';
 import { Layout } from '../../../globals';
 
 type Props = {
@@ -63,6 +63,7 @@ export const AuthInput = ({
   customStyles,
   returnKeyType,
 }: Props) => {
+  const { theme } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = (e: Event) => {
@@ -79,13 +80,13 @@ export const AuthInput = ({
 
   const getInputBorderColor = () => {
     return isError
-      ? Colors.red
+      ? theme.colors.red
       : isFocused
-      ? Colors.white
-      : Colors.borders['DEFAULT'];
+      ? theme.colors.white
+      : theme.colors.borders['DEFAULT'];
   };
   const getInputBackgroundColor = () => {
-    return isError ? `${Colors.red}20` : Colors.surface['300'];
+    return isError ? `${theme.colors.red}20` : theme.colors.surface['300'];
   };
 
   const InputComponent = useBottomSheetTextInput
@@ -96,10 +97,11 @@ export const AuthInput = ({
     <InputComponent
       value={value}
       onChangeText={onChange}
-      onFocus={handleFocus}
       onBlur={handleBlur}
       editable={isInputEditable}
-      placeholderTextColor={isError ? Colors.red : Colors.typography['100']}
+      placeholderTextColor={
+        isError ? theme.colors.red : theme.colors.typography['100']
+      }
       placeholder={placeholder}
       multiline={multiLine}
       scrollEnabled={scrollEnabled ?? false}
@@ -113,7 +115,7 @@ export const AuthInput = ({
         {
           borderColor: getInputBorderColor(),
           backgroundColor: isPassword
-            ? Colors.transparent
+            ? theme.colors.transparent
             : getInputBackgroundColor(),
         },
         isPassword
@@ -165,13 +167,13 @@ export const AuthInput = ({
             {showPass ? (
               <AppIcon
                 name={AppIconName.show}
-                color={Colors.surface['DEFAULT']}
+                color={theme.colors.surface['DEFAULT']}
                 iconSize={AppIconSize.mini}
               />
             ) : (
               <AppIcon
                 name={AppIconName.hide}
-                color={Colors.surface['DEFAULT']}
+                color={theme.colors.surface['DEFAULT']}
                 iconSize={AppIconSize.small}
               />
             )}

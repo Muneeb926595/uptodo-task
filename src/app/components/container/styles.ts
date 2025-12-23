@@ -1,12 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../theme';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   screenContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: Colors.background,
+    backgroundColor: theme.colors.background,
     paddingHorizontal: Layout.widthPercentageToDP(
       Layout.micro / Layout.divisionFactorForWidth,
     ),
@@ -14,10 +13,10 @@ export const styles = StyleSheet.create({
   bodyContainer: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: Colors.transparent,
+    backgroundColor: theme.colors.transparent,
     zIndex: 1,
   },
   backgroundImageStyle: {
     flex: 1,
   },
-});
+}));

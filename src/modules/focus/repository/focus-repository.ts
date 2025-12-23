@@ -68,9 +68,9 @@ class FocusRepository {
       return session;
     }
 
-    // Clean up expired session
+    // Clean up expired session - mark as completed since user finished the full duration
     if (session) {
-      await this.completeSession(session.id, false);
+      await this.completeSession(session.id, true);
     }
 
     return null;
@@ -79,7 +79,17 @@ class FocusRepository {
   async completeSession(id: string, completed: boolean): Promise<void> {
     const map = await this.loadSessions();
     if (map[id]) {
-      map[id].completed = completed;
+      const session = map[id];
+      const now = Date.now();
+
+      // Calculate actual duration in seconds
+      const actualDuration = Math.floor((now - session.startTime) / 1000);
+
+      // Use the minimum of actual duration or planned duration
+      // (in case session runs past endTime, cap it at planned duration)
+      session.duration = Math.min(actualDuration, session.duration);
+      session.completed = completed;
+
       await this.saveSessions(map);
     }
     await storageService.removeItem(this.ACTIVE_SESSION_KEY);
@@ -88,15 +98,7 @@ class FocusRepository {
     await notificationService.restoreNotifications();
   }
 
-  async cancelActiveSession(): Promise<void> {
-    const session = await this.getActiveSession();
-    if (session) {
-      await this.completeSession(session.id, false);
-      // Note: completeSession already restores notifications
-    }
-  }
-
-  async getStats(): Promise<FocusStats> {
+  async getStats(weekOffset: number = 0): Promise<FocusStats> {
     const map = await this.loadSessions();
     const sessions = Object.values(map).filter(s => s.completed);
 
@@ -108,14 +110,16 @@ class FocusRepository {
     );
     const todayTotal = todaySessions.reduce((sum, s) => sum + s.duration, 0);
 
-    // This week's stats (Sunday to Saturday)
-    const weekStart = dayjs().startOf('week').valueOf();
+    // Week stats with offset (0 = this week, -1 = last week, etc.)
+    const weekStart = dayjs().add(weekOffset, 'week').startOf('week').valueOf();
+    const weekEnd = dayjs().add(weekOffset, 'week').endOf('week').valueOf();
     const thisWeekData = new Array(7).fill(0);
 
     sessions.forEach(session => {
-      const sessionDay = dayjs(session.startTime);
-      if (sessionDay.isAfter(weekStart)) {
-        const dayIndex = sessionDay.day(); // 0 = Sunday, 6 = Saturday
+      const sessionTime = session.startTime;
+      // Check if session is within the specified week (inclusive)
+      if (sessionTime >= weekStart && sessionTime <= weekEnd) {
+        const dayIndex = dayjs(sessionTime).day(); // 0 = Sunday, 6 = Saturday
         thisWeekData[dayIndex] += session.duration;
       }
     });

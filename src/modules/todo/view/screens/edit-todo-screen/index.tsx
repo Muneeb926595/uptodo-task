@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { EditTodoHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
@@ -25,8 +25,6 @@ import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item
 import { EditTodoTitles } from '../../components/edit-todo-titles';
 
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
-  const styles = useStyles();
-
   const updateTodoMutation = useUpdateTodo();
 
   const [totoActions] = useState<EditTodoOptions[]>([
@@ -126,15 +124,30 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     magicSheet.hide();
 
     if (!title?.trim?.()) {
-      return Alert.alert('Error', 'Please enter a task title');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterTaskTitle,
+        ),
+      );
     }
 
     if (!category?.id) {
-      return Alert.alert('Error', 'Please select a category');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseSelectCategory,
+        ),
+      );
     }
 
     if (!selectedDate) {
-      return Alert.alert('Error', 'Please select a due date');
+      return Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseSelectDueDate,
+        ),
+      );
     }
 
     const payload = {
@@ -155,13 +168,18 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       });
       props.navigation.goBack();
     } catch (err) {
-      Alert.alert('Error', 'Unable to update todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToUpdateTodo,
+        ),
+      );
     }
   };
 
   return (
     <Container
-      insetsToHandle={['left', 'right']}
+      insetsToHandle={['left', 'right', 'bottom']}
       screenBackgroundStyle={{
         flex: 1,
         paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,

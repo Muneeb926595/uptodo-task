@@ -166,6 +166,9 @@ class BiometricService {
   }
 }
 
+// Export class for testing
+export { BiometricService };
+
 // Create and export singleton instance
 export const biometricService = new BiometricService(
   new ReactNativeBiometricsAdapter(),

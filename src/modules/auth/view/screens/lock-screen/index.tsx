@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
-import { AppText } from '../../components/text';
-import { AppIcon } from '../../components/icon';
-import { AppIconName, AppIconSize } from '../../components/icon/types';
-import { Colors } from '../../theme';
-import { biometricService } from '../../../modules/services/biometric';
+import { styles } from './styles';
+import { AppText } from '../../../../../app/components/text';
+import { AppIcon } from '../../../../../app/components/icon';
+import {
+  AppIconName,
+  AppIconSize,
+} from '../../../../../app/components/icon/types';
+import { Colors } from '../../../../../app/theme';
+import { biometricService } from '../../../../services/biometric';
+import { LocaleProvider } from '../../../../../app/localisation';
 
 interface LockScreenProps {
   onUnlock: () => void;
 }
 
 export const LockScreen = ({ onUnlock }: LockScreenProps) => {
-  const styles = useStyles();
   const [biometricType, setBiometricType] = useState<string>('Biometric');
   const [error, setError] = useState<string>('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -67,7 +70,11 @@ export const LockScreen = ({ onUnlock }: LockScreenProps) => {
         />
       </View>
 
-      <AppText style={styles.title}>UpTodo is Locked</AppText>
+      <AppText style={styles.title}>
+        {LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.upTodoIsLocked,
+        )}
+      </AppText>
       <AppText style={styles.subtitle}>
         Use {biometricType} to unlock and access your tasks
       </AppText>

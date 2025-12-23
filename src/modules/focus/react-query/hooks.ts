@@ -66,10 +66,10 @@ export const useFocusTimer = () => {
   };
 };
 
-export const useFocusStats = () => {
+export const useFocusStats = (weekOffset: number = 0) => {
   return useQuery<FocusStats>({
-    queryKey: focusKeys.stats(),
-    queryFn: () => focusRepository.getStats(),
+    queryKey: focusKeys.stats(weekOffset),
+    queryFn: () => focusRepository.getStats(weekOffset),
   });
 };
 
@@ -106,19 +106,6 @@ export const useStopFocus = () => {
     onSuccess: () => {
       qc.setQueryData(focusKeys.activeSession(), null);
       qc.invalidateQueries({ queryKey: focusKeys.stats() });
-      dispatch(stopFocusMode());
-    },
-  });
-};
-
-export const useCancelFocus = () => {
-  const qc = useQueryClient();
-  const dispatch = useDispatch();
-
-  return useMutation<void, any, void>({
-    mutationFn: () => focusRepository.cancelActiveSession(),
-    onSuccess: () => {
-      qc.setQueryData(focusKeys.activeSession(), null);
       dispatch(stopFocusMode());
     },
   });

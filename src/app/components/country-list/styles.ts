@@ -1,4 +1,5 @@
-import { PressableStateCallbackType, StyleSheet } from 'react-native';
+import { PressableStateCallbackType } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { Country } from '../inputs/phone-number/types';
 import { Fonts, Layout } from '../../globals';
@@ -6,13 +7,13 @@ import { Colors } from '../../theme';
 
 export const ITEM_HEIGHT = 48;
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: theme.colors.white,
   },
   countryCode: {
     ...Fonts.latoBlack,
-    color: Colors.surface['100'],
+    color: theme.colors.surface['100'],
     marginBottom: 0,
   },
   headerContainer: {
@@ -28,7 +29,7 @@ export const styles = StyleSheet.create({
     marginBottom: Layout.heightPercentageToDP(
       Layout.mini / Layout.divisionFactorForHeight,
     ),
-    color: Colors.white,
+    color: theme.colors.white,
     ...Fonts.latoBold,
     fontSize: Layout.RFValue(20),
   },
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
     ),
     ...Fonts.latoRegular,
     fontSize: Layout.RFValue(18),
-    color: Colors.typography['100'],
+    color: theme.colors.typography['100'],
   },
   itemContainer: {
     height: ITEM_HEIGHT,
@@ -55,17 +56,17 @@ export const styles = StyleSheet.create({
       Layout.small / Layout.divisionFactorForWidth,
     ),
     marginBottom: 0,
-    color: Colors.surface['DEFAULT'],
+    color: theme.colors.surface['DEFAULT'],
     ...Fonts.latoRegular,
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.borders['DEFAULT'],
+    backgroundColor: theme.colors.borders['DEFAULT'],
     marginHorizontal: Layout.widthPercentageToDP(
       Layout.small / Layout.divisionFactorForWidth,
     ),
   },
-});
+}));
 
 export const pressableStyle = (state: PressableStateCallbackType) => ({
   opacity: state.pressed ? 0.5 : 1,

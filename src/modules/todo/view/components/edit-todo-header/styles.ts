@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { themed } from '../../../../../app/theme/utils';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../../../app/globals';
 
-export const useStyles = themed(tokens =>
-  StyleSheet.create({
+export const styles = StyleSheet.create(theme =>
+  ({
     container: {
-      backgroundColor: tokens.colors.transparent,
+      backgroundColor: theme.colors.transparent,
     },
     wrapper: {
       flexDirection: 'row',
@@ -19,13 +18,13 @@ export const useStyles = themed(tokens =>
       justifyContent: 'center',
       alignItems: 'center',
       padding: Layout.widthPercentageToDP(2),
-      backgroundColor: tokens.colors.surface['50'],
+      backgroundColor: theme.colors.surface['50'],
     },
     title: {
       fontSize: Layout.RFValue(20),
       ...Fonts.latoRegular,
       fontWeight: '400',
-      color: tokens.colors.white,
+      color: theme.colors.white,
       textAlign: 'center',
     },
   }),

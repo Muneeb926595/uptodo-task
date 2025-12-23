@@ -1,23 +1,82 @@
 {
   "apiError": {
-    "authTokenExpired": "Bearer token has expired"
+    "authTokenExpired": "El token de autenticación ha expirado"
   },
   "error": {
-    "nothingFound": "Nothing Found"
+    "nothingFound": "No se encontró nada",
+    "fieldIsRequired": "El campo es obligatorio"
   },
   "general": {
-    "skip": "Skip"
+    "skip": "Saltar",
+    "done": "Hecho",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "cancel": "Cancelar",
+    "save": "Guardar"
   },
   "userGuide": {
-    "profileSettings": "Profile Settings"
+    "profileSettings": "Configuración de Perfil"
   },
-  "accessablity": {
-    "onboardingFirstImage": "Onboarding step 1 image"
+  "accessibility": {
+    "onboardingFirstImage": "Imagen del paso 1 de incorporación"
   },
   "instruction": {
-    "underProgress": "Under Progress"
+    "underProgress": "En Progreso",
+    "onboarding1Title": "Administra tus tareas",
+    "onboarding1Description": "Puedes administrar fácilmente todas tus tareas diarias en DoMe de forma gratuita",
+    "onboarding2Title": "Crea una rutina diaria",
+    "onboarding2Description": "En Uptodo puedes crear tu rutina personalizada para mantenerte productivo",
+    "onboarding3Title": "Organiza tus tareas",
+    "onboarding3Description": "Puedes organizar tus tareas diarias agregándolas en categorías separadas",
+    "areYouSureYouWantToDeleteThisTask": "¿Estás seguro de que quieres eliminar esta tarea?"
   },
   "label": {
-    "employer": "Employer"
+    "employer": "Empleador",
+    "addTask": "Agregar Tarea",
+    "taskName": "Nombre de la Tarea",
+    "description": "Descripción",
+    "tagline": "SwapX - Intercambia Cualquier Cosa",
+    "detailedTagline": "Intercambia artículos de forma segura con usuarios verificados",
+    "getStarted": "Comenzar",
+    "taskPriority": "Prioridad de la Tarea",
+    "chooseCategory": "Elegir Categoría",
+    "addCategory": "Agregar Categoría",
+    "attachments": "Archivos Adjuntos",
+    "searchForYourTask": "Buscar tu tarea...",
+    "taskTime": "Hora de la Tarea: ",
+    "taskCategory": "Categoría de la Tarea:",
+    "taskPriorityWithColon": "Prioridad de la Tarea:",
+    "delete": "Eliminar",
+    "noTasksForThisDay": "No hay tareas para este día",
+    "noCompletedTasks": "No hay tareas completadas",
+    "tapPlusToAddNewTasks": "Toca + para agregar una nueva tarea",
+    "completeTasksToSeeThemHere": "Completa tareas para verlas aquí",
+    "completed": "Completada",
+    "editTaskTitle": "Editar Título de la Tarea",
+    "subTask": "Sub - Tarea",
+    "addSubTask": "Agregar Sub-Tarea",
+    "deleteTask": "Eliminar Tarea",
+    "editTask": "Editar Tarea",
+    "taskTitle": "Título de la tarea: {title}",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "tryAgain": "Intentar de Nuevo",
+    "selectCountry": "Seleccionar País",
+    "search": "Buscar",
+    "index": "Índice",
+    "calendar": "Calendario",
+    "focus": "Enfoque",
+    "chooseTime": "Elegir Hora",
+    "whatDoYouWantToDoToday": "¿Qué quieres hacer hoy?",
+    "tapToAddYourTasks": "Toca + para agregar tus tareas",
+    "profile": "Perfil",
+    "createNewCategory": "Crear nueva categoría",
+    "categoryName": "Nombre de la categoría:",
+    "categoryNameWithoutColon": "Nombre de la categoría",
+    "categoryIcon": "Ícono de la categoría:",
+    "chooseiconFromlibrary": "Elegir ícono de la biblioteca",
+    "categoryColor": "Color de la categoría:",
+    "edit": "Editar",
+    "createCategory": "Crear Categoría",
+    "login": "Iniciar Sesión"
   }
 }

@@ -5,3 +5,4 @@ export * from './todos-list-item';
 export * from './edit-todo-header';
 export * from './delete-todo-confirmation';
 export * from './edit-todo-header';
+export * from './todo-sort-modal';

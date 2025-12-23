@@ -1,8 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../theme';
+import { StyleSheet } from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: theme.colors.white,
   },
-});
+}));

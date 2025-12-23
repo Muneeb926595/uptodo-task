@@ -3,7 +3,7 @@ import { Alert, TouchableOpacity, View } from 'react-native';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { HomeHeader } from '../../../../todo/view/components';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { ScreenProps } from '../../../../../app/navigation';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
@@ -14,10 +14,7 @@ import { useImagePicker } from '../../../../../app/hooks';
 import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -33,8 +30,6 @@ const CATEGORY_COLORS = [
 export const CreateNewCategoryScreen = (
   props: ScreenProps<'CreateNewCategoryScreen'>,
 ) => {
-  const styles = useStyles();
-
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
     const persistedUri = await mediaService.persistImage(imageObj?.uri);
     console.log('persistedUri', persistedUri);
@@ -60,13 +55,25 @@ export const CreateNewCategoryScreen = (
 
   const handleCreateCategory = async () => {
     if (categoryName?.trim?.()?.length <= 0) {
-      return Alert.alert('Please enter Category name');
+      return Alert.alert(
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseEnterCategoryName,
+        ),
+      );
     }
     if ((imageUri ?? '')?.toString?.()?.trim?.()?.length <= 0) {
-      return Alert.alert('Please select image');
+      return Alert.alert(
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseSelectImage,
+        ),
+      );
     }
     if (selectedColor?.trim?.()?.length <= 0) {
-      return Alert.alert('Please Choose color');
+      return Alert.alert(
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.pleaseChooseColor,
+        ),
+      );
     }
 
     // persist category to local storage via repository + react-query
@@ -80,16 +87,22 @@ export const CreateNewCategoryScreen = (
       });
       props.navigation.goBack();
     } catch (err) {
-      Alert.alert('Error', 'Unable to create category');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToCreateCategory,
+        ),
+      );
     }
   };
 
   return (
     <Container
-      insetsToHandle={['top', 'left', 'right']}
+      insetsToHandle={['left', 'right', 'bottom']}
       screenBackgroundStyle={{
         flex: 1,
         paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
+        paddingVertical: Layout.heightPercentageToDP(2),
       }}
       containerStyles={{ flex: 1 }}
     >

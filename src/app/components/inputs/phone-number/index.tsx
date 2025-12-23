@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useState } from 'react';
 import { View, Pressable, TextInput } from 'react-native';
 

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { ScreenProps } from '../../../../../app/navigation';
 import { useTodos } from '../../../react-query';
 import { Todo } from '../../../types';
@@ -11,7 +11,7 @@ import { Conditional } from '../../../../../app/components/conditional';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Images } from '../../../../../app/globals';
 import dayjs from 'dayjs';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 
@@ -27,7 +27,7 @@ const generateWeekDays = (startDate: dayjs.Dayjs) => {
 };
 
 export const CalendarScreen = (props: ScreenProps<'CalendarScreen'>) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [activeTab, setActiveTab] = useState<TabType>('today');
 

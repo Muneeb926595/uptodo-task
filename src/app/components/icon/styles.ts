@@ -1,68 +1,83 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
-import { Colors } from '../../theme';
 
-export const iconOptions: any = {
-  smallCircle: { ...Layout.icon.smallCircle },
-  mediumCircle: { ...Layout.icon.mediumCircle },
-  bigCircle: { ...Layout.icon.xxlargeCircle },
-  miniIcon: Layout.icon.size.mini,
-  smallIcon: Layout.icon.size.xlarge,
-  mediumIcon: Layout.icon.size.small,
-  bigIcon: Layout.icon.size.xxlarge,
+const getIconOptions = () => {
+  // Lazy load Colors to avoid initialization issues
+  const { Colors } = require('../../theme');
 
-  default: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  primary: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  secondary: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  info: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  instruction: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  action: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  success: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  error: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  warning: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  pending: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
-  disabled: {
-    color: Colors.brand[500],
-    backgroundColor: Colors.brand[100],
-  },
+  return {
+    smallCircle: { ...Layout.icon.smallCircle },
+    mediumCircle: { ...Layout.icon.mediumCircle },
+    bigCircle: { ...Layout.icon.xxlargeCircle },
+    miniIcon: Layout.icon.size.mini,
+    smallIcon: Layout.icon.size.xlarge,
+    mediumIcon: Layout.icon.size.small,
+    bigIcon: Layout.icon.size.xxlarge,
+
+    default: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    primary: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    secondary: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    info: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    instruction: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    action: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    success: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    error: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    warning: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    pending: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+    disabled: {
+      color: Colors.brand[500],
+      backgroundColor: Colors.brand[100],
+    },
+  };
 };
 
-export const styles = StyleSheet.create({
+// Lazy getter for iconOptions
+let _iconOptionsCache: any = null;
+export const iconOptions = new Proxy({} as any, {
+  get: (_, prop) => {
+    if (!_iconOptionsCache) {
+      _iconOptionsCache = getIconOptions();
+    }
+    return _iconOptionsCache[prop as string];
+  },
+});
+
+export const styles = StyleSheet.create(theme => ({
   microCircle: { ...Layout.icon.microCircle },
   miniCircle: { ...Layout.icon.miniCircle },
   smallCircle: {
     ...Layout.icon.smallCircle,
-    backgroundColor: Colors.brand[500],
+    backgroundColor: theme.colors.brand[500],
   },
   mediumCircle: { ...Layout.icon.mediumCircle },
   largeCircle: { ...Layout.icon.largeCircle },
@@ -74,4 +89,4 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+}));

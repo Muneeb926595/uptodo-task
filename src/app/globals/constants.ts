@@ -1,4 +1,3 @@
-import { Colors } from '../theme';
 import { Layout } from './layout';
 
 class _Constants {
@@ -55,7 +54,7 @@ class _Constants {
   readonly skeletons = {
     DEFAULT_SKELTON_SPEED: 800,
     DEFAULT_SKELTON_DIRECTION: 'right',
-    DEFAULT_SKELTON_BACKGROUND_COLOR: Colors.white,
+    DEFAULT_SKELTON_BACKGROUND_COLOR: '#FFFFFF',
   };
 
   readonly biometric = {

@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
 import { Colors } from '../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -17,6 +17,6 @@ export const styles = StyleSheet.create({
   errorMessage: {
     marginBottom: Layout.widthPercentageToDP(5),
     textAlign: 'center',
-    color: Colors.red,
+    color: theme.colors.red,
   },
-});
+}));

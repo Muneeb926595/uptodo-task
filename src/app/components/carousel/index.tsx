@@ -5,10 +5,9 @@ import { Button } from '../button';
 import { Fonts, Layout } from '../../globals';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Colors } from '../../theme';
-import { useStyles } from './styles';
+import { styles } from './styles';
 
 export const Carousel = ({ data, Component, onComplete }: any) => {
-  const styles = useStyles();
   const scrollX = useRef(new Animated.Value(0)).current;
   const position = useRef(
     Animated.divide(scrollX, Layout.window.width),

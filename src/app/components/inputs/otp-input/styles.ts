@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { OtpError } from './types';
 import { Fonts, Layout } from '../../../globals';
@@ -56,7 +56,7 @@ export const cellTextStyle = (err?: OtpError) => [
 ];
 
 export const cellBorderStyle = (focused?: boolean, err?: OtpError) => {
-  let bgColor = Colors.transparent;
+  let bgColor: string = Colors.transparent;
   if (focused) {
     bgColor = Colors.transparent;
   }

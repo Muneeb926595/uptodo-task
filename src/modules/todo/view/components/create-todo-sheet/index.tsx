@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BottomSheetWrapper } from '../../../../../app/components/bottom-sheet-wrapper';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { Controller, useForm } from 'react-hook-form';
 import { AuthInput } from '../../../../../app/components/inputs';
 import { AppText } from '../../../../../app/components/text';
@@ -24,10 +24,7 @@ import { PriorityLevel } from '../../../types';
 import { useImagePicker } from '../../../../../app/hooks';
 import { Conditional } from '../../../../../app/components/conditional';
 import { CustomImage } from '../../../../../app/components/custom-image';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 import { TodoPriorityPicker } from '../todo-priority-picker';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
 
@@ -37,7 +34,6 @@ type Props = {
 };
 
 export const CreateTodoBottomSheet = (props: Props) => {
-  const styles = useStyles();
   const {
     control,
     handleSubmit,
@@ -128,7 +124,12 @@ export const CreateTodoBottomSheet = (props: Props) => {
     try {
       await createTodoMutation.mutateAsync(payload);
     } catch (err) {
-      Alert.alert('Error', 'Unable to create todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToCreateTodo,
+        ),
+      );
     }
   };
 
@@ -154,6 +155,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                   LocaleProvider.IDs.label.taskName,
                 )}
                 isError={errors?.title}
+                useBottomSheetTextInput
               />
             )}
             name="title"
@@ -178,6 +180,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
                   LocaleProvider.IDs.label.description,
                 )}
                 isError={errors?.description}
+                useBottomSheetTextInput
               />
             )}
             name="description"

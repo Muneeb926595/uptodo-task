@@ -1,14 +1,13 @@
 // https://material.io/design/typography/the-type-system.html#type-scale
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../globals';
-import { Colors } from '../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   button: {
     fontSize: 14,
     letterSpacing: 1.25,
-    fontWeight: '500',
+    fontWeight: '500' as const,
   },
   headingWrapper: {
     paddingBottom: Layout.heightPercentageToDP(
@@ -17,57 +16,57 @@ export const styles = StyleSheet.create({
   },
   heading3: {
     ...Fonts.heading3,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   heading4: {
     ...Fonts.heading4,
   },
   heading5: {
     ...Fonts.heading5,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   heading6: {
     fontSize: 20,
     letterSpacing: 0.15,
-    fontWeight: '500',
+    fontWeight: '500' as const,
   },
   paragraph: {
     ...Fonts.latoRegular,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   paragraphBold: {
     ...Fonts.paragraphBold,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   paragraphLarge: {
     ...Fonts.paragraphLarge,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   paragraphSmall: {
     ...Fonts.paragraphSmall,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   paragraphTiny: {
     ...Fonts.paragraphTiny,
-    color: Colors.white,
+    color: theme.colors.white,
   },
   paragraphLink: {
     ...Fonts.paragraphLink,
-    color: Colors.brand['DEFAULT'],
+    color: theme.colors.brand.DEFAULT,
   },
   paragraphLinkBold: {
     ...Fonts.paragraphLinkBold,
-    color: Colors.brand['DEFAULT'],
+    color: theme.colors.brand.DEFAULT,
   },
   textLink: {
-    color: Colors.brand['DEFAULT'],
+    color: theme.colors.brand.DEFAULT,
     ...Fonts.bold,
     paddingVertical: Layout.mini,
   },
   micro: {
     ...Fonts.micro,
-    color: Colors.white,
+    color: theme.colors.white,
   },
-});
+}));
 
 export const StyledTextStyles = styles;

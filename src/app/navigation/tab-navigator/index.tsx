@@ -1,17 +1,16 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Colors } from '../../theme';
+import { useTheme } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
-import { TouchableOpacity, View } from 'react-native';
+import { Animated, TouchableOpacity, View } from 'react-native';
 import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
 import { styles } from './styles';
-import { CommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
+import { getCommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
-import { CategoriesScreen } from '../../../modules/categories/view/screens';
 import { CreateTodoBottomSheet } from '../../../modules/todo/view/components';
 import {
   TodoListingScreen,
@@ -19,6 +18,7 @@ import {
 } from '../../../modules/todo/view/screens';
 import { FocusScreen } from '../../../modules/focus/view/screens';
 import { ProfileSettingsScreen } from '../../../modules/profile/view/screens';
+import { useEffect, useRef } from 'react';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -28,13 +28,6 @@ const HomeStack = () => (
     <Stack.Screen
       name="TodoListingScreen"
       component={TodoListingScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <Stack.Screen
-      name="CategoriesScreen"
-      component={CategoriesScreen}
       options={{
         headerShown: false,
       }}
@@ -79,34 +72,77 @@ const ProfileStack = () => (
 );
 
 const AddButton = () => {
+  const { theme } = useTheme();
+  const glowAnim = useRef(new Animated.Value(15)).current;
+
+  useEffect(() => {
+    const glow = Animated.loop(
+      Animated.sequence([
+        Animated.timing(glowAnim, {
+          toValue: 30,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(glowAnim, {
+          toValue: 15,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+
+    glow.start();
+
+    return () => {
+      glow.stop();
+    };
+  }, []);
+
   const handleOpenSheet = async () => {
     await magicSheet.show(() => <CreateTodoBottomSheet />, {
-      ...CommonBottomSheetStyle,
+      ...getCommonBottomSheetStyle(theme.colors.surface['DEFAULT']),
       snapPoints: [Layout.heightPercentageToDP(54)],
+      android_keyboardInputMode: 'adjustResize',
+      keyboardBehavior: 'interactive',
+      keyboardBlurBehavior: 'restore',
     });
   };
+
   return (
-    <TouchableOpacity onPress={handleOpenSheet} style={styles.floatingButton}>
-      <AppIcon
-        name={AppIconName.add}
-        iconSize={AppIconSize.xlarge}
-        color={Colors.white}
-      />
-    </TouchableOpacity>
+    <View style={styles.addButtonContainer}>
+      <Animated.View
+        style={[
+          styles.floatingButton,
+          {
+            shadowRadius: glowAnim,
+            elevation: glowAnim,
+          },
+        ]}
+      >
+        <TouchableOpacity onPress={handleOpenSheet}>
+          <AppIcon
+            name={AppIconName.add}
+            iconSize={AppIconSize.xlarge}
+            color={theme.colors.white}
+          />
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 };
 
 export const TabsNavigator = () => {
+  const { theme } = useTheme();
   return (
     <MainTabs.Navigator
       id={undefined}
       screenOptions={({ route }) => ({
         headerShown: true,
         lazy: true,
-        tabBarActiveTintColor: Colors.brand['DEFAULT'],
-        tabBarInactiveTintColor: Colors.white,
+        tabBarActiveTintColor: theme.colors.brand.DEFAULT,
+        tabBarInactiveTintColor: theme.colors.white,
         tabBarStyle: {
-          backgroundColor: Colors.surface['100'],
+          backgroundColor: theme.colors.surface['100'],
           paddingTop: Layout.heightPercentageToDP(0.6),
         },
         tabBarIcon: ({ focused, color, size }) => {

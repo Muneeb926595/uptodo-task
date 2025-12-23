@@ -5,7 +5,7 @@ The Focus Mode module helps users stay productive by providing timed focus sessi
 
 ## Features
 
-### ✅ Implemented
+### Implemented
 
 1. **Focus Sessions**
 
@@ -213,7 +213,7 @@ Stop/Cancel Focus Mode:
    - Filters notifications that would fire DURING focus (now < dueDate <= endTime)
    - Saves to SUPPRESSED_NOTIFICATIONS in MMKV
    - Cancels only those specific notifications
-   - Notifications AFTER focus session remain scheduled ✅
+   - Notifications AFTER focus session remain scheduled
 7. Updates React Query cache and Redux state
 8. UI shows timer counting down
 ```
@@ -266,11 +266,11 @@ Stop/Cancel Focus Mode:
 ```
 1. User closes app while focus is active
 2. MMKV persists to disk:
-   - ACTIVE_FOCUS_SESSION ✅
-   - SUPPRESSED_NOTIFICATIONS ✅
-   - FOCUS_SESSIONS ✅
-3. Suppressed notifications remain canceled ✅
-4. Future notifications (after focus session) remain scheduled ✅
+   - ACTIVE_FOCUS_SESSION
+   - SUPPRESSED_NOTIFICATIONS
+   - FOCUS_SESSIONS
+3. Suppressed notifications remain canceled
+4. Future notifications (after focus session) remain scheduled
 ```
 
 #### Reopening App:
@@ -294,8 +294,8 @@ Stop/Cancel Focus Mode:
 Day 1, 2:00 PM: Start 30min focus (ends 2:30 PM)
 Day 1, 2:10 PM: Close app
 Day 1, 2:30 PM: Timer expires (app closed, no code runs)
-Day 1, 3:00 PM: Todo notification scheduled → fires normally ✅ (was never suppressed)
-Day 2, 10:00 AM: Another todo → fires normally ✅
+Day 1, 3:00 PM: Todo notification scheduled → fires normally  (was never suppressed)
+Day 2, 10:00 AM: Another todo → fires normally
 Day 3, 9:00 AM: User opens app
 ```
 
@@ -315,8 +315,8 @@ Day 3, 9:00 AM: User opens app
    - Reads SUPPRESSED_NOTIFICATIONS (only notifications from 2:00-2:30 PM Day 1)
    - All timestamps are in the past → skips rescheduling (intentionally missed)
    - Clears SUPPRESSED_NOTIFICATIONS
-7. User navigates anywhere → app works normally ✅
-8. All future notifications (Day 1 3:00 PM onwards) were NEVER suppressed ✅
+7. User navigates anywhere → app works normally
+8. All future notifications (Day 1 3:00 PM onwards) were NEVER suppressed
 ```
 
 **Key Fix:** Only notifications that would fire DURING focus session are suppressed. Notifications scheduled after focus ends remain active, so users don't miss notifications days later.
@@ -331,7 +331,7 @@ Day 3, 9:00 AM: User opens app
    - Suppresses notifications for 2:00-2:45 PM
    - Previous SUPPRESSED_NOTIFICATIONS overwritten
    - Restores at 2:45 PM
-3. Each session independent, no conflicts ✅
+3. Each session independent, no conflicts
 ```
 
 ## Edge Cases Handled
@@ -340,7 +340,7 @@ Day 3, 9:00 AM: User opens app
 
 ```
 suppressNotifications([], endTime) → empty array → no cancellations
-restoreNotifications() → empty array → does nothing ✅
+restoreNotifications() → empty array → does nothing
 ```
 
 ### Edge Case 2: Notification Scheduled During Focus
@@ -349,9 +349,9 @@ restoreNotifications() → empty array → does nothing ✅
 1. Focus active (2:00 PM - 2:30 PM)
 2. User creates todo due at 3:00 PM
 3. Notification gets scheduled immediately (3:00 PM > 2:30 PM)
-4. NOT suppressed because it's after focus ends ✅
+4. NOT suppressed because it's after focus ends
 5. When focus ends: only pre-existing suppressed notifications restored
-6. New 3:00 PM notification fires normally ✅
+6. New 3:00 PM notification fires normally
 ```
 
 ### Edge Case 3: Todo Completed During Focus
@@ -360,7 +360,7 @@ restoreNotifications() → empty array → does nothing ✅
 1. Focus active with notification suppressed
 2. User marks todo complete
 3. Todo repository filters it out
-4. When focus ends: restoreNotifications() won't reschedule (not in list) ✅
+4. When focus ends: restoreNotifications() won't reschedule (not in list)
 ```
 
 ### Edge Case 4: Long Focus Session (2+ hours)
@@ -369,17 +369,17 @@ restoreNotifications() → empty array → does nothing ✅
 1. Focus: 2:00 PM - 4:30 PM
 2. Todos due at: 2:15 PM, 2:45 PM, 3:30 PM, 5:00 PM
 3. Suppressed: 2:15, 2:45, 3:30 (during focus)
-4. NOT suppressed: 5:00 PM (after focus) ✅
+4. NOT suppressed: 5:00 PM (after focus)
 5. At 4:30 PM: tries to restore 2:15, 2:45, 3:30
    - All in past → skipped (user was focused, intentional)
-6. 5:00 PM notification fires normally ✅
+6. 5:00 PM notification fires normally
 ```
 
 ### Edge Case 5: App Force Killed
 
 ```
 Same as Flow 4 - MMKV persists to disk
-Next launch triggers cleanup via app.tsx ✅
+Next launch triggers cleanup via app.tsx
 ```
 
 ## Storage State Examples
@@ -421,7 +421,7 @@ SUPPRESSED_NOTIFICATIONS = [
     body: "Call doctor",
     timestamp: 1734617400000 // 2:20 PM - DURING focus
   }
-  // Note: 3:00 PM notification NOT in this list ✅
+  // Note: 3:00 PM notification NOT in this list
 ]
 
 FOCUS_SESSIONS = {
@@ -432,10 +432,10 @@ FOCUS_SESSIONS = {
 ### After Focus Ends:
 
 ```javascript
-ACTIVE_FOCUS_SESSION = null ✅ (removed)
-SUPPRESSED_NOTIFICATIONS = null ✅ (removed)
+ACTIVE_FOCUS_SESSION = null  (removed)
+SUPPRESSED_NOTIFICATIONS = null  (removed)
 FOCUS_SESSIONS = {
-  "focus_1734616200000": { completed: true, ... } ✅
+  "focus_1734616200000": { completed: true, ... }
 }
 ```
 

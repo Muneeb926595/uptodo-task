@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
 import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
@@ -10,23 +10,52 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { Colors } from '../../../../../app/theme';
+import { useTheme } from '../../../../../app/theme';
 import { navigationRef } from '../../../../../app/navigation';
+import { profileRepository } from '../../../../profile/repository/profile-repository';
+import { UserProfile } from '../../../../profile/types/profile.types';
+import { Conditional } from '../../../../../app/components/conditional';
 
 type HomeHeaderProps = {
   title: string;
+  onFilterPress?: () => void;
 };
 
-export const HomeHeader = ({ title }: HomeHeaderProps) => {
-  const styles = useStyles();
+export const HomeHeader = ({ title, onFilterPress }: HomeHeaderProps) => {
+  const { theme } = useTheme();
+
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
+  const loadProfile = async () => {
+    try {
+      const userProfile = await profileRepository.getProfile();
+      setProfile(userProfile);
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    }
+  };
 
   const handleFilterPress = () => {
-    navigationRef.navigate('CreateNewCategoryScreen');
+    if (onFilterPress) {
+      onFilterPress();
+    } else {
+      navigationRef.navigate('CreateNewCategoryScreen');
+    }
   };
-  const handlePressProfile = () => {};
+  const handlePressProfile = () => {
+    // @ts-ignore
+    navigationRef.navigate('Profile');
+  };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.transparent }]}
+      edges={['top']}
+    >
       <View style={styles.wrapper}>
         <TouchableOpacity
           hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
@@ -34,7 +63,7 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
         >
           <AppIcon
             name={AppIconName.filter}
-            color={Colors.white}
+            color={theme.colors.white}
             iconSize={AppIconSize.xxlarge}
           />
         </TouchableOpacity>
@@ -46,16 +75,27 @@ export const HomeHeader = ({ title }: HomeHeaderProps) => {
           onPress={handlePressProfile}
           style={{ flex: 0.2 }}
         >
-          <CustomImage
-            uri={undefined}
-            imageStyles={styles.headerImage}
-            placeHolder={Images.Avatar}
-            resizeMode="cover"
-            svgDimensions={{
-              width: Layout.widthPercentageToDP(8),
-              height: Layout.widthPercentageToDP(8),
-            }}
-          />
+          <Conditional
+            ifTrue={profile?.avatar}
+            elseChildren={
+              <AppIcon
+                name={AppIconName.user}
+                iconSize={AppIconSize.primary}
+                color={theme.colors.white}
+              />
+            }
+          >
+            <CustomImage
+              uri={profile?.avatar}
+              imageStyles={styles.headerImage}
+              placeHolder={Images.Avatar}
+              resizeMode="cover"
+              svgDimensions={{
+                width: Layout.widthPercentageToDP(8),
+                height: Layout.widthPercentageToDP(8),
+              }}
+            />
+          </Conditional>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

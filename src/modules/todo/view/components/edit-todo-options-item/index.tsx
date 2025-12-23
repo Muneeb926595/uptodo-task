@@ -13,7 +13,7 @@ import { Constants, Images, Layout } from '../../../../../app/globals';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
-import { useStyles } from './styles';
+import { styles } from './styles';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
@@ -26,10 +26,7 @@ import { TodoPriorityPicker } from '../todo-priority-picker';
 import { useDeleteTodo } from '../../../react-query';
 import { magicSheet } from 'react-native-magic-sheet';
 import { navigationRef } from '../../../../../app/navigation';
-import {
-  mediaService,
-  PickedImage,
-} from '../../../../services/media';
+import { mediaService, PickedImage } from '../../../../services/media';
 import { useImagePicker } from '../../../../../app/hooks';
 
 type ListItemProps = {
@@ -76,7 +73,12 @@ export const EditTodoOptionsListItem = ({
       magicSheet.hide();
       navigationRef.goBack();
     } catch (err) {
-      Alert.alert('Error', 'Unable to delete todo');
+      Alert.alert(
+        LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+        LocaleProvider.formatMessage(
+          LocaleProvider.IDs.message.unableToDeleteTodo,
+        ),
+      );
     }
   };
 
@@ -208,7 +210,6 @@ export const EditTodoOptionsListItem = ({
     }
   };
 
-  const styles = useStyles();
   return (
     <TouchableOpacity
       onPress={() => doSelectedOperation(item?.id)}

@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
-import { Colors } from '../../theme';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     height: Layout.heightPercentageToDP(0.1),
     width: '100%',
-    backgroundColor: Colors.borders['DEFAULT'],
+    backgroundColor: theme.colors.borders.DEFAULT,
   },
-});
+}));
