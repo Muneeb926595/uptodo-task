@@ -1,0 +1,125 @@
+name: Test Environment - Build & Deploy
+
+on:
+  push:
+    branches: [test, test/active-sprint]
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-android:
+    name: Build Android (Test)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    environment: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Android
+        run: |
+          eas build --platform android --profile test --non-interactive --no-wait
+
+  build-ios:
+    name: Build iOS (Test)
+    runs-on: ubuntu-latest
+    needs: publish-update
+    if: github.event_name == 'push'
+    environment: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build iOS
+        run: |
+          eas build --platform ios --profile test --non-interactive --no-wait
+
+  submit-android:
+    name: Submit to Play Store (Test)
+    runs-on: ubuntu-latest
+    needs: build-android
+    if: github.event_name == 'workflow_dispatch'
+    environment: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Submit to Google Play
+        run: |
+          eas submit --platform android --profile test --latest --non-interactive
+
+  submit-ios:
+    name: Submit to App Store (Test)
+    runs-on: ubuntu-latest
+    needs: build-ios
+    if: github.event_name == 'workflow_dispatch'
+    environment: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Submit to App Store
+        run: |
+          eas submit --platform ios --profile test --latest --non-interactive

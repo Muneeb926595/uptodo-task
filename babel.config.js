@@ -11,6 +11,7 @@ module.exports = {
         root: 'src',
       },
     ],
+    'hot-updater/babel-plugin',
     'react-native-reanimated/plugin',
   ],
 };

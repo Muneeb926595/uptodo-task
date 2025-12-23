@@ -1,0 +1,72 @@
+name: OTA Update Deployment
+
+# Manual trigger only - YOU decide when to deploy OTA
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Deployment channel'
+        required: true
+        type: choice
+        options:
+          - development
+          - test
+          - staging
+          - production
+      message:
+        description: 'Update message'
+        required: false
+        type: string
+        default: 'OTA update'
+      force_update:
+        description: 'Force update (users must update immediately)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ota-${{ github.event.inputs.channel }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-ota:
+    name: Deploy OTA to ${{ github.event.inputs.channel }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.channel == 'production' && 'production' || 'staging' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Setup Supabase Credentials
+        run: |
+          echo "HOT_UPDATER_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env.hotupdater
+          echo "HOT_UPDATER_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env.hotupdater
+          echo "HOT_UPDATER_SUPABASE_BUCKET_NAME=${{ secrets.SUPABASE_BUCKET_NAME }}" >> .env.hotupdater
+
+      - name: Deploy Hot Updater OTA
+        run: |
+          if [ "${{ github.event.inputs.force_update }}" = "true" ]; then
+            npx hot-updater deploy -c ${{ github.event.inputs.channel }} -f -m "${{ github.event.inputs.message }}"
+          else
+            npx hot-updater deploy -c ${{ github.event.inputs.channel }} -m "${{ github.event.inputs.message }}"
+          fi
+
+      - name: Deployment Summary
+        run: |
+          echo "## 🚀 OTA Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Channel:** ${{ github.event.inputs.channel }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Message:** ${{ github.event.inputs.message }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Force Update:** ${{ github.event.inputs.force_update }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Users on the **${{ github.event.inputs.channel }}** channel will receive this update!" >> $GITHUB_STEP_SUMMARY

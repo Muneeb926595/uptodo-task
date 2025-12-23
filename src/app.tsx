@@ -15,9 +15,10 @@ import {
 } from 'react-native-safe-area-context';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, View, Text } from 'react-native';
 import { getTranslationService, TranslationProvider } from './app/localisation';
 import { Constants } from './app/globals';
+import { HotUpdater } from '@hot-updater/react-native';
 import { store } from './app/stores';
 import { Provider } from 'react-redux';
 import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
@@ -116,5 +117,45 @@ function App() {
     </Provider>
   ) : null;
 }
-
+// TODO: fix the supabase scehma issue and then rever this change
+// Hot Updater disabled temporarily - will enable after first deployment
+// After you run: npx hot-updater deploy -c development
+// It will give you the baseURL to use here
 export default App;
+
+/*
+export default HotUpdater.wrap({
+  // You'll need to configure this after setting up Firebase
+  // The URL will be provided after running: npx hot-updater deploy
+  baseURL: process.env.HOT_UPDATER_BASE_URL || '',
+  updateStrategy: 'appVersion',
+  updateMode: 'auto',
+  fallbackComponent: ({ progress, status }) => (
+    <View
+      style={{
+        flex: 1,
+        padding: 20,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+        {status === 'UPDATING' ? 'Updating...' : 'Checking for Update...'}
+      </Text>
+      {progress > 0 ? (
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginTop: 10,
+          }}
+        >
+          {Math.round(progress * 100)}%
+        </Text>
+      ) : null}
+    </View>
+  ),
+})(App);
