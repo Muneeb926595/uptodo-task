@@ -47,6 +47,8 @@ export class I18nextAdapter implements TranslationService {
       fallbackLng: this.config.fallbackLocale,
       interpolation: {
         escapeValue: false, // React already escapes
+        prefix: '{',
+        suffix: '}',
       },
       react: {
         useSuspense: false,
