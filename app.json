@@ -1,4 +1,29 @@
 {
   "name": "UpTodo",
-  "displayName": "UpTodo"
+  "displayName": "UpTodo",
+  "expo": {
+    "name": "UpTodo",
+    "slug": "uptodo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "updates": {
+      "url": "https://expo.dev/accounts/muneeburrehmanemumba/projects/uptodo"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.reactjs.native.example.UpTodo"
+    },
+    "android": {
+      "package": "com.uptodo"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0b20221c-b199-40ea-8afe-05f28309fe73"
+      }
+    }
+  }
 }

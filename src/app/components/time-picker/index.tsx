@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, forwardRef } from 'react';
 import {
   View,
   FlatList,
@@ -41,9 +41,10 @@ type WheelProps<T> = {
   onChange: (value: T) => void;
 };
 
-function Wheel<T>({ data, width, initialIndex, onChange }: WheelProps<T>) {
-  const ref = useRef<FlatList>(null);
-
+const Wheel = forwardRef(function Wheel<T>(
+  { data, width, initialIndex, onChange }: WheelProps<T>,
+  ref: any,
+) {
   const onScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = Math.round(e?.nativeEvent?.contentOffset?.y / ITEM_HEIGHT);
     const value = data[index];
@@ -84,7 +85,7 @@ function Wheel<T>({ data, width, initialIndex, onChange }: WheelProps<T>) {
       <View pointerEvents="none" style={styles.selectionOverlay} />
     </View>
   );
-}
+});
 
 export const TimePicker: React.FC<Props> = ({
   initialDate,
@@ -113,11 +114,38 @@ export const TimePicker: React.FC<Props> = ({
     am: isAM,
   });
 
+  const hourWheelRef = useRef<FlatList>(null);
+  const minuteWheelRef = useRef<FlatList>(null);
+  const ampmWheelRef = useRef<FlatList>(null);
+
+  const getWheelValue = (wheelRef: any, data: any[], fallback: any) => {
+    try {
+      const scrollY =
+        (wheelRef.current as any)?._listRef?._scrollMetrics?.offset || 0;
+      const index = Math.round(scrollY / ITEM_HEIGHT);
+      return data[index] ?? fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
   const save = () => {
-    const h =
-      (selectedRef?.current?.hour % 12) + (selectedRef?.current?.am ? 0 : 12);
+    // Read current scroll positions directly from the wheels
+    const hour = getWheelValue(hourWheelRef, hours, selectedRef.current.hour);
+    const minute = getWheelValue(
+      minuteWheelRef,
+      minutes,
+      selectedRef.current.minute,
+    );
+    const ampm = getWheelValue(
+      ampmWheelRef,
+      ['AM', 'PM'],
+      selectedRef.current.am ? 'AM' : 'PM',
+    );
+
+    const h = (hour % 12) + (ampm === 'AM' ? 0 : 12);
     const d = new Date(initialDate);
-    d.setHours(h, selectedRef?.current?.minute, 0, 0);
+    d.setHours(h, minute, 0, 0);
     console.log('OH my dogd', d);
     onConfirm(d);
   };
@@ -131,22 +159,25 @@ export const TimePicker: React.FC<Props> = ({
 
       <View style={styles.pickerRow}>
         <Wheel
+          ref={hourWheelRef}
           data={hoursData}
           width={90}
           initialIndex={hours.indexOf(hour12) + CENTER_OFFSET}
-          onChange={v => (selectedRef.current.hour = v)}
+          onChange={v => (selectedRef.current.hour = v as number)}
         />
 
         <AppText style={styles.colon}>:</AppText>
 
         <Wheel
+          ref={minuteWheelRef}
           data={minutesData}
           width={90}
           initialIndex={minutes.indexOf(minute) + CENTER_OFFSET}
-          onChange={v => (selectedRef.current.minute = v)}
+          onChange={v => (selectedRef.current.minute = v as number)}
         />
 
         <Wheel
+          ref={ampmWheelRef}
           data={ampmData}
           width={90}
           initialIndex={(isAM ? 0 : 1) + CENTER_OFFSET}

@@ -1,4 +1,10 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+// Ensure plugins are extended
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // to convert backend date object into frontend calendar object
 export const convertDateStringToObj = (dateString: any) => {
@@ -31,6 +37,7 @@ export const formatTodoDateTime = (
   date: Date | number | string,
   timeFormat = 'HH:mm',
 ) => {
+  // Parse the timestamp in local timezone
   const d = dayjs(date);
 
   if (d.isToday()) {

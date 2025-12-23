@@ -1,0 +1,11 @@
+# .github/workflows/
+*.yml
+
+# EAS credentials
+credentials.json
+google-services.json
+GoogleService-Info.plist
+
+# App Store Connect API Key
+AuthKey_*.p8
+api-key.json

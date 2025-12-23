@@ -1,0 +1,88 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "APP_ENV": "development"
+      }
+    },
+    "test": {
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "ios": {
+        "simulator": false,
+        "buildConfiguration": "Release"
+      },
+      "distribution": "internal",
+      "channel": "test",
+      "env": {
+        "APP_ENV": "test"
+      }
+    },
+    "staging": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "buildConfiguration": "Release"
+      },
+      "distribution": "internal",
+      "channel": "staging",
+      "env": {
+        "APP_ENV": "staging"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "buildConfiguration": "Release"
+      },
+      "autoIncrement": true,
+      "channel": "production",
+      "env": {
+        "APP_ENV": "production"
+      }
+    }
+  },
+  "submit": {
+    "test": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      },
+      "ios": {
+        "appleTeamId": "${APPLE_TEAM_ID}",
+        "ascAppId": "${ASC_APP_ID}"
+      }
+    },
+    "staging": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      },
+      "ios": {
+        "appleTeamId": "${APPLE_TEAM_ID}",
+        "ascAppId": "${ASC_APP_ID}"
+      }
+    },
+    "production": {
+      "android": {
+        "track": "production",
+        "releaseStatus": "completed"
+      },
+      "ios": {
+        "appleTeamId": "${APPLE_TEAM_ID}",
+        "ascAppId": "${ASC_APP_ID}"
+      }
+    }
+  }
+}
