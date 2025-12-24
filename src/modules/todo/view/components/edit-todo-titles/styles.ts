@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { Constants, Fonts, Layout } from '../../../../../app/globals';
+import { Fonts, Layout } from '../../../../../app/globals';
 
 export const styles = StyleSheet.create(theme => ({
   backdrop: {

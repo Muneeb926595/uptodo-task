@@ -4,10 +4,7 @@
  * Tests the adapter implementation for react-native-biometrics library
  */
 
-import ReactNativeBiometrics, {
-  BiometryType,
-  BiometryTypes,
-} from 'react-native-biometrics';
+import ReactNativeBiometrics from 'react-native-biometrics';
 import { ReactNativeBiometricsAdapter } from '../react-native-biometrics-adapter';
 import { BiometricType } from '../biometric-adapter';
 

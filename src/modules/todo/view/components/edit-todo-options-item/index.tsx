@@ -62,7 +62,7 @@ export const EditTodoOptionsListItem = ({
     return persistedUri;
   };
 
-  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+  const { pickAndUpload } = useImagePicker({
     uploader: persistImageOnPhoneStorage,
   });
 

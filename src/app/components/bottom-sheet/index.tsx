@@ -24,7 +24,7 @@ export const BottomSheet = (props: BottomSheetProps) => {
         >
           {isModal && (
             <TouchableWithoutFeedback onPress={onDismiss}>
-              <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+              <View style={styles.backdrop} />
             </TouchableWithoutFeedback>
           )}
         </BottomSheetBackdrop>

@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../globals';
-import { createNeonEffect } from '../../theme/neon-effects';
 
 export const styles = StyleSheet.create(theme => ({
   headerTitle: {

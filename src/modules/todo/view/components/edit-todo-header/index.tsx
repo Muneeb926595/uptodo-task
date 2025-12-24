@@ -3,8 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { AppText } from '../../../../../app/components/text';
-import { Constants, Images, Layout } from '../../../../../app/globals';
-import { CustomImage } from '../../../../../app/components/custom-image';
+import { Constants } from '../../../../../app/globals';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
@@ -18,7 +17,6 @@ type EditTodoHeaderProps = {
 };
 
 export const EditTodoHeader = ({ title }: EditTodoHeaderProps) => {
-
   const handleFilterPress = () => {
     navigationRef.goBack();
   };

@@ -21,7 +21,6 @@ import {
   useTheme,
   themeMetadata,
   UnistylesRuntime,
-  setTheme,
 } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { biometricService } from '../../../../services/biometric';
@@ -326,7 +325,6 @@ export const ProfileSettingsScreen = () => {
         strategy,
       );
 
-      const totalImported = todosResult.imported + categoriesResult.imported;
       const totalSkipped = todosResult.skipped + categoriesResult.skipped;
 
       let message = LocaleProvider.formatMessage(

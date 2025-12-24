@@ -71,7 +71,7 @@ export class UnistylesThemeAdapter implements ThemeAdapter {
     return themeMetadata;
   }
 
-  onThemeChange(callback: (theme: any) => void): () => void {
+  onThemeChange(): () => void {
     // Unistyles doesn't have a direct listener API, but theme changes
     // trigger re-renders automatically, so we can return a no-op
     // In a real implementation, you might need to use a custom event system

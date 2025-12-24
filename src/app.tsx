@@ -2,11 +2,6 @@
 import './app/theme/unistyles';
 
 import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import isToday from 'dayjs/plugin/isToday';
-import isTomorrow from 'dayjs/plugin/isTomorrow';
-import isYesterday from 'dayjs/plugin/isYesterday';
 import './app/utils/ignore-warnings';
 import { MagicModalPortal } from 'react-native-magic-modal';
 import {
@@ -15,7 +10,7 @@ import {
 } from 'react-native-safe-area-context';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { getTranslationService, TranslationProvider } from './app/localisation';
 import { Constants } from './app/globals';
 import { store } from './app/stores';
@@ -28,18 +23,9 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
 import { ToastProvider } from './app/context/toast-context';
 import { SecurityAlert } from './app/components/security-alert';
+import { initializeDayjsPlugins } from './app/utils/timeDateUtils';
 
-// Load critical dayjs plugins immediately (needed for UI rendering)
-dayjs.extend(utc);
-dayjs.extend(isToday);
-dayjs.extend(isTomorrow);
-dayjs.extend(isYesterday);
-
-// Defer less critical dayjs plugins to improve startup time
-setTimeout(() => {
-  import('dayjs/plugin/relativeTime').then(m => dayjs.extend(m.default));
-  import('dayjs/plugin/timezone').then(m => dayjs.extend(m.default));
-}, 0);
+initializeDayjsPlugins();
 
 if (__DEV__) {
   //   require('../ReactotronConfig');
@@ -95,18 +81,7 @@ function App() {
                 </SafeAreaProvider>
                 <MagicSheetPortal />
               </BottomSheetModalProvider>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  zIndex: 9999,
-                  elevation: 9999,
-                }}
-                pointerEvents="box-none"
-              >
+              <View style={styles.modalsWrapper} pointerEvents="box-none">
                 <MagicModalPortal />
               </View>
             </GestureHandlerRootView>
@@ -118,3 +93,15 @@ function App() {
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  modalsWrapper: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 9999,
+    elevation: 9999,
+  },
+});

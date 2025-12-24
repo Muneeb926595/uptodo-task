@@ -1,10 +1,9 @@
-import { Dimensions, Platform, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
 
 import { BottomSheetWrapper } from '../../bottom-sheet-wrapper';
 import { Button } from '../../button';
-import { magicSheet } from 'react-native-magic-sheet';
 import { Colors } from '../../../theme';
 import { Layout } from '../../../globals';
 import { LocaleProvider } from '../../../localisation/locale-provider';

@@ -8,7 +8,7 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
-import { navigationRef, ScreenProps } from '../../../../../app/navigation';
+import { navigationRef } from '../../../../../app/navigation';
 import { LocaleProvider } from '../../../../../app/localisation';
 import { storageService, StorageKeys } from '../../../../services/storage';
 import { styles } from './styles';
@@ -35,9 +35,7 @@ const LANGUAGES: Language[] = [
   },
 ];
 
-export const LanguagePickerScreen = (
-  props: ScreenProps<'LanguagePickerScreen'>,
-) => {
+export const LanguagePickerScreen = () => {
   const { theme } = useTheme();
   const [currentLanguage, setCurrentLanguage] = useState<string>('en-US');
   const [loading, setLoading] = useState(false);

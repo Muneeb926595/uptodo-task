@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native-unistyles';
 
 import { Country } from '../inputs/phone-number/types';
 import { Fonts, Layout } from '../../globals';
-import { Colors } from '../../theme';
 
 export const ITEM_HEIGHT = 48;
 
@@ -72,10 +71,7 @@ export const pressableStyle = (state: PressableStateCallbackType) => ({
   opacity: state.pressed ? 0.5 : 1,
 });
 
-export const itemLayout = (
-  data: Country[] | null | undefined,
-  index: number,
-) => ({
+export const itemLayout = (_: Country[] | null | undefined, index: number) => ({
   length: ITEM_HEIGHT,
   offset: ITEM_HEIGHT * index,
   index,

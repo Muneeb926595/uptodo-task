@@ -56,7 +56,6 @@ export const AuthInput = ({
   value,
   keyboardType,
   onBlur,
-  onFocus,
   isError,
   scrollEnabled,
   passwordFieldCustomeStyles,
@@ -65,13 +64,6 @@ export const AuthInput = ({
 }: Props) => {
   const { theme } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
-
-  const handleFocus = (e: Event) => {
-    if (typeof onFocus === 'function') {
-      onFocus(e);
-    }
-    setIsFocused(true);
-  };
 
   const handleBlur = (e: Event) => {
     onBlur(e);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useSelector } from 'react-redux';
 import { styles } from './styles';
 import { Props } from './types';
 import { AppText } from '../text';
@@ -14,7 +13,6 @@ export const Button = (props: Props) => {
     btnLabelStyles,
     loading,
     disabled,
-    authenticationRequired,
     disableBgColor,
     leftIcon,
     loaderColor,

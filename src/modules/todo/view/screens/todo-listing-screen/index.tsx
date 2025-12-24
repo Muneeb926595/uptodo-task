@@ -21,14 +21,12 @@ import { CustomImage } from '../../../../../app/components/custom-image';
 import { Images, Layout } from '../../../../../app/globals';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
-import { formatTodoDateTime } from '../../../../../app/utils';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
   AppIconName,
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { useTheme } from '../../../../../app/theme';
-import { ScreenProps } from '../../../../../app/navigation';
 import { Todo } from '../../../types';
 import { useTodos } from '../../../react-query';
 import { AuthInput } from '../../../../../app/components/inputs';
@@ -158,8 +156,8 @@ const RenderSectionList = ({
   );
 };
 
-export const TodoListingScreen = (props: ScreenProps<'TodoListingScreen'>) => {
-  const { data: todos, isLoading, refetch } = useTodos();
+export const TodoListingScreen = () => {
+  const { data: todos, refetch } = useTodos();
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [currentSort, setCurrentSort] = useState<TodoSortOption>(

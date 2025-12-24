@@ -11,7 +11,6 @@ export interface ExportData {
 }
 
 class ImportExportService {
-  private readonly FILE_NAME = 'uptodo-backup.json';
   private readonly CURRENT_VERSION = '1.0';
 
   /**

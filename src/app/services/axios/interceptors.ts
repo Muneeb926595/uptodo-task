@@ -34,7 +34,7 @@ axiosClient.interceptors.response.use(
       }
 
       // For other errors, show alert with Retry option which will re-run the request if chosen
-      return new Promise((resolve, reject) => {
+      return new Promise((_, reject) => {
         errorHandler
           .showApiErrorAlert(error, {
             onRetry: () => axiosClient.request(error.config as any),

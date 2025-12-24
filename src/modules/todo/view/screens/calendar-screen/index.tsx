@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Container } from '../../../../../app/components/container';
 import { AppText } from '../../../../../app/components/text';
-import { useTheme } from '../../../../../app/theme';
-import { ScreenProps } from '../../../../../app/navigation';
 import { useTodos } from '../../../react-query';
 import { Todo } from '../../../types';
 import { TodoListItem } from '../../components';
@@ -26,8 +24,7 @@ const generateWeekDays = (startDate: dayjs.Dayjs) => {
   return days;
 };
 
-export const CalendarScreen = (props: ScreenProps<'CalendarScreen'>) => {
-  const { theme } = useTheme();
+export const CalendarScreen = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [activeTab, setActiveTab] = useState<TabType>('today');
 

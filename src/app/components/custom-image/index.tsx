@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import FastImage from '@d11/react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { Images } from '../../globals';
-import { LocaleProvider } from '../../localisation/locale-provider';
 import { isValidUrl } from '../../utils';
 
 type Props = {

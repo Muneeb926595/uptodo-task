@@ -30,7 +30,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
     },
   },
-  extraReducers: builder => {
+  extraReducers: _ => {
     // not needed after adding the setLoading above
     // builder.addMatcher(authApi.endpoints.login.matchPending, state => {
     //   state.loading = true;

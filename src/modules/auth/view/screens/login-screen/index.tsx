@@ -12,8 +12,8 @@ import { LocaleProvider } from '../../../../../app/localisation';
 export const LoginScreen = () => {
   const { theme } = useTheme();
 
-  const [email, setEmail] = useState('keven@mailsac.com');
-  const [password, setPassword] = useState('Evolo123@');
+  const [email] = useState('keven@mailsac.com');
+  const [password] = useState('Evolo123@');
   const loginMutation = useLogin();
   const login = loginMutation.mutateAsync;
   const isLoading = loginMutation.status === 'pending';

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Animated, I18nManager } from 'react-native';
+import { View, Animated } from 'react-native';
 
 import { Button } from '../button';
 import { Fonts, Layout } from '../../globals';
@@ -67,7 +67,7 @@ export const Carousel = ({ data, Component, onComplete }: any) => {
       <View style={{ paddingBottom: Layout.mini }}>
         <Animated.FlatList
           data={data}
-          keyExtractor={(item, index) => 'key' + index}
+          keyExtractor={(_, index) => 'key' + index}
           horizontal
           ref={flatListRef}
           pagingEnabled

@@ -1,10 +1,17 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import isToday from 'dayjs/plugin/isToday';
+import isTomorrow from 'dayjs/plugin/isTomorrow';
+import isYesterday from 'dayjs/plugin/isYesterday';
 
-// Ensure plugins are extended
-dayjs.extend(utc);
-dayjs.extend(timezone);
+export const initializeDayjsPlugins = () => {
+  dayjs.extend(utc);
+  dayjs.extend(isToday);
+  dayjs.extend(isTomorrow);
+  dayjs.extend(isYesterday);
+  dayjs.extend(timezone);
+};
 
 // to convert backend date object into frontend calendar object
 export const convertDateStringToObj = (dateString: any) => {

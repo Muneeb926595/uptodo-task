@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { Layout } from '../../globals';
-import { Colors } from '../../theme';
 
 export const styles = StyleSheet.create(theme => ({
   container: {

@@ -10,11 +10,6 @@ import {
 } from 'react-native';
 import { styles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../../app/components/text';
-import { AppIcon } from '../../../../../app/components/icon';
-import {
-  AppIconName,
-  AppIconSize,
-} from '../../../../../app/components/icon/types';
 import { useTheme } from '../../../../../app/theme';
 import { profileRepository } from '../../../repository/profile-repository';
 import { navigationRef } from '../../../../../app/navigation';

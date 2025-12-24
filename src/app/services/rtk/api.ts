@@ -20,7 +20,7 @@ export const api = createApi({
   endpoints: builder => ({
     getUser: builder.query<User, string>({
       query: id => `/users/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: (_, __, id) => [{ type: 'User', id }],
     }),
     updateUser: builder.mutation<User, Partial<User> & { id: string }>({
       query: ({ id, ...patch }) => ({
@@ -28,7 +28,7 @@ export const api = createApi({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+      invalidatesTags: (_, __, { id }) => [{ type: 'User', id }],
     }),
     // Add more endpoints
   }),

@@ -11,7 +11,7 @@ jest.mock('../../../../app/utils/id');
 jest.mock('../../../categories/repository/categories-repository');
 
 import { todoRepository } from '../todo-repository';
-import { storageService, StorageKeys } from '../../../services/storage';
+import { storageService } from '../../../services/storage';
 import { notificationService } from '../../../services/notifications';
 import { generateId } from '../../../../app/utils/id';
 import { categoriesRepository } from '../../../categories/repository/categories-repository';

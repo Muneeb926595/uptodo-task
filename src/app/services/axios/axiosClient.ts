@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Constants } from '../../globals';
 
 const axiosClient = axios.create({
   baseURL: 'http://localhost:8080/api',

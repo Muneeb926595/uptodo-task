@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Alert, TouchableOpacity, View } from 'react-native';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
-import { HomeHeader } from '../../../../todo/view/components';
 import { styles } from './styles';
 import { ScreenProps } from '../../../../../app/navigation';
 import { AppText } from '../../../../../app/components/text';
@@ -36,7 +35,7 @@ export const CreateNewCategoryScreen = (
     return persistedUri;
   };
 
-  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+  const { pickAndUpload, imageUri } = useImagePicker({
     uploader: persistImageOnPhoneStorage,
   });
 
@@ -155,7 +154,7 @@ export const CreateNewCategoryScreen = (
         <FlatList
           horizontal
           data={CATEGORY_COLORS}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[

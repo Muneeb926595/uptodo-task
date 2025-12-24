@@ -6,12 +6,10 @@ import {
   NativeSyntheticEvent,
   TouchableOpacity,
 } from 'react-native';
-import { Colors } from '../../theme';
 import { styles } from './styles';
 import { AppText } from '../text';
 import { FormattedMessage } from '../../localisation/locale-formatter';
 import { LocaleProvider } from '../../localisation/locale-provider';
-import { Form } from 'react-hook-form';
 import { Constants } from '../../globals';
 
 type Props = {

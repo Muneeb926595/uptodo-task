@@ -1,13 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  Animated,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
-import { Colors } from '../../theme';
-import { Layout } from '../../globals';
+import { Animated, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 
 export interface ToastProps {

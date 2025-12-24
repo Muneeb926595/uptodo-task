@@ -1,16 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
 import { AuthFlow } from '../../modules/auth/view/navigation/auth';
 import { hideSplash } from 'react-native-splash-view';
-import { useTheme, UnistylesRuntime } from '../theme';
 import { TabsNavigator } from './tab-navigator';
 import { notificationService } from '../../modules/services/notifications';
 import { todoRepository } from '../../modules/todo/repository';
@@ -18,7 +13,6 @@ import { EditTodoScreen } from '../../modules/todo/view/screens';
 import { CreateNewCategoryScreen } from '../../modules/categories/view/screens/create-new-category-screen';
 import { focusRepository } from '../../modules/focus/repository';
 import { useFirstTimeAppOpen } from '../hooks';
-import { Conditional } from '../components/conditional';
 import { OnboardingScreen } from '../../modules/auth/view/screens/onboarding-screen';
 import { StorageKeys, storageService } from '../../modules/services/storage';
 import {
@@ -35,7 +29,6 @@ const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = () => {
   const routeNameRef = useRef<any>(null);
-  const currentTheme = UnistylesRuntime.themeName;
 
   const isFirstTime = useFirstTimeAppOpen();
   const [showOnboarding, setShowOnboarding] = useState<boolean>(true);

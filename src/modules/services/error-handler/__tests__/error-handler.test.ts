@@ -188,7 +188,7 @@ describe('Error Handler Service', () => {
           data: { message: 'Invalid data' },
         },
       };
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress(); // Click OK
       });
 
@@ -212,7 +212,7 @@ describe('Error Handler Service', () => {
           data: { message: 'Server error' },
         },
       };
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress();
       });
 
@@ -237,7 +237,7 @@ describe('Error Handler Service', () => {
         },
       };
       const onRetry = jest.fn();
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[1].onPress(); // Click OK (Retry is first, OK is second)
       });
 
@@ -261,7 +261,7 @@ describe('Error Handler Service', () => {
         },
       };
       (storageService.removeItem as jest.Mock).mockResolvedValue(undefined);
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress();
       });
 
@@ -293,7 +293,7 @@ describe('Error Handler Service', () => {
         message: 'Request failed',
       };
       (storageService.removeItem as jest.Mock).mockResolvedValue(undefined);
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress();
       });
 
@@ -321,7 +321,7 @@ describe('Error Handler Service', () => {
       (store.dispatch as jest.Mock).mockImplementation(() => {
         throw new Error('Redux error');
       });
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress();
       });
 
@@ -339,7 +339,7 @@ describe('Error Handler Service', () => {
         },
       };
       const onRetry = jest.fn();
-      mockAlert.mockImplementation((title, message, buttons) => {
+      mockAlert.mockImplementation((_, __, buttons) => {
         buttons[0].onPress(); // Click Retry button
       });
 

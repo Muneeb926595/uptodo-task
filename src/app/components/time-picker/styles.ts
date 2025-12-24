@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { Colors } from '../../theme';
 import { Layout } from '../../globals';
 
 const ITEM_HEIGHT = 44;

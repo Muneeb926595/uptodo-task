@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { Fonts, Layout } from '../../../globals';
-import { Colors } from '../../../theme';
 
 export const styles = StyleSheet.create(theme => ({
   inputContainer: {

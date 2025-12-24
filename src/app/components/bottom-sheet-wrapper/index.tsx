@@ -1,12 +1,8 @@
 import { View } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
-import { AppIcon } from '../icon';
 import { AppIconName } from '../icon/types';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import { magicSheet } from 'react-native-magic-sheet';
 import { AppText } from '../text';
-import { Colors } from '../../theme';
 
 type Props = {
   children: any;
@@ -14,15 +10,7 @@ type Props = {
   iconName?: AppIconName;
 };
 
-export const BottomSheetWrapper = ({
-  children,
-  headerTitle,
-  iconName,
-}: Props) => {
-  const handleCloseBottomSheet = () => {
-    magicSheet.hide();
-  };
-
+export const BottomSheetWrapper = ({ children, headerTitle }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>

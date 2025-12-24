@@ -4,7 +4,6 @@ import { useTheme } from '../../theme';
 import { AppIcon } from '../../components/icon';
 import { AppIconName, AppIconSize } from '../../components/icon/types';
 import { Animated, TouchableOpacity, View } from 'react-native';
-import { AppText } from '../../components/text';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { LocaleProvider } from '../../localisation/locale-provider';
 import { Layout } from '../../globals';
@@ -145,7 +144,7 @@ export const TabsNavigator = () => {
           backgroundColor: theme.colors.surface['100'],
           paddingTop: Layout.heightPercentageToDP(0.6),
         },
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ color }) => {
           switch (route.name) {
             case 'Home':
               return (

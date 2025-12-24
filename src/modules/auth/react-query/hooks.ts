@@ -20,7 +20,7 @@ export const useLogin = () => {
       qc.setQueryData(authKeys.user(), user);
       dispatch(setUser(user));
     },
-    onError: (err: any) => {
+    onError: (_: any) => {
       // keep user cleared on error
       dispatch(clearUser());
     },
@@ -31,7 +31,7 @@ export const useRefreshToken = () => {
   const qc = useQueryClient();
   return useMutation<string, any, void>({
     mutationFn: () => authRepository.refreshToken(),
-    onSuccess: (token: string) => {
+    onSuccess: () => {
       // could optionally re-fetch user or update auth headers
       qc.invalidateQueries({ queryKey: authKeys.user() });
     },

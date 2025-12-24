@@ -31,8 +31,8 @@ export const ThemePickerScreen = () => {
     // Get the touch coordinates for circular animation
     event.currentTarget.measure(
       (
-        x: number,
-        y: number,
+        _x: number,
+        _y: number,
         width: number,
         height: number,
         px: number,

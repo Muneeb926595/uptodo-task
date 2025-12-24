@@ -1,4 +1,3 @@
-import { read } from 'react-native-fs';
 import { Dictionary } from '../types';
 
 export type LocaleMessage = {

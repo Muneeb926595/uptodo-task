@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { AppText } from '../../../../../app/components/text';
 import { AppIcon } from '../../../../../app/components/icon';
 import {
@@ -7,7 +7,6 @@ import {
   AppIconSize,
 } from '../../../../../app/components/icon/types';
 import { useTheme } from '../../../../../app/theme';
-import { Layout } from '../../../../../app/globals';
 import { magicModal } from 'react-native-magic-modal';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { styles } from './styles';

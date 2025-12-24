@@ -28,12 +28,7 @@ import { mediaService, PickedImage } from '../../../../services/media';
 import { TodoPriorityPicker } from '../todo-priority-picker';
 import { TodoCategoryPicker } from '../../../../categories/view/components';
 
-type Props = {
-  userName?: string;
-  onUserProfileUpdationSuccess?: () => void;
-};
-
-export const CreateTodoBottomSheet = (props: Props) => {
+export const CreateTodoBottomSheet = () => {
   const {
     control,
     handleSubmit,
@@ -50,7 +45,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
     return persistedUri;
   };
 
-  const { pickAndUpload, isLoading, imageUri } = useImagePicker({
+  const { pickAndUpload, imageUri } = useImagePicker({
     uploader: persistImageOnPhoneStorage,
   });
 
@@ -61,7 +56,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
   const createTodoMutation = useCreateTodo();
 
   const handleOpenCalendar = async () => {
-    const result = await magicModal.show(
+    await magicModal.show(
       () => (
         <CalendarPicker
           onCancel={() => magicModal.hideAll()}
@@ -76,7 +71,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
   };
 
   const handleOpenPriorityPicker = async () => {
-    const result = await magicModal.show(
+    await magicModal.show(
       () => (
         <TodoPriorityPicker
           onCancel={() => magicModal.hideAll()}
@@ -91,7 +86,7 @@ export const CreateTodoBottomSheet = (props: Props) => {
   };
 
   const handleOpenCategoryPicker = async () => {
-    const result = await magicModal.show(
+    await magicModal.show(
       () => (
         <TodoCategoryPicker
           onConfirm={category => {
