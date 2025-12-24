@@ -7,7 +7,7 @@ import { LocaleProvider } from '../../../../../app/localisation/locale-provider'
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { Layout } from '../../../../../app/globals';
 import { Controller, useForm } from 'react-hook-form';
-import { AuthInput } from '../../../../../app/components/inputs';
+import { AuthInput } from '../../../../../app/components/auth-input';
 
 type Props = {
   todoTitle: string;
@@ -28,7 +28,6 @@ export const EditTodoTitles = ({
   onCancel,
   onConfirm,
 }: Props) => {
-
   const {
     control,
     handleSubmit,

@@ -18,56 +18,36 @@ import {
 import { FocusScreen } from '../../../modules/focus/view/screens';
 import { ProfileSettingsScreen } from '../../../modules/profile/view/screens';
 import { useEffect, useRef } from 'react';
+import { ComponentType } from 'react';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
-const HomeStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
-    <Stack.Screen
-      name="TodoListingScreen"
-      component={TodoListingScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>
-);
+// Generic stack navigator creator to avoid repetition
+const createStackNavigator = (
+  screenName: string,
+  component: ComponentType<any>,
+) => {
+  const StackNavigator = () => (
+    <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name={screenName as any}
+        component={component}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+  return StackNavigator;
+};
 
-const CalendarStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
-    <Stack.Screen
-      name="CalendarScreen"
-      component={CalendarScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>
-);
-
-const FocusStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
-    <Stack.Screen
-      name="FocusScreen"
-      component={FocusScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>
-);
-
-const ProfileStack = () => (
-  <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
-    <Stack.Screen
-      name="ProfileScreen"
-      component={ProfileSettingsScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>
+const HomeStack = createStackNavigator('TodoListingScreen', TodoListingScreen);
+const CalendarStack = createStackNavigator('CalendarScreen', CalendarScreen);
+const FocusStack = createStackNavigator('FocusScreen', FocusScreen);
+const ProfileStack = createStackNavigator(
+  'ProfileScreen',
+  ProfileSettingsScreen,
 );
 
 const AddButton = () => {
@@ -130,12 +110,52 @@ const AddButton = () => {
   );
 };
 
+// Tab configuration to avoid tight coupling
+type TabConfig = {
+  name: keyof MainBottomTabsParamList;
+  component: ComponentType<any>;
+  icon: AppIconName;
+  labelKey: string;
+};
+
+const TAB_CONFIG: TabConfig[] = [
+  {
+    name: 'Home',
+    component: HomeStack,
+    icon: AppIconName.homeTab,
+    labelKey: LocaleProvider.IDs.label.index,
+  },
+  {
+    name: 'Calendar',
+    component: CalendarStack,
+    icon: AppIconName.calendar,
+    labelKey: LocaleProvider.IDs.label.calendar,
+  },
+  {
+    name: 'Focus',
+    component: FocusStack,
+    icon: AppIconName.clock,
+    labelKey: LocaleProvider.IDs.label.focus,
+  },
+  {
+    name: 'Profile',
+    component: ProfileStack,
+    icon: AppIconName.user,
+    labelKey: LocaleProvider.IDs.label.profile,
+  },
+];
+
+const renderTabIcon = (iconName: AppIconName, color: string) => (
+  <AppIcon name={iconName} iconSize={AppIconSize.medium} color={color} />
+);
+
 export const TabsNavigator = () => {
   const { theme } = useTheme();
+
   return (
     <MainTabs.Navigator
       id={undefined}
-      screenOptions={({ route }) => ({
+      screenOptions={{
         headerShown: true,
         lazy: true,
         tabBarActiveTintColor: theme.colors.brand.DEFAULT,
@@ -144,97 +164,41 @@ export const TabsNavigator = () => {
           backgroundColor: theme.colors.surface['100'],
           paddingTop: Layout.heightPercentageToDP(0.6),
         },
-        tabBarIcon: ({ color }) => {
-          switch (route.name) {
-            case 'Home':
-              return (
-                <AppIcon
-                  name={AppIconName.homeTab}
-                  iconSize={AppIconSize.medium}
-                  color={color}
-                />
-              );
-            case 'Calendar':
-              return (
-                <AppIcon
-                  name={AppIconName.calendar}
-                  iconSize={AppIconSize.medium}
-                  color={color}
-                />
-              );
-            case 'Focus':
-              return (
-                <AppIcon
-                  name={AppIconName.clock}
-                  iconSize={AppIconSize.medium}
-                  color={color}
-                />
-              );
-            case 'Profile':
-              return (
-                <AppIcon
-                  name={AppIconName.user}
-                  iconSize={AppIconSize.medium}
-                  color={color}
-                />
-              );
-            default:
-              return '';
-          }
-        },
-      })}
+      }}
     >
-      <MainTabs.Screen
-        name="Home"
-        component={HomeStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: LocaleProvider.formatMessage(
-            LocaleProvider.IDs.label.index,
-          ),
-        }}
-      />
-      <MainTabs.Screen
-        name="Calendar"
-        component={CalendarStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: LocaleProvider.formatMessage(
-            LocaleProvider.IDs.label.calendar,
-          ),
-        }}
-      />
+      {TAB_CONFIG.slice(0, 2).map(tab => (
+        <MainTabs.Screen
+          key={tab.name}
+          name={tab.name}
+          component={tab.component}
+          options={{
+            headerShown: false,
+            tabBarLabel: LocaleProvider.formatMessage(tab.labelKey),
+            tabBarIcon: ({ color }) => renderTabIcon(tab.icon, color),
+          }}
+        />
+      ))}
       <MainTabs.Screen
         name="Add"
-        component={() => {
-          return null;
-        }}
+        component={() => null}
         options={{
           headerShown: false,
           tabBarLabel: '',
           tabBarButton: () => <AddButton />,
         }}
       />
-      <MainTabs.Screen
-        name="Focus"
-        component={FocusStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: LocaleProvider.formatMessage(
-            LocaleProvider.IDs.label.focus,
-          ),
-        }}
-      />
-      <MainTabs.Screen
-        name="Profile"
-        component={ProfileStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: LocaleProvider.formatMessage(
-            LocaleProvider.IDs.label.profile,
-          ),
-        }}
-      />
+      {TAB_CONFIG.slice(2).map(tab => (
+        <MainTabs.Screen
+          key={tab.name}
+          name={tab.name}
+          component={tab.component}
+          options={{
+            headerShown: false,
+            tabBarLabel: LocaleProvider.formatMessage(tab.labelKey),
+            tabBarIcon: ({ color }) => renderTabIcon(tab.icon, color),
+          }}
+        />
+      ))}
     </MainTabs.Navigator>
   );
 };

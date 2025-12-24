@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 import { FieldError } from 'react-hook-form';
-import { AppIcon } from '../../icon';
-import { AppIconName, AppIconSize } from '../../icon/types';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useTheme } from '../../../theme';
-import { Layout } from '../../../globals';
+import { Layout } from '../../globals';
+import { AppIconName, AppIconSize } from '../icon/types';
+import { AppIcon } from '../icon';
+import { useTheme } from '../../theme';
 
 type Props = {
   secure?: boolean;

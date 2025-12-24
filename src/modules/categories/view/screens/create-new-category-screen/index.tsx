@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, TouchableOpacity, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
 import { Container } from '../../../../../app/components/container';
 import { styles } from './styles';
@@ -7,13 +8,13 @@ import { ScreenProps } from '../../../../../app/navigation';
 import { AppText } from '../../../../../app/components/text';
 import { FormattedMessage } from '../../../../../app/localisation/locale-formatter';
 import { Constants, Images, Layout } from '../../../../../app/globals';
-import { AuthInput } from '../../../../../app/components/inputs';
 import { FlatList } from 'react-native-gesture-handler';
 import { useImagePicker } from '../../../../../app/hooks';
 import { useCreateCategory } from '../../../react-query/hooks';
 import { CustomImage } from '../../../../../app/components/custom-image';
 import { Conditional } from '../../../../../app/components/conditional';
 import { mediaService, PickedImage } from '../../../../services/media';
+import { AuthInput } from '../../../../../app/components/auth-input';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -26,9 +27,29 @@ const CATEGORY_COLORS = [
   '#F48FB1', // Muted Pink
 ];
 
+type CategoryFormData = {
+  categoryName: string;
+  selectedColor: string;
+};
+
 export const CreateNewCategoryScreen = (
   props: ScreenProps<'CreateNewCategoryScreen'>,
 ) => {
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<CategoryFormData>({
+    defaultValues: {
+      categoryName: '',
+      selectedColor: '',
+    },
+  });
+
+  const selectedColor = watch('selectedColor');
+
   const persistImageOnPhoneStorage = async (imageObj: PickedImage) => {
     const persistedUri = await mediaService.persistImage(imageObj?.uri);
     console.log('persistedUri', persistedUri);
@@ -41,19 +62,16 @@ export const CreateNewCategoryScreen = (
 
   const createCategoryMutation = useCreateCategory();
 
-  const [categoryName, setCategoryName] = useState<string>('');
-  const [selectedColor, setSelectedColor] = useState<string>('');
-
   const handleColorPress = (selectedItem: string) => {
-    setSelectedColor(selectedItem);
+    setValue('selectedColor', selectedItem);
   };
 
   const onCancel = () => {
     props.navigation.goBack();
   };
 
-  const handleCreateCategory = async () => {
-    if (categoryName?.trim?.()?.length <= 0) {
+  const onSubmit = async (data: CategoryFormData) => {
+    if (data.categoryName?.trim?.()?.length <= 0) {
       return Alert.alert(
         LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.pleaseEnterCategoryName,
@@ -67,7 +85,7 @@ export const CreateNewCategoryScreen = (
         ),
       );
     }
-    if (selectedColor?.trim?.()?.length <= 0) {
+    if (data.selectedColor?.trim?.()?.length <= 0) {
       return Alert.alert(
         LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.pleaseChooseColor,
@@ -75,13 +93,11 @@ export const CreateNewCategoryScreen = (
       );
     }
 
-    // persist category to local storage via repository + react-query
-
     try {
       await createCategoryMutation.mutateAsync({
-        name: categoryName?.trim?.(),
+        name: data.categoryName?.trim?.(),
         icon: imageUri ?? undefined,
-        color: selectedColor,
+        color: data.selectedColor,
         isSystem: false,
       });
       props.navigation.goBack();
@@ -112,12 +128,19 @@ export const CreateNewCategoryScreen = (
         <AppText style={styles.inputlabel}>
           <FormattedMessage id={LocaleProvider.IDs.label.categoryName} />
         </AppText>
-        <AuthInput
-          value={categoryName}
-          onChange={setCategoryName}
-          onBlur={() => {}}
-          placeholder={LocaleProvider.formatMessage(
-            LocaleProvider.IDs.label.categoryNameWithoutColon,
+        <Controller
+          control={control}
+          name="categoryName"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <AuthInput
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              placeholder={LocaleProvider.formatMessage(
+                LocaleProvider.IDs.label.categoryNameWithoutColon,
+              )}
+            />
           )}
         />
 
@@ -174,7 +197,7 @@ export const CreateNewCategoryScreen = (
             </AppText>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={handleCreateCategory}
+            onPress={handleSubmit(onSubmit)}
             style={styles.chooseBtn}
           >
             <AppText style={styles.chooseText}>

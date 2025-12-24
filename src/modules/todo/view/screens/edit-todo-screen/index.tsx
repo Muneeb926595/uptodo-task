@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { EditTodoHeader } from '../../components';
 import { LocaleProvider } from '../../../../../app/localisation/locale-provider';
@@ -24,8 +25,31 @@ import { useUpdateTodo } from '../../../react-query/hooks';
 import { EditTodoOptionsListItem } from '../../components/edit-todo-options-item';
 import { EditTodoTitles } from '../../components/edit-todo-titles';
 
+type EditTodoFormData = {
+  title: string;
+  description: string;
+  category: Category;
+  priority: PriorityLevel;
+  dueDate: Date | null;
+  isCompleted: boolean;
+  attachments: string[] | undefined;
+};
+
 export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   const updateTodoMutation = useUpdateTodo();
+  const todo = props.route.params?.todoItem;
+
+  const { control, handleSubmit, setValue, watch } = useForm<EditTodoFormData>({
+    defaultValues: {
+      title: todo?.title || '',
+      description: (todo?.description as string) || '',
+      category: todo?.category as Category,
+      priority: todo?.priority || 1,
+      dueDate: todo?.dueDate ? new Date(todo.dueDate) : null,
+      isCompleted: todo?.isCompleted ?? false,
+      attachments: todo?.attachments,
+    },
+  });
 
   const [totoActions] = useState<EditTodoOptions[]>([
     {
@@ -65,40 +89,32 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     },
   ]);
 
-  const todo = props.route.params?.todoItem;
-
-  const [title, setTitle] = useState<string>(todo?.title);
-  const [description, setDescription] = useState<string>(
-    todo?.description as string,
-  );
-  const [category, setCategory] = useState<Category>(
-    todo?.category as Category,
-  );
-  const [priority, setPriority] = useState<PriorityLevel>(todo?.priority);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(
-    todo?.dueDate ? new Date(todo.dueDate) : null,
-  );
-  const [isCompleted, setIsCompleted] = useState<boolean>(
-    todo?.isCompleted ?? false,
-  );
-  const [attachments, setAttachments] = useState<string[] | undefined>(
-    todo?.attachments,
-  );
+  const title = watch('title');
+  const description = watch('description');
+  const category = watch('category');
+  const priority = watch('priority');
+  const selectedDate = watch('dueDate');
+  const attachments = watch('attachments');
 
   useLayoutEffect(() => {
     if (todo) {
-      setTitle(todo?.title);
-      setDescription(todo?.description as string);
-      setSelectedDate(todo?.dueDate ? new Date(todo.dueDate) : null);
-      setCategory(todo?.category as Category);
-      setPriority(todo?.priority);
-      setIsCompleted(todo?.isCompleted ?? false);
-      setAttachments(todo?.attachments);
+      setValue('title', todo?.title);
+      setValue('description', (todo?.description as string) || '');
+      setValue('dueDate', todo?.dueDate ? new Date(todo.dueDate) : null);
+      setValue('category', todo?.category as Category);
+      setValue('priority', todo?.priority);
+      setValue('isCompleted', todo?.isCompleted ?? false);
+      setValue('attachments', todo?.attachments);
     }
-  }, [todo]);
+  }, [todo, setValue]);
 
-  const handleCompleteTodo = (value: boolean) => {
-    setIsCompleted(value);
+  const handleEditTitleConfirmation = (newValues: {
+    title: string;
+    description: string;
+  }) => {
+    setValue('title', newValues.title);
+    setValue('description', newValues.description);
+    magicModal.hideAll();
   };
 
   const handleEditTitle = async () => {
@@ -108,22 +124,18 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
           todoTitle={title}
           todoDescription={description}
           onCancel={() => magicModal.hideAll()}
-          onConfirm={newValues => {
-            setTitle(newValues.title);
-            setDescription(newValues.description);
-            magicModal.hideAll();
-          }}
+          onConfirm={handleEditTitleConfirmation}
         />
       ),
       { swipeDirection: undefined },
     ).promise;
   };
 
-  const handleEditTodo = async () => {
+  const onSubmit = async (data: EditTodoFormData) => {
     magicModal.hideAll();
     magicSheet.hide();
 
-    if (!title?.trim?.()) {
+    if (!data.title?.trim?.()) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
         LocaleProvider.formatMessage(
@@ -132,7 +144,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       );
     }
 
-    if (!category?.id) {
+    if (!data.category?.id) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
         LocaleProvider.formatMessage(
@@ -141,7 +153,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
       );
     }
 
-    if (!selectedDate) {
+    if (!data.dueDate) {
       return Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
         LocaleProvider.formatMessage(
@@ -151,14 +163,14 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
     }
 
     const payload = {
-      title: title.trim(),
-      description: description?.trim?.(),
-      dueDate: dayjs(selectedDate).valueOf(), // timestamp in ms
-      todoTime: dayjs(selectedDate).format('HH:mm'),
-      priority,
-      categoryId: category?.id,
-      isCompleted,
-      attachments,
+      title: data.title.trim(),
+      description: data.description?.trim?.(),
+      dueDate: dayjs(data.dueDate).valueOf(),
+      todoTime: dayjs(data.dueDate).format('HH:mm'),
+      priority: data.priority,
+      categoryId: data.category?.id,
+      isCompleted: data.isCompleted,
+      attachments: data.attachments,
     };
 
     try {
@@ -198,17 +210,23 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
           <View
             style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}
           >
-            <CheckBox
-              value={isCompleted}
-              boxType="circle"
-              style={{
-                transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
-              }}
-              tintColors={{
-                true: Colors.brand['DEFAULT'],
-                false: Colors.white,
-              }}
-              onValueChange={handleCompleteTodo}
+            <Controller
+              control={control}
+              name="isCompleted"
+              render={({ field: { onChange, value } }) => (
+                <CheckBox
+                  value={value}
+                  boxType="circle"
+                  style={{
+                    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+                  }}
+                  tintColors={{
+                    true: Colors.brand['DEFAULT'],
+                    false: Colors.white,
+                  }}
+                  onValueChange={onChange}
+                />
+              )}
             />
             <View>
               <AppText style={styles.todoItemLabel}>{title}</AppText>
@@ -232,11 +250,11 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
           renderItem={({ item }: { item: EditTodoOptions }) => (
             <EditTodoOptionsListItem
               item={item}
-              setSelectedDate={setSelectedDate}
-              setCategory={setCategory}
-              setPriority={setPriority}
+              setSelectedDate={date => setValue('dueDate', date)}
+              setCategory={cat => setValue('category', cat)}
+              setPriority={prio => setValue('priority', prio)}
               attachments={attachments}
-              setAttachments={setAttachments}
+              setAttachments={att => setValue('attachments', att)}
               selectedDate={selectedDate}
               category={category}
               priority={priority}
@@ -252,7 +270,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
         buttonLable={LocaleProvider.formatMessage(
           LocaleProvider.IDs.label.editTask,
         )}
-        onPress={handleEditTodo}
+        onPress={handleSubmit(onSubmit)}
         buttonContainer={{ marginBottom: Layout.heightPercentageToDP(5) }}
       />
     </Container>

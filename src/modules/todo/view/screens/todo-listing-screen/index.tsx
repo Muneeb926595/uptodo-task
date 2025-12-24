@@ -29,13 +29,13 @@ import {
 import { useTheme } from '../../../../../app/theme';
 import { Todo } from '../../../types';
 import { useTodos } from '../../../react-query';
-import { AuthInput } from '../../../../../app/components/inputs';
 import {
   TodoSortModal,
   TodoSortOption,
 } from '../../components/todo-sort-modal';
 import { sortTodos } from '../../../utils/sort-todos';
 import { magicModal } from 'react-native-magic-modal';
+import { AuthInput } from '../../../../../app/components/auth-input';
 
 export const buildTodoListItems = (
   todos: Todo[],

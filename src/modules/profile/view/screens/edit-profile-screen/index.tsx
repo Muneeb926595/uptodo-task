@@ -8,6 +8,7 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import { styles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../../app/components/text';
 import { useTheme } from '../../../../../app/theme';
@@ -17,14 +18,33 @@ import { UserProfile } from '../../../types/profile.types';
 import { Container } from '../../../../../app/components/container';
 import { LocaleProvider } from '../../../../../app/localisation';
 
+type ProfileFormData = {
+  name: string;
+  email: string;
+};
+
 export const EditProfileScreen = () => {
   const { theme } = useTheme();
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<ProfileFormData>({
+    defaultValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  const name = watch('name');
+  const email = watch('email');
 
   useEffect(() => {
     loadProfile();
@@ -34,8 +54,8 @@ export const EditProfileScreen = () => {
     const userProfile = await profileRepository.getProfile();
     if (userProfile) {
       setProfile(userProfile);
-      setName(userProfile.name);
-      setEmail(userProfile.email || '');
+      setValue('name', userProfile.name);
+      setValue('email', userProfile.email || '');
     }
   };
 
@@ -43,7 +63,7 @@ export const EditProfileScreen = () => {
   const hasChanges =
     name.trim() !== profile?.name || email.trim() !== (profile?.email || '');
 
-  const handleSave = async () => {
+  const onSubmit = async (data: ProfileFormData) => {
     if (!isNameValid) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
@@ -58,8 +78,8 @@ export const EditProfileScreen = () => {
 
     try {
       await profileRepository.updateProfile({
-        name: name.trim(),
-        email: email.trim() || undefined,
+        name: data.name.trim(),
+        email: data.email.trim() || undefined,
       });
 
       Alert.alert(
@@ -121,19 +141,32 @@ export const EditProfileScreen = () => {
             <AppText style={styles.label}>
               {LocaleProvider.formatMessage(LocaleProvider.IDs.label.name)} *
             </AppText>
-            <TextInput
-              style={[styles.input, nameFocused && styles.inputFocused]}
-              value={name}
-              onChangeText={setName}
-              placeholder={LocaleProvider.formatMessage(
-                LocaleProvider.IDs.message.enterYourNamePlaceholder,
+            <Controller
+              control={control}
+              name="name"
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, nameFocused && styles.inputFocused]}
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder={LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.enterYourNamePlaceholder,
+                  )}
+                  placeholderTextColor={theme.colors.typography['400']}
+                  onFocus={() => setNameFocused(true)}
+                  onBlur={() => {
+                    setNameFocused(false);
+                    onBlur();
+                  }}
+                  autoCapitalize="words"
+                  returnKeyType="next"
+                  maxLength={50}
+                />
               )}
-              placeholderTextColor={theme.colors.typography['400']}
-              onFocus={() => setNameFocused(true)}
-              onBlur={() => setNameFocused(false)}
-              autoCapitalize="words"
-              returnKeyType="next"
-              maxLength={50}
             />
           </View>
 
@@ -144,20 +177,29 @@ export const EditProfileScreen = () => {
                 LocaleProvider.IDs.label.emailOptional,
               )}
             </AppText>
-            <TextInput
-              style={[styles.input, emailFocused && styles.inputFocused]}
-              value={email}
-              onChangeText={setEmail}
-              placeholder={LocaleProvider.formatMessage(
-                LocaleProvider.IDs.message.enterYourEmailPlaceholder,
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, emailFocused && styles.inputFocused]}
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder={LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.message.enterYourEmailPlaceholder,
+                  )}
+                  placeholderTextColor={theme.colors.typography['400']}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => {
+                    setEmailFocused(false);
+                    onBlur();
+                  }}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  maxLength={100}
+                />
               )}
-              placeholderTextColor={theme.colors.typography['400']}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => setEmailFocused(false)}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              returnKeyType="done"
-              maxLength={100}
             />
           </View>
 
@@ -168,7 +210,7 @@ export const EditProfileScreen = () => {
               (!isNameValid || !hasChanges || isSubmitting) &&
                 styles.continueButtonDisabled,
             ]}
-            onPress={handleSave}
+            onPress={handleSubmit(onSubmit)}
             disabled={!isNameValid || !hasChanges || isSubmitting}
             activeOpacity={0.7}
           >
