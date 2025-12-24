@@ -1,8 +1,8 @@
 // Initialize Unistyles FIRST before any other imports
-import './app/theme/unistyles';
+import './theme/unistyles';
 
 import React, { useEffect, useState } from 'react';
-import './app/utils/ignore-warnings';
+import './utils/ignore-warnings';
 import { MagicModalPortal } from 'react-native-magic-modal';
 import {
   initialWindowMetrics,
@@ -11,19 +11,22 @@ import {
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import { getTranslationService, TranslationProvider } from './app/localisation';
-import { Constants } from './app/globals';
-import { store } from './app/stores';
+import {
+  getTranslationService,
+  TranslationProvider,
+} from './services/localisation';
+import { Constants } from './globals';
+import { store } from './stores';
 import { Provider } from 'react-redux';
-import { ReactQueryProvider } from './app/services/reactQuery/queryClient';
-import { AppNavigator } from './app/navigation';
-import { storageService, StorageKeys } from './modules/services/storage';
-import { initializeTheme } from './app/theme';
+import { ReactQueryProvider } from './react-query/queryClient';
+import { storageService, StorageKeys } from './services/storage';
+import { initializeTheme } from './theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
-import { ToastProvider } from './app/context/toast-context';
-import { SecurityAlert } from './app/components/security-alert';
-import { initializeDayjsPlugins } from './app/utils/timeDateUtils';
+import { ToastProvider } from './context/toast-context';
+import { SecurityAlert } from './views/components/security-alert';
+import { initializeDayjsPlugins } from './utils/timeDateUtils';
+import { AppNavigator } from './views/navigation';
 
 initializeDayjsPlugins();
 
