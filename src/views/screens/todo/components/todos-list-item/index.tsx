@@ -31,20 +31,14 @@ import {
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { formatTodoDateTime } from '../../../../../utils';
 import { Images } from '../../../../../globals';
+import { getPriorityColor } from './utils';
 
 export const TodoListItem = ({ item }: { item: Todo }) => {
   const { theme } = useTheme();
   const translateX = useSharedValue(0);
   const { showToast } = useToast();
 
-  // Priority color based on isOverdue and priority level
-  const priorityColor = item.isOverdue
-    ? theme.colors.red
-    : item.priority >= 8
-    ? theme.colors.brand.DEFAULT
-    : item.priority >= 5
-    ? '#F4D35E'
-    : '#7DDB9B';
+  const priorityColor = getPriorityColor(item.priority, item.isOverdue, theme);
 
   const handleItemPress = () => {
     navigationRef.navigate('EditTodoScreen', { todoItem: item });

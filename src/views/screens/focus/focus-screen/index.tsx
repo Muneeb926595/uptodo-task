@@ -18,6 +18,7 @@ import {
 } from '../../../../react-query';
 import dayjs from 'dayjs';
 import { styles } from './styles';
+import { formatTime, formatDuration } from './utils';
 import {
   FormattedMessage,
   LocaleProvider,
@@ -66,26 +67,6 @@ export const FocusScreen = () => {
       );
     }
   }, [timeRemaining, timer]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const formatDuration = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-
-    if (hours > 0 && mins > 0) {
-      return `${hours}h ${mins}m`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else if (mins > 0) {
-      return `${mins}m`;
-    }
-    return '0m';
-  };
 
   const handleStartFocus = () => {
     const defaultDuration = 1800; // 30 minutes in seconds

@@ -9,20 +9,12 @@ import { CustomImage } from '../../../../views/components/custom-image';
 import { Images } from '../../../../globals';
 import dayjs from 'dayjs';
 import { styles } from './styles';
+import { generateWeekDays } from './utils';
 import { FormattedMessage } from '../../../../services/localisation';
 import { LocaleProvider } from '../../../../services/localisation';
 import { TodoListItem } from '../components';
 
 type TabType = 'today' | 'completed';
-
-// Generate week days starting from a specific date
-const generateWeekDays = (startDate: dayjs.Dayjs) => {
-  const days = [];
-  for (let i = 0; i < 7; i++) {
-    days.push(startDate.add(i, 'day'));
-  }
-  return days;
-};
 
 export const CalendarScreen = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
