@@ -27,6 +27,7 @@ import { ToastProvider } from './context/toast-context';
 import { SecurityAlert } from './views/components/security-alert';
 import { initializeDayjsPlugins } from './utils/timeDateUtils';
 import { AppNavigator } from './views/navigation';
+import { ErrorBoundary } from './views/components/error-boundary';
 
 initializeDayjsPlugins();
 
@@ -80,7 +81,9 @@ function App() {
               <BottomSheetModalProvider>
                 <SafeAreaProvider initialMetrics={initialWindowMetrics}>
                   <SecurityAlert />
-                  <AppNavigator />
+                  <ErrorBoundary>
+                    <AppNavigator />
+                  </ErrorBoundary>
                 </SafeAreaProvider>
                 <MagicSheetPortal />
               </BottomSheetModalProvider>
