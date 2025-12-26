@@ -1,4 +1,9 @@
-import notifee, { TriggerType, TimestampTrigger } from '@notifee/react-native';
+import notifee, { 
+  TriggerType, 
+  TimestampTrigger,
+  AlarmType,
+  AndroidImportance,
+} from '@notifee/react-native';
 
 import {
   NOTIFICATION_CHANNEL_ID,
@@ -16,7 +21,7 @@ export class NotifeeAdapter implements NotificationAdapter {
       id: NOTIFICATION_CHANNEL_ID,
       name: 'Todo Reminders',
       sound: 'default',
-      importance: 4, // AndroidImportance.HIGH
+      importance: AndroidImportance.HIGH,
       vibration: true,
     });
   }
@@ -30,14 +35,23 @@ export class NotifeeAdapter implements NotificationAdapter {
     const trigger: TimestampTrigger = {
       type: TriggerType.TIMESTAMP,
       timestamp: input.timestamp,
-      alarmManager: { allowWhileIdle: true },
+      alarmManager: {
+        allowWhileIdle: true,
+        type: AlarmType.SET_EXACT_AND_ALLOW_WHILE_IDLE,
+      },
     };
 
     const id = await notifee.createTriggerNotification(
       {
         title: input.title,
         body: input.body,
-        android: { channelId: NOTIFICATION_CHANNEL_ID },
+        android: {
+          channelId: NOTIFICATION_CHANNEL_ID,
+          smallIcon: 'ic_launcher',
+          pressAction: {
+            id: 'default',
+          },
+        },
         // iOS: To show on ios when in foreground mode
         ios: {
           foregroundPresentationOptions: {
