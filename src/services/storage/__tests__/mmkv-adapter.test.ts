@@ -4,11 +4,8 @@
  * Tests the MMKV adapter implementation
  */
 
-import { createMMKV, MMKV } from 'react-native-mmkv';
+import { MMKV } from 'react-native-mmkv';
 import { MMKVAdapter } from '../mmkv-adapter';
-
-// Mock createMMKV
-jest.mock('react-native-mmkv');
 
 describe('MMKVAdapter', () => {
   let mmkvAdapter: MMKVAdapter;
@@ -27,10 +24,8 @@ describe('MMKVAdapter', () => {
       getAllKeys: jest.fn(() => []),
     } as any;
 
-    // Mock createMMKV to return our mock instance
-    (createMMKV as jest.Mock).mockReturnValue(mockMMKV);
-
-    mmkvAdapter = new MMKVAdapter();
+    // Inject the mock instance into the adapter
+    mmkvAdapter = new MMKVAdapter(mockMMKV);
   });
 
   afterEach(() => {

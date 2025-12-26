@@ -15,8 +15,9 @@ export const mmkvInstance = createMMKV({
 export class MMKVAdapter implements StorageAdapter {
   private storage: MMKV;
 
-  constructor() {
-    this.storage = mmkvInstance;
+  // Injectable MMKV instance for easier testing, defaults to singleton
+  constructor(storage?: MMKV) {
+    this.storage = storage || mmkvInstance;
   }
 
   set(key: string, value: string): void {
