@@ -33,6 +33,9 @@ import {
   useEnableAppLock,
   useDisableAppLock,
 } from '../../../../react-query/profile';
+import { useQueryClient } from '@tanstack/react-query';
+import { todosKeys } from '../../../../react-query/todo';
+import { categoriesKeys } from '../../../../react-query/categories';
 
 export const ProfileSettingsScreen = () => {
   const { theme } = useTheme();
@@ -48,6 +51,7 @@ export const ProfileSettingsScreen = () => {
   const updateProfileMutation = useUpdateProfile();
   const enableAppLockMutation = useEnableAppLock();
   const disableAppLockMutation = useDisableAppLock();
+  const queryClient = useQueryClient();
 
   const [biometricType, setBiometricType] = useState<string>('');
   const [exportingData, setExportingData] = useState(false);
@@ -347,6 +351,10 @@ export const ProfileSettingsScreen = () => {
           { count: todosResult.errors },
         )}`;
       }
+
+      // Invalidate queries to refresh UI
+      queryClient.invalidateQueries({ queryKey: todosKeys.all() });
+      queryClient.invalidateQueries({ queryKey: categoriesKeys.all() });
 
       Alert.alert(
         LocaleProvider.formatMessage(

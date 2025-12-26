@@ -26,7 +26,7 @@ export const EditProfileScreen = () => {
   const { theme } = useTheme();
   const { data: profile } = useProfile();
   const updateProfileMutation = useUpdateProfile();
-  
+
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,13 +87,15 @@ export const EditProfileScreen = () => {
               ),
               [
                 {
-                  text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok),
+                  text: LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.ok,
+                  ),
                   onPress: () => navigationRef.goBack(),
                 },
               ],
             );
           },
-          onError: (error) => {
+          onError: error => {
             setIsSubmitting(false);
             console.error('Error updating profile:', error);
             Alert.alert(
