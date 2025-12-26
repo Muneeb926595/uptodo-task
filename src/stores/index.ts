@@ -1,5 +1,6 @@
 // Redux toolkit store: to only store frontend states
 import { configureStore } from '@reduxjs/toolkit';
+import { rozeniteDevToolsEnhancer } from '@rozenite/redux-devtools-plugin';
 import { authReducer } from './auth';
 import { focusReducer } from './focus';
 
@@ -9,6 +10,8 @@ export const store = configureStore({
     focus: focusReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
+  enhancers: getDefaultEnhancers =>
+    getDefaultEnhancers().concat(rozeniteDevToolsEnhancer()),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

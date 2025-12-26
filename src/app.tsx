@@ -4,6 +4,7 @@ import './theme/unistyles';
 import React, { useEffect, useState } from 'react';
 import './utils/ignore-warnings';
 import { MagicModalPortal } from 'react-native-magic-modal';
+import { useRozeniteLogger } from './utils/rozenite-logger';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -36,6 +37,9 @@ if (__DEV__) {
 }
 
 function App() {
+  // Enable Rozenite DevTools plugins
+  useRozeniteLogger();
+
   const [appLocaleProviderReady, setAppLocaleProviderReady] = useState(false);
 
   useEffect(() => {

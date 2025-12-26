@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useReactNavigationDevTools } from '@rozenite/react-navigation-plugin';
 
 import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
@@ -29,6 +30,9 @@ const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = () => {
   const routeNameRef = useRef<any>(null);
+
+  // Enable React Navigation DevTools in Rozenite
+  useReactNavigationDevTools({ ref: navigationRef });
 
   const isFirstTime = useFirstTimeAppOpen();
   const [showOnboarding, setShowOnboarding] = useState<boolean>(true);

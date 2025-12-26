@@ -6,6 +6,7 @@ import {
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
+import { useTanStackQueryDevTools } from '@rozenite/tanstack-query-plugin';
 import errorHandler from '../services/error-handler';
 import { AppState } from 'react-native';
 
@@ -43,12 +44,15 @@ queryClient.getMutationCache().subscribe(({ mutation }) => {
 export const ReactQueryProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  // Enable TanStack Query DevTools in Rozenite
+  useTanStackQueryDevTools(queryClient);
+
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', state => {
       focusManager.setFocused(state === 'active');
     });
     return () => {
-      // for RN >= 0.65, remove() is not part of subscription: see docs
+      // for RN >= 0.65, remove() is not part of subscription: see docs
       subscription.remove();
     };
   }, []);

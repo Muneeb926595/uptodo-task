@@ -1,6 +1,12 @@
 import { createMMKV, MMKV } from 'react-native-mmkv';
 import { StorageAdapter } from './storage-adapter';
 
+// Export MMKV instance for Rozenite DevTools
+export const mmkvInstance = createMMKV({
+  id: 'default-mmkv-storage',
+  encryptionKey: 'uptodo-secure-key-2024',
+});
+
 /**
  * MMKV Adapter Implementation
  *
@@ -10,10 +16,7 @@ export class MMKVAdapter implements StorageAdapter {
   private storage: MMKV;
 
   constructor() {
-    this.storage = createMMKV({
-      id: 'default-mmkv-storage',
-      encryptionKey: 'uptodo-secure-key-2024',
-    });
+    this.storage = mmkvInstance;
   }
 
   set(key: string, value: string): void {
