@@ -1,3 +1,4 @@
+// For consistency we need to wrap all bottom sheets with header title, so this component will help to achieve that
 import { View } from 'react-native';
 import React from 'react';
 import { styles } from './styles';

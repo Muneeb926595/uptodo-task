@@ -1,3 +1,4 @@
+// BottomSheet component using ref and @gorhom/bottom-sheet, Since magic sheet is following a singleton pattern, if we need to open a sheet inside of sheet then we need to use this component
 import React, { useCallback } from 'react';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 
