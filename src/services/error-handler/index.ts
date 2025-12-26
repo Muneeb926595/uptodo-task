@@ -7,15 +7,42 @@ export type ParsedError = {
   status?: number;
   code?: string | number;
   message: string;
-  original?: any;
+  original?: unknown;
 };
+
+interface ApiErrorResponse {
+  response?: {
+    status: number;
+    data?: {
+      message?: string;
+      error?: string;
+      detail?: string;
+      code?: string | number;
+    };
+  };
+  request?: unknown;
+  message?: string;
+}
+
+function isApiError(error: unknown): error is ApiErrorResponse {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    ('response' in error || 'request' in error || 'message' in error)
+  );
+}
 
 /**
  * Parse API errors into a consistent format
  */
-export const parseApiError = (err: any): ParsedError => {
+export const parseApiError = (err: unknown): ParsedError => {
   if (!err) return { message: 'Unknown error', original: err };
-  if (err?.response) {
+
+  if (!isApiError(err)) {
+    return { message: 'An error occurred', original: err };
+  }
+
+  if (err.response) {
     const { status, data } = err?.response;
     const message =
       (data && (data?.message || data?.error || data?.detail)) ||
@@ -37,8 +64,8 @@ export const parseApiError = (err: any): ParsedError => {
  * Handles 401 errors specially by clearing session
  */
 export const showApiErrorAlert = async (
-  err: any,
-  opts?: { onRetry?: () => void | Promise<any>; title?: string },
+  err: unknown,
+  opts?: { onRetry?: () => void | Promise<unknown>; title?: string },
 ) => {
   const parsed = parseApiError(err);
   const title =
@@ -64,11 +91,18 @@ export const showApiErrorAlert = async (
   }
 
   return new Promise<void>(resolve => {
-    const buttons: any[] = [];
+    const buttons: Array<{ text: string; onPress: () => void }> = [];
     if (opts?.onRetry) {
       buttons.push({
         text: 'Retry',
-        onPress: () => resolve(opts.onRetry && opts.onRetry()),
+        onPress: () => {
+          const result = opts.onRetry?.();
+          if (result && typeof result === 'object' && 'then' in result) {
+            result.then(() => resolve()).catch(() => resolve());
+          } else {
+            resolve();
+          }
+        },
       });
     }
     buttons.push({ text: 'OK', onPress: () => resolve() });

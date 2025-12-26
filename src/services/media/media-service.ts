@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import { Asset, ImageLibraryOptions } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
-import { MediaAdapter } from './media-adapter';
+import { MediaAdapter, CompressImageOptions } from './media-adapter';
 
 export type PickedImage = {
   uri: string;
@@ -15,7 +15,7 @@ export type UploadFn = (
 
 export type PickOptions = {
   pickerOptions?: ImageLibraryOptions;
-  compressOptions?: any;
+  compressOptions?: CompressImageOptions;
 };
 
 export type UploadOptions = PickOptions & {
@@ -24,7 +24,7 @@ export type UploadOptions = PickOptions & {
 
 /**
  * Media Service
- * 
+ *
  * High-level service for handling media operations (pick, compress, upload).
  * Uses adapter pattern to support different image picker implementations.
  */
@@ -41,7 +41,10 @@ export class MediaService {
   /**
    * Compress an image given a URI
    */
-  async compressImage(uri: string, options?: any): Promise<string> {
+  async compressImage(
+    uri: string,
+    options?: CompressImageOptions,
+  ): Promise<string> {
     return this.adapter.compressImage(uri, options);
   }
 
@@ -65,12 +68,8 @@ export class MediaService {
    */
   createImageFormData(file: PickedImage, fieldName = 'file'): FormData {
     const fd = new FormData();
-    // @ts-ignore React Native FormData file object
-    fd.append(fieldName, {
-      uri: file.uri,
-      name: file.name,
-      type: file.type,
-    } as any);
+    // React Native FormData accepts file objects with uri, name, and type
+    fd.append(fieldName, file as unknown as Blob);
     return fd;
   }
 

@@ -49,6 +49,8 @@ export class NotifeeAdapter implements NotificationAdapter {
 
   async getScheduledIds(): Promise<string[]> {
     const scheduled = await notifee.getTriggerNotifications();
-    return scheduled.map((n: any) => n.notification.id!).filter(Boolean);
+    return scheduled
+      .map(trigger => trigger.notification.id)
+      .filter((id): id is string => Boolean(id));
   }
 }
