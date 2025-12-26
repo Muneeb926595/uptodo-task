@@ -1,12 +1,8 @@
 // src/stores/auth/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types';
 
-interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-}
+import { User } from '../../types';
+import { AuthState } from '../state';
 
 const initialState: AuthState = {
   user: null,

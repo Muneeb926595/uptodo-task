@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface FocusState {
-  isActive: boolean;
-  duration: number; // in seconds
-  startTime: number | null;
-  endTime: number | null;
-  notificationsSuppressed: boolean;
-}
+import { FocusState } from '../state';
 
 const initialState: FocusState = {
   isActive: false,
