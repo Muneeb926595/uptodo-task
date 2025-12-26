@@ -13,7 +13,6 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { styles } from './styles';
-import { HomeHeader, TodoListItem } from '..';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
 import { Conditional } from '../../../../views/components/conditional';
@@ -29,13 +28,15 @@ import {
 import { useTheme } from '../../../../theme';
 import { Todo } from '../../../../types';
 import { useTodos } from '../../../../react-query';
-import {
-  TodoSortModal,
-  TodoSortOption,
-} from '../todo-sort-modal';
 import { sortTodos } from '../../../../utils/sort-todos';
 import { magicModal } from 'react-native-magic-modal';
 import { AuthInput } from '../../../../views/components/auth-input';
+import {
+  HomeHeader,
+  TodoListItem,
+  TodoSortModal,
+  TodoSortOption,
+} from '../components';
 
 export const buildTodoListItems = (
   todos: Todo[],

@@ -1,5 +1,5 @@
 import { Todo } from '../types';
-import { TodoSortOption } from '../views/screens/todo/todo-sort-modal';
+import { TodoSortOption } from '../views/screens/todo/components';
 
 export const sortTodos = (
   todos: Todo[],

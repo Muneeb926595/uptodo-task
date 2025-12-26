@@ -2,12 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { styles } from './styles';
 import { Images } from '../../../../globals';
-import { AppText } from '../../../../views/components/text';
+import { AppText } from '../../../components/text';
 import { FormattedMessage } from '../../../../services/localisation';
 import { LocaleProvider } from '../../../../services/localisation';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Carousel } from '../../../../views/components/carousel';
-import { OnBoardingCarouselItem } from '..';
+import { Carousel } from '../../../components/carousel';
+import { OnBoardingCarouselItem } from '../components';
 
 type CarouselData = {
   source?: string;

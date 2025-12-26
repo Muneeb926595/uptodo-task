@@ -4,7 +4,6 @@ import { Container } from '../../../../views/components/container';
 import { AppText } from '../../../../views/components/text';
 import { useTodos } from '../../../../react-query';
 import { Todo } from '../../../../types';
-import { TodoListItem } from '..';
 import { Conditional } from '../../../../views/components/conditional';
 import { CustomImage } from '../../../../views/components/custom-image';
 import { Images } from '../../../../globals';
@@ -12,6 +11,7 @@ import dayjs from 'dayjs';
 import { styles } from './styles';
 import { FormattedMessage } from '../../../../services/localisation';
 import { LocaleProvider } from '../../../../services/localisation';
+import { TodoListItem } from '../components';
 
 type TabType = 'today' | 'completed';
 

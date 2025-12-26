@@ -1,4 +1,3 @@
-export * from './on-boarding-item';
 export * from './onboarding-screen';
 export * from './welcome-screen';
 export * from './login-screen';

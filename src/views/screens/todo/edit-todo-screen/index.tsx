@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Alert, FlatList, TouchableOpacity, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { styles } from './styles';
-import { EditTodoHeader } from '..';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
 import { ScreenProps } from '../../../navigation';
@@ -22,8 +21,11 @@ import { magicSheet } from 'react-native-magic-sheet';
 import dayjs from 'dayjs';
 import { Category, PriorityLevel } from '../../../../types';
 import { useUpdateTodo } from '../../../../react-query/todo/hooks';
-import { EditTodoOptionsListItem } from '../edit-todo-options-item';
-import { EditTodoTitles } from '../edit-todo-titles';
+import {
+  EditTodoHeader,
+  EditTodoOptionsListItem,
+  EditTodoTitles,
+} from '../components';
 
 type EditTodoFormData = {
   title: string;

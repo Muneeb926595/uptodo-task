@@ -10,15 +10,12 @@ import { Layout } from '../../../globals';
 import { styles } from './styles';
 import { getCommonBottomSheetStyle } from '../../components/bottom-sheet-wrapper/styles';
 import { magicSheet } from 'react-native-magic-sheet';
-import { CreateTodoBottomSheet } from '../../screens/todo';
-import {
-  TodoListingScreen,
-  CalendarScreen,
-} from '../../screens/todo';
+import { TodoListingScreen, CalendarScreen } from '../../screens/todo';
 import { FocusScreen } from '../../screens/focus';
 import { ProfileSettingsScreen } from '../../screens/profile';
 import { useEffect, useRef } from 'react';
 import { ComponentType } from 'react';
+import { CreateTodoBottomSheet } from '../../screens/todo/components';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
