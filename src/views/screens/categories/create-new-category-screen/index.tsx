@@ -1,5 +1,11 @@
 import React from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
@@ -8,6 +14,8 @@ import { ScreenProps } from '../../../navigation';
 import { AppText } from '../../../../views/components/text';
 import { FormattedMessage } from '../../../../services/localisation';
 import { Constants, Images, Layout } from '../../../../globals';
+import { magicModal } from 'react-native-magic-modal';
+import { Colors } from '../../../../theme';
 import { FlatList } from 'react-native-gesture-handler';
 import { useImagePicker } from '../../../../hooks';
 import { useCreateCategory } from '../../../../react-query/categories/hooks';
@@ -15,6 +23,7 @@ import { CustomImage } from '../../../../views/components/custom-image';
 import { Conditional } from '../../../../views/components/conditional';
 import { mediaService, PickedImage } from '../../../../services/media';
 import { AuthInput } from '../../../../views/components/auth-input';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red
@@ -33,7 +42,7 @@ type CategoryFormData = {
 };
 
 export const CreateNewCategoryScreen = (
-  props: ScreenProps<'CreateNewCategoryScreen'>,
+  props?: ScreenProps<'CreateNewCategoryScreen'>,
 ) => {
   const { control, handleSubmit, watch, setValue } = useForm<CategoryFormData>({
     defaultValues: {
@@ -61,7 +70,11 @@ export const CreateNewCategoryScreen = (
   };
 
   const onCancel = () => {
-    props.navigation.goBack();
+    if (props?.navigation) {
+      props.navigation.goBack();
+    } else {
+      magicModal.hideAll();
+    }
   };
 
   const onSubmit = async (data: CategoryFormData) => {
@@ -94,7 +107,11 @@ export const CreateNewCategoryScreen = (
         color: data.selectedColor,
         isSystem: false,
       });
-      props.navigation.goBack();
+      if (props?.navigation) {
+        props.navigation.goBack();
+      } else {
+        magicModal.hideAll();
+      }
     } catch (err) {
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
@@ -105,16 +122,8 @@ export const CreateNewCategoryScreen = (
     }
   };
 
-  return (
-    <Container
-      insetsToHandle={['left', 'right', 'bottom']}
-      screenBackgroundStyle={{
-        flex: 1,
-        paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
-        paddingVertical: Layout.heightPercentageToDP(2),
-      }}
-      containerStyles={{ flex: 1 }}
-    >
+  const content = (
+    <>
       <AppText style={styles.header}>
         <FormattedMessage id={LocaleProvider.IDs.label.createNewCategory} />
       </AppText>
@@ -200,6 +209,36 @@ export const CreateNewCategoryScreen = (
           </TouchableOpacity>
         </View>
       </View>
-    </Container>
+    </>
+  );
+
+  // If navigation props exist, wrap in Container (for navigation)
+  // Otherwise, return plain content (for modal usage with SafeAreaView wrapper)
+  if (props?.navigation) {
+    return (
+      <Container
+        insetsToHandle={['left', 'right', 'bottom']}
+        screenBackgroundStyle={styles.screenBg}
+        containerStyles={{ flex: 1 }}
+      >
+        {content}
+      </Container>
+    );
+  }
+
+  return content;
+};
+
+export const CreateNewCategoryModal: React.FC = () => {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {/* @ts-ignore - props are optional for modal usage */}
+        <CreateNewCategoryScreen />
+      </ScrollView>
+    </SafeAreaView>
   );
 };

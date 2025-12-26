@@ -1,10 +1,15 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { Fonts, Layout } from '../../../../globals';
+import { Constants, Fonts, Layout } from '../../../../globals';
 
 export const styles = StyleSheet.create(theme => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
+  },
+  screenBg: {
+    flex: 1,
+    paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
+    paddingVertical: Layout.heightPercentageToDP(2),
   },
   header: {
     fontSize: Layout.RFValue(20),
@@ -70,6 +75,18 @@ export const styles = StyleSheet.create(theme => ({
   },
   chooseText: {
     color: theme.colors.white,
+  },
+
+  safeArea: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
+    paddingVertical: Layout.heightPercentageToDP(2),
   },
 }));
 // a component's render body to receive up-to-date styles when the theme changes.

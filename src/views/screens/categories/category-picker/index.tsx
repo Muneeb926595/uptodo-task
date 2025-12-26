@@ -16,6 +16,8 @@ import { LocaleProvider } from '../../../../services/localisation/locale-provide
 import { navigationRef } from '../../../navigation';
 import { magicModal } from 'react-native-magic-modal';
 import { CustomImage } from '../../../components/custom-image';
+import { Platform } from 'react-native';
+import { CreateNewCategoryModal } from '../create-new-category-screen';
 
 type Props = {
   onConfirm: (category: Category) => void;
@@ -53,8 +55,16 @@ export const TodoCategoryPicker = ({ onConfirm }: Props) => {
   const { data: categories, isLoading } = useCategories();
 
   const handleAddCategory = () => {
-    magicModal.hideAll();
-    navigationRef.navigate('CreateNewCategoryScreen');
+    if (Platform.OS === 'android') {
+      // On Android, show CreateNewCategoryScreen inside magic modal to appear above bottom sheet
+      magicModal.show(() => <CreateNewCategoryModal />, {
+        swipeDirection: undefined,
+      });
+    } else {
+      magicModal.hideAll();
+      // On iOS, navigate to the screen normally (works fine)
+      navigationRef.navigate('CreateNewCategoryScreen');
+    }
   };
 
   return (
