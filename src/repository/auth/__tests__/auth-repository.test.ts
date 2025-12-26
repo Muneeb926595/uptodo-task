@@ -6,7 +6,7 @@
 
 // Mock dependencies BEFORE imports
 jest.mock('../../../services/storage');
-jest.mock('../../../api/axios/axiosClient', () => ({
+jest.mock('../../../api/axios/axios-client', () => ({
   __esModule: true,
   default: {
     post: jest.fn(),

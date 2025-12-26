@@ -1,4 +1,4 @@
-import axiosClient from './axiosClient';
+import axiosClient from './axios-client';
 import errorHandler from '../../services/error-handler';
 import { AxiosError } from 'axios';
 import { storageService, StorageKeys } from '../../services/storage';

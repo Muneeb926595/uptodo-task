@@ -26,7 +26,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
 import { ToastProvider } from './context/toast-context';
 import { SecurityAlert } from './views/components/security-alert';
-import { initializeDayjsPlugins } from './utils/timeDateUtils';
+import { initializeDayjsPlugins } from './utils/date-time-utils';
 import { AppNavigator } from './views/navigation';
 import { ErrorBoundary } from './views/components/error-boundary';
 

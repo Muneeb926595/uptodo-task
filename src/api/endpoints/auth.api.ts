@@ -1,4 +1,4 @@
-import axiosClient from '../axios/axiosClient';
+import axiosClient from '../axios/axios-client';
 
 export const authApi = {
   login: (email: string, password: string) =>
