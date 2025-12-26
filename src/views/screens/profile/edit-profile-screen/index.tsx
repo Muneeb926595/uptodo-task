@@ -124,11 +124,11 @@ export const EditProfileScreen = () => {
   return (
     <Container
       insetsToHandle={['top']}
-      screenBackgroundStyle={{ flex: 1 }}
-      containerStyles={{ flex: 1 }}
+      screenBackgroundStyle={styles.flexContainer}
+      containerStyles={styles.flexContainer}
     >
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView

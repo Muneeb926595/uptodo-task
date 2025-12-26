@@ -125,4 +125,9 @@ export const styles = StyleSheet.create(theme => ({
     color: theme.colors.red,
     marginLeft: Layout.widthPercentageToDP(2),
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }));

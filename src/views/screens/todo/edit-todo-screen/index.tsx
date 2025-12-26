@@ -194,24 +194,14 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
   return (
     <Container
       insetsToHandle={['left', 'right', 'bottom']}
-      screenBackgroundStyle={{
-        flex: 1,
-        paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
-      }}
-      containerStyles={{ flex: 1 }}
+      screenBackgroundStyle={styles.screenBackground}
+      containerStyles={styles.containerFlex}
     >
       <EditTodoHeader title="" />
       <View style={styles.container}>
         {/* todo title and description */}
-        <View
-          style={[
-            styles.rowBetween,
-            { marginTop: Layout.heightPercentageToDP(3) },
-          ]}
-        >
-          <View
-            style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}
-          >
+        <View style={[styles.rowBetween, styles.headerRow]}>
+          <View style={[styles.row, styles.rowGap]}>
             <Controller
               control={control}
               name="isCompleted"
@@ -219,9 +209,7 @@ export const EditTodoScreen = (props: ScreenProps<'EditTodoScreen'>) => {
                 <CheckBox
                   value={value}
                   boxType="circle"
-                  style={{
-                    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
-                  }}
+                  style={styles.checkboxScale}
                   tintColors={{
                     true: Colors.brand['DEFAULT'],
                     false: Colors.white,

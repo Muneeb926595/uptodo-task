@@ -60,7 +60,7 @@ export const EditTodoTitles = ({
         </AppText>
         <Divider />
 
-        <View style={{ marginTop: Layout.heightPercentageToDP(2) }}>
+        <View style={styles.inputContainer}>
           <Controller
             control={control}
             rules={{

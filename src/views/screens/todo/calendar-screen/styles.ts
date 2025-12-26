@@ -180,4 +180,10 @@ export const styles = StyleSheet.create(theme => ({
     textAlign: 'center',
     marginTop: Layout.heightPercentageToDP(0.8),
   },
+  screenBackground: {
+    flex: 1,
+  },
+  containerFlex: {
+    flex: 1,
+  },
 }));

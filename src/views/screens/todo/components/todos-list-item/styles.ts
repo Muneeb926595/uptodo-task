@@ -90,6 +90,20 @@ export const styles = StyleSheet.create(theme => ({
     marginTop: Layout.heightPercentageToDP(0.5),
     fontWeight: '600' as const,
   },
+  checkboxScale: {
+    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+  },
+  todoContentContainer: {
+    flex: 1,
+  },
+  categoryGapRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: Layout.widthPercentageToDP(3),
+  },
+  flagIcon: {
+    marginRight: Layout.widthPercentageToDP(1),
+  },
 }));
 
 // Note: themed(...) returns a hook/getter function that must be called inside

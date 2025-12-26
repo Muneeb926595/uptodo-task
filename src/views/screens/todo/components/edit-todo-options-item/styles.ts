@@ -49,6 +49,9 @@ export const styles = StyleSheet.create(theme => ({
     width: '100%',
     borderRadius: 8,
   },
+  rowGap: {
+    columnGap: Layout.widthPercentageToDP(2),
+  },
 }));
 
 // Note: themed(...) returns a hook/getter function that must be called inside

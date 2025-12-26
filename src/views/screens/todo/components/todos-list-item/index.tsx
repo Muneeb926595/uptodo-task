@@ -191,9 +191,7 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
           <CheckBox
             value={item?.isCompleted}
             boxType="circle"
-            style={{
-              transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
-            }}
+            style={styles.checkboxScale}
             tintColors={{
               true: theme.colors.brand.DEFAULT,
               false: theme.colors.white,
@@ -201,21 +199,17 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
             onValueChange={handleCompleteTodo}
           />
           {/* </Conditional> */}
-          <TouchableOpacity style={{ flex: 1 }} onPress={handleItemPress}>
+          <TouchableOpacity
+            style={styles.todoContentContainer}
+            onPress={handleItemPress}
+          >
             <AppText style={styles.todoItemLabel}>{item?.title}</AppText>
             <View style={styles.rowBetween}>
               <AppText style={styles.todoItemTime}>
                 {formatTodoDateTime(item?.dueDate)}
               </AppText>
 
-              <View
-                style={[
-                  styles.row,
-                  {
-                    columnGap: Layout.widthPercentageToDP(3),
-                  },
-                ]}
-              >
+              <View style={styles.categoryGapRow}>
                 <Conditional ifTrue={!!item?.category}>
                   <View
                     style={[
@@ -239,7 +233,7 @@ export const TodoListItem = ({ item }: { item: Todo }) => {
                     name={AppIconName.flag}
                     iconSize={AppIconSize.mini}
                     color={priorityColor}
-                    style={{ marginRight: Layout.widthPercentageToDP(1) }}
+                    style={styles.flagIcon}
                   />
                   <AppText style={styles.todoItemPriorityLabel}>
                     {item?.priority}

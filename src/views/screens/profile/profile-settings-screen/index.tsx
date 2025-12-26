@@ -431,9 +431,7 @@ export const ProfileSettingsScreen = () => {
         style={[styles.container, { backgroundColor: theme.colors.background }]}
         edges={['top']}
       >
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.loadingContainer}>
           <AppText>
             {LocaleProvider.formatMessage(LocaleProvider.IDs.label.loading)}
           </AppText>

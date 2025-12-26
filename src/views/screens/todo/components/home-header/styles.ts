@@ -22,4 +22,7 @@ export const styles = StyleSheet.create(theme => ({
     color: theme.colors.white,
     textAlign: 'center',
   },
+  profileContainer: {
+    flex: 0.2,
+  },
 }));

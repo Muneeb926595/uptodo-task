@@ -68,4 +68,7 @@ export const styles = StyleSheet.create(theme => ({
     ...Fonts.latoRegular,
     fontSize: Layout.RFValue(12),
   },
+  inputContainer: {
+    marginTop: Layout.heightPercentageToDP(2),
+  },
 }));

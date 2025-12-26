@@ -112,4 +112,7 @@ export const styles = StyleSheet.create(theme => ({
     fontSize: Layout.RFValue(14),
     color: theme.colors.typography['300'],
   },
+  flexContainer: {
+    flex: 1,
+  },
 }));

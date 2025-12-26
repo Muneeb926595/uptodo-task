@@ -135,7 +135,9 @@ export const CreateTodoBottomSheet = () => {
         LocaleProvider.IDs.label.addTask,
       )}
     >
-      <BottomSheetScrollView contentContainerStyle={{ flex: 1 }}>
+      <BottomSheetScrollView
+        contentContainerStyle={styles.scrollContentContainer}
+      >
         <View style={styles.container}>
           <Controller
             control={control}
@@ -211,15 +213,8 @@ export const CreateTodoBottomSheet = () => {
             </Conditional>
           </TouchableOpacity>
 
-          <View
-            style={[
-              styles.rowBetween,
-              { marginTop: Layout.heightPercentageToDP(2) },
-            ]}
-          >
-            <View
-              style={[styles.row, { columnGap: Layout.widthPercentageToDP(8) }]}
-            >
+          <View style={[styles.rowBetween, styles.actionsRow]}>
+            <View style={[styles.row, styles.rowGap]}>
               <TouchableOpacity
                 hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
                 onPress={handleOpenCalendar}

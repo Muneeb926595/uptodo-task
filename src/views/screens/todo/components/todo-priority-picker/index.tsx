@@ -39,10 +39,10 @@ const RenderPriorityItem = ({
         name={AppIconName.flag}
         iconSize={AppIconSize.primary}
         color={Colors.white}
-        style={{ marginBottom: Layout.heightPercentageToDP(1) }}
+        style={styles.flagIconMargin}
       />
 
-      <AppText style={[styles.priorityItemText]}>{value}</AppText>
+      <AppText style={styles.priorityItemText}>{value}</AppText>
     </TouchableOpacity>
   );
 };
@@ -61,7 +61,7 @@ export const TodoPriorityPicker = ({ onCancel, onConfirm }: Props) => {
         <FlatList
           data={PRIORITY_LEVELS}
           numColumns={4}
-          style={{ marginTop: Layout.heightPercentageToDP(2.4) }}
+          style={styles.priorityListContainer}
           keyExtractor={item => item?.toString?.()}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.listContent}

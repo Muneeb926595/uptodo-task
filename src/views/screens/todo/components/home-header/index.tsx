@@ -36,10 +36,7 @@ export const HomeHeader = ({ title, onFilterPress }: HomeHeaderProps) => {
   };
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.colors.transparent }]}
-      edges={['top']}
-    >
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.wrapper}>
         <TouchableOpacity
           hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
@@ -57,7 +54,7 @@ export const HomeHeader = ({ title, onFilterPress }: HomeHeaderProps) => {
         <TouchableOpacity
           hitSlop={Constants.defaults.DEFAULT_TOUCH_HIT_SLOP}
           onPress={handlePressProfile}
-          style={{ flex: 0.2 }}
+          style={styles.profileContainer}
         >
           <Conditional
             ifTrue={profile?.avatar}

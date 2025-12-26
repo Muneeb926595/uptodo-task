@@ -103,8 +103,8 @@ export const CalendarScreen = () => {
   return (
     <Container
       insetsToHandle={['left', 'right', 'top']}
-      screenBackgroundStyle={{ flex: 1 }}
-      containerStyles={{ flex: 1 }}
+      screenBackgroundStyle={styles.screenBackground}
+      containerStyles={styles.containerFlex}
     >
       <View>
         <AppText style={styles.screenTitle}>

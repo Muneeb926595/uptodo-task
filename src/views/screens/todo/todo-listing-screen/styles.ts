@@ -61,4 +61,10 @@ export const styles = StyleSheet.create(theme => ({
     fontWeight: '400' as const,
     color: theme.colors.white,
   },
+  arrowIcon: {
+    marginLeft: Layout.widthPercentageToDP(2),
+  },
+  screenBackground: {
+    flex: 1,
+  },
 }));

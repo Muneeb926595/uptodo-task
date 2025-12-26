@@ -80,4 +80,10 @@ export const styles = StyleSheet.create(theme => ({
     textAlign: 'center',
     color: theme.colors.white,
   },
+  flagIconMargin: {
+    marginBottom: Layout.heightPercentageToDP(1),
+  },
+  priorityListContainer: {
+    marginTop: Layout.heightPercentageToDP(2.4),
+  },
 }));

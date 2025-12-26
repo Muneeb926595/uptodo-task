@@ -114,7 +114,7 @@ const SectionHeader = ({
           name={AppIconName.arrowDown}
           iconSize={AppIconSize.mini}
           color={theme.colors.white}
-          style={{ marginLeft: Layout.widthPercentageToDP(2) }}
+          style={styles.arrowIcon}
         />
       </Animated.View>
     </View>
@@ -251,8 +251,8 @@ export const TodoListingScreen = () => {
   return (
     <Container
       insetsToHandle={['left', 'right']}
-      screenBackgroundStyle={{ flex: 1 }}
-      containerStyles={{ flex: 1 }}
+      screenBackgroundStyle={styles.screenBackground}
+      containerStyles={styles.screenBackground}
     >
       <HomeHeader
         title={LocaleProvider.formatMessage(LocaleProvider.IDs.label.index)}

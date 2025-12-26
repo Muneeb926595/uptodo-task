@@ -154,9 +154,7 @@ export const EditTodoOptionsListItem = ({
         );
       case EditTodoActionType.TodoCategory:
         return (
-          <View
-            style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}
-          >
+          <View style={[styles.row, styles.rowGap]}>
             <CustomImage
               uri={category?.icon}
               imageStyles={styles.categoryIcon}
@@ -216,7 +214,7 @@ export const EditTodoOptionsListItem = ({
       onPress={() => doSelectedOperation(item?.id)}
       style={styles.sectionsContainer}
     >
-      <View style={[styles.row, { columnGap: Layout.widthPercentageToDP(2) }]}>
+      <View style={[styles.row, styles.rowGap]}>
         <AppIcon
           name={item?.leftIconName!}
           color={item?.isDanger ? Colors.red : Colors.white}

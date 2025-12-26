@@ -31,4 +31,13 @@ export const styles = StyleSheet.create(theme => ({
     width: '100%',
     borderRadius: 8,
   },
+  scrollContentContainer: {
+    flex: 1,
+  },
+  actionsRow: {
+    marginTop: Layout.heightPercentageToDP(2),
+  },
+  rowGap: {
+    columnGap: Layout.widthPercentageToDP(8),
+  },
 }));

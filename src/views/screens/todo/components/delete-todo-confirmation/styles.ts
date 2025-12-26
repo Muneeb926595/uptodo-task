@@ -63,4 +63,7 @@ export const styles = StyleSheet.create(theme => ({
     textAlign: 'center',
     color: theme.colors.white,
   },
+  messageContainer: {
+    marginTop: Layout.heightPercentageToDP(2),
+  },
 }));

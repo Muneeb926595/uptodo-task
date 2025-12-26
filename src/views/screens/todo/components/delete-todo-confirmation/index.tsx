@@ -27,7 +27,7 @@ export const DeleteTaskConfirmation = ({
         </AppText>
         <Divider />
 
-        <View style={{ marginTop: Layout.heightPercentageToDP(2) }}>
+        <View style={styles.messageContainer}>
           <AppText style={styles.message}>
             <FormattedMessage
               id={

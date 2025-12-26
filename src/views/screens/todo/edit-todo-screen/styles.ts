@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { Fonts, Layout } from '../../../../globals';
+import { Constants, Fonts, Layout } from '../../../../globals';
 
 export const styles = StyleSheet.create(theme => ({
   container: {
@@ -56,6 +56,22 @@ export const styles = StyleSheet.create(theme => ({
     width: Layout.widthPercentageToDP(5),
     height: Layout.widthPercentageToDP(5),
     borderRadius: Layout.widthPercentageToDP(1),
+  },
+  screenBackground: {
+    flex: 1,
+    paddingHorizontal: Constants.defaults.DEFAULT_APP_PADDING,
+  },
+  containerFlex: {
+    flex: 1,
+  },
+  headerRow: {
+    marginTop: Layout.heightPercentageToDP(3),
+  },
+  rowGap: {
+    columnGap: Layout.widthPercentageToDP(2),
+  },
+  checkboxScale: {
+    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
   },
 }));
 

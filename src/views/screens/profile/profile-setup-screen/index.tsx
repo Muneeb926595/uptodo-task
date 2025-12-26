@@ -107,7 +107,7 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.flexContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
