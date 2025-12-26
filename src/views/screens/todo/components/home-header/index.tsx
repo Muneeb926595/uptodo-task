@@ -1,10 +1,8 @@
 import { View, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { useTheme } from '../../../../../theme';
-import { UserProfile } from '../../../../../types';
-import { profileRepository } from '../../../../../repository';
 import { navigationRef } from '../../../../navigation';
 import { Constants, Images, Layout } from '../../../../../globals';
 import {
@@ -14,6 +12,7 @@ import {
   CustomImage,
 } from '../../../../components';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
+import { useProfile } from '../../../../../react-query/profile';
 
 type HomeHeaderProps = {
   title: string;
@@ -22,21 +21,7 @@ type HomeHeaderProps = {
 
 export const HomeHeader = ({ title, onFilterPress }: HomeHeaderProps) => {
   const { theme } = useTheme();
-
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-
-  useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
-    try {
-      const userProfile = await profileRepository.getProfile();
-      setProfile(userProfile);
-    } catch (error) {
-      console.error('Error loading profile:', error);
-    }
-  };
+  const { data: profile } = useProfile();
 
   const handleFilterPress = () => {
     if (onFilterPress) {

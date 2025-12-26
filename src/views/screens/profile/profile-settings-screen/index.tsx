@@ -17,20 +17,22 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../views/components/icon/types';
-import {
-  useTheme,
-  themeMetadata,
-  UnistylesRuntime,
-} from '../../../../theme';
+import { useTheme, themeMetadata, UnistylesRuntime } from '../../../../theme';
 import { profileRepository } from '../../../../repository/profile';
 import { biometricService } from '../../../../services/biometric';
 import { mediaService } from '../../../../services/media';
-import { UserProfile } from '../../../../types/profile.types';
 import { navigationRef } from '../../../navigation';
 import { todoRepository } from '../../../../repository/todo';
 import { categoriesRepository } from '../../../../repository/categories';
 import { importExportService } from '../../../../services/import-export';
 import { LocaleProvider } from '../../../../services/localisation';
+import {
+  useProfile,
+  useAppLockStatus,
+  useUpdateProfile,
+  useEnableAppLock,
+  useDisableAppLock,
+} from '../../../../react-query/profile';
 
 export const ProfileSettingsScreen = () => {
   const { theme } = useTheme();
@@ -40,35 +42,22 @@ export const ProfileSettingsScreen = () => {
     | 'forestGreen'
     | 'sunsetOrange'
     | 'rosePink';
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [appLockEnabled, setAppLockEnabled] = useState(false);
+
+  const { data: profile, isLoading: loadingProfile } = useProfile();
+  const { data: appLockEnabled = false } = useAppLockStatus();
+  const updateProfileMutation = useUpdateProfile();
+  const enableAppLockMutation = useEnableAppLock();
+  const disableAppLockMutation = useDisableAppLock();
+
   const [biometricType, setBiometricType] = useState<string>('');
-  const [loading, setLoading] = useState(true);
   const [exportingData, setExportingData] = useState(false);
   const [importingData, setImportingData] = useState(false);
 
   useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
-    try {
-      const userProfile = await profileRepository.getProfile();
-      setProfile(userProfile);
-
-      const lockEnabled = await profileRepository.isAppLockEnabled();
-      setAppLockEnabled(lockEnabled);
-
-      if (lockEnabled) {
-        const type = await biometricService.getBiometricTypeName();
-        setBiometricType(type);
-      }
-    } catch (error) {
-      console.error('Error loading profile:', error);
-    } finally {
-      setLoading(false);
+    if (appLockEnabled) {
+      biometricService.getBiometricTypeName().then(setBiometricType);
     }
-  };
+  }, [appLockEnabled]);
 
   const handleChangeAvatar = async () => {
     try {
@@ -78,12 +67,7 @@ export const ProfileSettingsScreen = () => {
       });
 
       if (result && result.uri) {
-        const updated = await profileRepository.updateProfile({
-          avatar: result.uri,
-        });
-        if (updated) {
-          setProfile(updated);
-        }
+        updateProfileMutation.mutate({ avatar: result.uri });
       }
     } catch (error) {
       console.error('Error changing avatar:', error);
@@ -129,20 +113,27 @@ export const ProfileSettingsScreen = () => {
 
       if (canEnable) {
         const type = await biometricService.getBiometricTypeName();
-        await profileRepository.enableAppLock(type);
-        setAppLockEnabled(true);
-        setBiometricType(type);
-
-        Alert.alert(
-          LocaleProvider.formatMessage(
-            LocaleProvider.IDs.message.appLockEnabled,
-          ),
-          LocaleProvider.formatMessage(
-            LocaleProvider.IDs.message.appLockEnabledMessage,
-            { type },
-          ),
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
-        );
+        enableAppLockMutation.mutate(type, {
+          onSuccess: () => {
+            setBiometricType(type);
+            Alert.alert(
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.appLockEnabled,
+              ),
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.appLockEnabledMessage,
+                { type },
+              ),
+              [
+                {
+                  text: LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.ok,
+                  ),
+                },
+              ],
+            );
+          },
+        });
       }
     } else {
       // Disable app lock - require authentication first
@@ -153,19 +144,26 @@ export const ProfileSettingsScreen = () => {
       );
 
       if (result.success) {
-        await profileRepository.disableAppLock();
-        setAppLockEnabled(false);
-        setBiometricType('');
-
-        Alert.alert(
-          LocaleProvider.formatMessage(
-            LocaleProvider.IDs.message.appLockDisabled,
-          ),
-          LocaleProvider.formatMessage(
-            LocaleProvider.IDs.message.appLockDisabledMessage,
-          ),
-          [{ text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok) }],
-        );
+        disableAppLockMutation.mutate(undefined, {
+          onSuccess: () => {
+            setBiometricType('');
+            Alert.alert(
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.appLockDisabled,
+              ),
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.appLockDisabledMessage,
+              ),
+              [
+                {
+                  text: LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.ok,
+                  ),
+                },
+              ],
+            );
+          },
+        });
       }
     }
   };
@@ -419,7 +417,7 @@ export const ProfileSettingsScreen = () => {
     );
   };
 
-  if (loading) {
+  if (loadingProfile) {
     return (
       <SafeAreaView
         style={[styles.container, { backgroundColor: theme.colors.background }]}

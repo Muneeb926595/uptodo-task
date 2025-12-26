@@ -12,11 +12,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { styles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../views/components/text';
 import { useTheme } from '../../../../theme';
-import { profileRepository } from '../../../../repository/profile';
 import { navigationRef } from '../../../navigation';
-import { UserProfile } from '../../../../types/profile.types';
 import { Container } from '../../../../views/components/container';
 import { LocaleProvider } from '../../../../services/localisation';
+import { useProfile, useUpdateProfile } from '../../../../react-query/profile';
 
 type ProfileFormData = {
   name: string;
@@ -25,7 +24,9 @@ type ProfileFormData = {
 
 export const EditProfileScreen = () => {
   const { theme } = useTheme();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const { data: profile } = useProfile();
+  const updateProfileMutation = useUpdateProfile();
+  
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,17 +48,11 @@ export const EditProfileScreen = () => {
   const email = watch('email');
 
   useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
-    const userProfile = await profileRepository.getProfile();
-    if (userProfile) {
-      setProfile(userProfile);
-      setValue('name', userProfile.name);
-      setValue('email', userProfile.email || '');
+    if (profile) {
+      setValue('name', profile.name);
+      setValue('email', profile.email || '');
     }
-  };
+  }, [profile, setValue]);
 
   const isNameValid = name.trim().length >= 2;
   const hasChanges =
@@ -77,24 +72,41 @@ export const EditProfileScreen = () => {
     setIsSubmitting(true);
 
     try {
-      await profileRepository.updateProfile({
-        name: data.name.trim(),
-        email: data.email.trim() || undefined,
-      });
-
-      Alert.alert(
-        LocaleProvider.formatMessage(LocaleProvider.IDs.label.success),
-        LocaleProvider.formatMessage(
-          LocaleProvider.IDs.message.profileUpdatedSuccessfully,
-        ),
-        [
-          {
-            text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok),
-            onPress: () => navigationRef.goBack(),
+      updateProfileMutation.mutate(
+        {
+          name: data.name.trim(),
+          email: data.email.trim() || undefined,
+        },
+        {
+          onSuccess: () => {
+            setIsSubmitting(false);
+            Alert.alert(
+              LocaleProvider.formatMessage(LocaleProvider.IDs.label.success),
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.profileUpdatedSuccessfully,
+              ),
+              [
+                {
+                  text: LocaleProvider.formatMessage(LocaleProvider.IDs.label.ok),
+                  onPress: () => navigationRef.goBack(),
+                },
+              ],
+            );
           },
-        ],
+          onError: (error) => {
+            setIsSubmitting(false);
+            console.error('Error updating profile:', error);
+            Alert.alert(
+              LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
+              LocaleProvider.formatMessage(
+                LocaleProvider.IDs.message.failedToUpdateProfile,
+              ),
+            );
+          },
+        },
       );
     } catch (error) {
+      setIsSubmitting(false);
       console.error('Error updating profile:', error);
       Alert.alert(
         LocaleProvider.formatMessage(LocaleProvider.IDs.label.error),
