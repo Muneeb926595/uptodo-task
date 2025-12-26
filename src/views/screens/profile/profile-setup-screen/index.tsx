@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
@@ -10,6 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useForm, Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { AppText } from '../../../../views/components/text';
 import { AppIcon } from '../../../../views/components/icon';
@@ -25,21 +25,33 @@ import {
   FormattedMessage,
   LocaleProvider,
 } from '../../../../services/localisation';
+import { AuthInput } from '../../../../views/components/auth-input';
 
 interface ProfileSetupScreenProps {
   onComplete?: () => void;
 }
 
+type ProfileFormData = {
+  name: string;
+  email: string;
+};
+
 export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
   const { theme } = useTheme();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState<string | undefined>();
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const isNameValid = name.trim().length >= 2;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<ProfileFormData>({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+    },
+  });
 
   const handleChangeAvatar = async () => {
     try {
@@ -62,23 +74,13 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
     }
   };
 
-  const handleContinue = async () => {
-    if (!isNameValid) {
-      Alert.alert(
-        LocaleProvider.formatMessage(LocaleProvider.IDs.message.invalidName),
-        LocaleProvider.formatMessage(
-          LocaleProvider.IDs.message.pleaseEnterValidName,
-        ),
-      );
-      return;
-    }
-
+  const handleContinue = async (data: ProfileFormData) => {
     setIsSubmitting(true);
 
     try {
       await profileRepository.createProfile({
-        name: name.trim(),
-        email: email.trim() || undefined,
+        name: data.name.trim(),
+        email: data.email.trim() || undefined,
         avatar,
       });
 
@@ -167,39 +169,56 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
           {/* Name Input */}
           <View style={styles.inputSection}>
             <AppText style={styles.label}>Name *</AppText>
-            <TextInput
-              style={[styles.input, nameFocused && styles.inputFocused]}
-              value={name}
-              onChangeText={setName}
-              placeholder={LocaleProvider.formatMessage(
-                LocaleProvider.IDs.label.enterYourName,
+            <Controller
+              control={control}
+              name="name"
+              rules={{
+                required: true,
+                minLength: 2,
+                maxLength: 50,
+                validate: value => value.trim().length >= 2,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <AuthInput
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  placeholder={LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.enterYourName,
+                  )}
+                  returnKeyType="next"
+                  isError={errors.name}
+                />
               )}
-              placeholderTextColor={theme.colors.typography['400']}
-              onFocus={() => setNameFocused(true)}
-              onBlur={() => setNameFocused(false)}
-              autoCapitalize="words"
-              returnKeyType="next"
-              maxLength={50}
             />
           </View>
 
           {/* Email Input */}
           <View style={styles.inputSection}>
             <AppText style={styles.label}>Email (Optional)</AppText>
-            <TextInput
-              style={[styles.input, emailFocused && styles.inputFocused]}
-              value={email}
-              onChangeText={setEmail}
-              placeholder={LocaleProvider.formatMessage(
-                LocaleProvider.IDs.label.enterYourEmail,
+            <Controller
+              control={control}
+              name="email"
+              rules={{
+                maxLength: 100,
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Invalid email format',
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <AuthInput
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  placeholder={LocaleProvider.formatMessage(
+                    LocaleProvider.IDs.label.enterYourEmail,
+                  )}
+                  keyboardType="email-address"
+                  returnKeyType="done"
+                  isError={errors.email}
+                />
               )}
-              placeholderTextColor={theme.colors.typography['400']}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => setEmailFocused(false)}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              returnKeyType="done"
-              maxLength={100}
             />
           </View>
 
@@ -207,10 +226,10 @@ export const ProfileSetupScreen = ({ onComplete }: ProfileSetupScreenProps) => {
           <TouchableOpacity
             style={[
               styles.continueButton,
-              (!isNameValid || isSubmitting) && styles.continueButtonDisabled,
+              (!isValid || isSubmitting) && styles.continueButtonDisabled,
             ]}
-            onPress={handleContinue}
-            disabled={!isNameValid || isSubmitting}
+            onPress={handleSubmit(handleContinue)}
+            disabled={!isValid || isSubmitting}
             activeOpacity={0.7}
           >
             <AppText style={styles.continueButtonText}>
