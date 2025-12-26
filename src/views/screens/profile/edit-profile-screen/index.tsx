@@ -31,13 +31,7 @@ export const EditProfileScreen = () => {
   const [emailFocused, setEmailFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<ProfileFormData>({
+  const { control, handleSubmit, setValue, watch } = useForm<ProfileFormData>({
     defaultValues: {
       name: '',
       email: '',

@@ -5,7 +5,6 @@ import { PRIORITY_LEVELS, PriorityLevel } from '../../../../../types';
 import { AppIcon, AppText, Divider } from '../../../../components';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { Colors } from '../../../../../theme';
-import { Layout } from '../../../../../globals';
 import {
   FormattedMessage,
   LocaleProvider,

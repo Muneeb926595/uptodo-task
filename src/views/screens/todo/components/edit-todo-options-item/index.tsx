@@ -26,7 +26,7 @@ import {
 import { TodoCategoryPicker } from '../../../categories';
 import { TodoPriorityPicker } from '../todo-priority-picker';
 import { formatTodoDateTime } from '../../../../../utils';
-import { Constants, Images, Layout } from '../../../../../globals';
+import { Constants, Images } from '../../../../../globals';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { Colors } from '../../../../../theme';
 

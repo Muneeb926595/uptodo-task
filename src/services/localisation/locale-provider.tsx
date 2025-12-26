@@ -1,11 +1,9 @@
 /* eslint-disable camelcase */
 'use strict';
-import { flatten } from 'flat';
 import { Constants } from '../../globals';
 import { ISystemMessages } from './types';
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { Dictionary } from '../../types';
 import { getTranslationService } from './translation-provider';
 
 /**
@@ -16,15 +14,8 @@ import { getTranslationService } from './translation-provider';
  */
 export class LocaleProvider extends Component<any> {
   public static currency: string = Constants.defaults.DEFAULT_APP_CURRENCY;
-  private static readonly error = {
-    notInitialized: 'LocaleProvider was not initialized',
-  };
 
-  private static locale: string = Constants.defaults.DEFAULT_APP_LOCALE;
-  private static messages: any = {};
   private static _messageIDs: any = {};
-
-  private static onError: () => void;
 
   static get IDs(): ISystemMessages {
     return this._messageIDs;
@@ -81,10 +72,9 @@ export class LocaleProvider extends Component<any> {
   static setLocale(locale: string) {
     const translationService = getTranslationService();
     translationService.changeLanguage(locale).catch(console.error);
-    LocaleProvider.locale = locale;
   }
 
-  static setPreferredLocale(preferredLocale: string, fallbackLocale: string) {
+  static setPreferredLocale(preferredLocale: string) {
     LocaleProvider.setLocale(preferredLocale);
   }
 
@@ -95,7 +85,6 @@ export class LocaleProvider extends Component<any> {
   static async changeLanguage(preferredLocale: string) {
     const translationService = getTranslationService();
     await translationService.changeLanguage(preferredLocale);
-    LocaleProvider.locale = translationService.getCurrentLanguage();
   }
 
   /**

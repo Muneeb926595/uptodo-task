@@ -25,7 +25,7 @@ import {
   FormattedMessage,
   LocaleProvider,
 } from '../../../../../services/localisation';
-import { Constants, Images, Layout } from '../../../../../globals';
+import { Constants, Images } from '../../../../../globals';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { Colors } from '../../../../../theme';
 

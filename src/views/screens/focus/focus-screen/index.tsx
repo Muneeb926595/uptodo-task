@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Container } from '../../../../views/components/container';
 import { AppText } from '../../../../views/components/text';
-import { ScreenProps } from '../../../navigation';
 import Svg, { Circle } from 'react-native-svg';
 import { useTheme } from '../../../../theme';
 import { Layout } from '../../../../globals';

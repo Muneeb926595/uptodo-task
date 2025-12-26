@@ -6,7 +6,6 @@ import {
   FormattedMessage,
   LocaleProvider,
 } from '../../../../../services/localisation';
-import { Layout } from '../../../../../globals';
 
 type Props = {
   todoTitle: string;

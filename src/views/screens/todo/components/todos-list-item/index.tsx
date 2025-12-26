@@ -30,7 +30,7 @@ import {
 } from '../../../../components';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { formatTodoDateTime } from '../../../../../utils';
-import { Images, Layout } from '../../../../../globals';
+import { Images } from '../../../../../globals';
 
 export const TodoListItem = ({ item }: { item: Todo }) => {
   const { theme } = useTheme();

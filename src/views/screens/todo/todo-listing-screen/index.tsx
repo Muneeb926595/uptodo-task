@@ -17,7 +17,7 @@ import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
 import { Conditional } from '../../../../views/components/conditional';
 import { CustomImage } from '../../../../views/components/custom-image';
-import { Images, Layout } from '../../../../globals';
+import { Images } from '../../../../globals';
 import { AppText } from '../../../../views/components/text';
 import { FormattedMessage } from '../../../../services/localisation';
 import { AppIcon } from '../../../../views/components/icon';

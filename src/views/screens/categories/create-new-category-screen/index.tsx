@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, TouchableOpacity, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { LocaleProvider } from '../../../../services/localisation';
@@ -35,13 +35,7 @@ type CategoryFormData = {
 export const CreateNewCategoryScreen = (
   props: ScreenProps<'CreateNewCategoryScreen'>,
 ) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<CategoryFormData>({
+  const { control, handleSubmit, watch, setValue } = useForm<CategoryFormData>({
     defaultValues: {
       categoryName: '',
       selectedColor: '',

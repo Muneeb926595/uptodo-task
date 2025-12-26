@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
 import { ScreenProps } from '../../../navigation';
-import { Constants, Layout } from '../../../../globals';
+import { Layout } from '../../../../globals';
 import CheckBox from '@react-native-community/checkbox';
 import { Colors } from '../../../../theme';
 import { AppText } from '../../../../views/components/text';
