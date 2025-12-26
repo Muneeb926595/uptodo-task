@@ -7,6 +7,20 @@ import {
 import { NotificationAdapter } from './notification-adapter';
 
 export class NotifeeAdapter implements NotificationAdapter {
+  constructor() {
+    this.createNotificationChannel();
+  }
+
+  private async createNotificationChannel(): Promise<void> {
+    await notifee.createChannel({
+      id: NOTIFICATION_CHANNEL_ID,
+      name: 'Todo Reminders',
+      sound: 'default',
+      importance: 4, // AndroidImportance.HIGH
+      vibration: true,
+    });
+  }
+
   async requestPermission(): Promise<boolean> {
     const settings = await notifee.requestPermission();
     return settings.authorizationStatus >= 1;
