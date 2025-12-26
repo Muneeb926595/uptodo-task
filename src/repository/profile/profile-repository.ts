@@ -138,6 +138,53 @@ class ProfileRepository {
       return null;
     }
   }
+
+  async handleAppLockToggle(
+    enabled: boolean,
+    biometricService: {
+      isAvailable: () => Promise<boolean>;
+      promptToEnable: () => Promise<boolean>;
+      authenticate: (reason: string) => Promise<{ success: boolean }>;
+      getBiometricTypeName: () => Promise<string>;
+      getSetupInstructions: () => string;
+    },
+  ): Promise<
+    | { success: true; biometricType: string }
+    | { success: false; reason: string; instructions?: string }
+  > {
+    if (enabled) {
+      // Enable app lock
+      const isAvailable = await biometricService.isAvailable();
+      if (!isAvailable) {
+        return {
+          success: false,
+          reason: 'biometricUnavailable',
+          instructions: biometricService.getSetupInstructions(),
+        };
+      }
+
+      const canEnable = await biometricService.promptToEnable();
+      if (!canEnable) {
+        return { success: false, reason: 'authenticationFailed' };
+      }
+
+      const type = await biometricService.getBiometricTypeName();
+      await this.enableAppLock(type);
+      return { success: true, biometricType: type };
+    } else {
+      // Disable app lock - require authentication first
+      const result = await biometricService.authenticate(
+        'Verify to disable app lock',
+      );
+
+      if (!result.success) {
+        return { success: false, reason: 'authenticationFailed' };
+      }
+
+      await this.disableAppLock();
+      return { success: true, biometricType: '' };
+    }
+  }
 }
 
 export const profileRepository = new ProfileRepository();
