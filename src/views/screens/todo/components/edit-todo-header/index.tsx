@@ -2,11 +2,11 @@ import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { navigationRef } from '../../../../navigation';
 import { Constants } from '../../../../../globals';
 import { AppIcon, AppText } from '../../../../components';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { Colors } from '../../../../../theme';
+import { navigationRef } from '../../../../../navigation';
 
 type EditTodoHeaderProps = {
   title: string;

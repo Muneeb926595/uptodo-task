@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { MainStackParamList } from '../../../navigation/types';
 import { LoginScreen, WelcomeScreen } from '..';
+import { MainStackParamList } from '../../../../navigation';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 

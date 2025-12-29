@@ -10,7 +10,6 @@ import {
 } from '../../../../views/components/icon/types';
 import { useTheme, themeMetadata, UnistylesRuntime } from '../../../../theme';
 import { profileRepository } from '../../../../repository/profile';
-import { navigationRef } from '../../../navigation';
 import { LocaleProvider } from '../../../../services/localisation';
 import {
   useProfile,
@@ -22,6 +21,7 @@ import {
   SecuritySection,
   DataManagementSection,
 } from '../components';
+import { navigationRef } from '../../../../navigation';
 
 export const ProfileSettingsScreen = () => {
   const { theme } = useTheme();

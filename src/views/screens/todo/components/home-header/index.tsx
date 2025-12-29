@@ -3,7 +3,6 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { useTheme } from '../../../../../theme';
-import { navigationRef } from '../../../../navigation';
 import { Constants, Images, Layout } from '../../../../../globals';
 import {
   AppIcon,
@@ -13,6 +12,7 @@ import {
 } from '../../../../components';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { useProfile } from '../../../../../react-query/profile';
+import { navigationRef } from '../../../../../navigation';
 
 type HomeHeaderProps = {
   title: string;

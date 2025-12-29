@@ -4,7 +4,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { styles } from './styles';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
-import { ScreenProps } from '../../../navigation';
 import { Layout } from '../../../../globals';
 import CheckBox from '@react-native-community/checkbox';
 import { Colors } from '../../../../theme';
@@ -26,6 +25,7 @@ import {
   EditTodoOptionsListItem,
   EditTodoTitles,
 } from '../components';
+import { ScreenProps } from '../../../../navigation';
 
 type EditTodoFormData = {
   title: string;

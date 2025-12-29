@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { Fonts, Layout } from '../../../globals';
+import { Fonts, Layout } from '../../globals';
 
 export const styles = StyleSheet.create(theme => ({
   headerTitle: {

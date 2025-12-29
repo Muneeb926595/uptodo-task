@@ -10,7 +10,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { LocaleProvider } from '../../../../services/localisation';
 import { Container } from '../../../../views/components/container';
 import { styles } from './styles';
-import { ScreenProps } from '../../../navigation';
 import { AppText } from '../../../../views/components/text';
 import { FormattedMessage } from '../../../../services/localisation';
 import { Constants, Images, Layout } from '../../../../globals';
@@ -24,6 +23,7 @@ import { Conditional } from '../../../../views/components/conditional';
 import { mediaService, PickedImage } from '../../../../services/media';
 import { AuthInput } from '../../../../views/components/auth-input';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenProps } from '../../../../navigation';
 
 const CATEGORY_COLORS = [
   '#FF9A85', // Muted Red

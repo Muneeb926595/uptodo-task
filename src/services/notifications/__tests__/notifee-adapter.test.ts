@@ -98,7 +98,13 @@ describe('NotifeeAdapter', () => {
         {
           title: input.title,
           body: input.body,
-          android: { channelId: NOTIFICATION_CHANNEL_ID },
+          android: {
+            channelId: NOTIFICATION_CHANNEL_ID,
+            smallIcon: 'ic_launcher',
+            pressAction: {
+              id: 'default',
+            },
+          },
           ios: {
             foregroundPresentationOptions: {
               alert: true,
@@ -110,7 +116,10 @@ describe('NotifeeAdapter', () => {
         {
           type: TriggerType.TIMESTAMP,
           timestamp: input.timestamp,
-          alarmManager: { allowWhileIdle: true },
+          alarmManager: {
+            allowWhileIdle: true,
+            type: 0,
+          },
         },
       );
       expect(result).toBe('notif-456');

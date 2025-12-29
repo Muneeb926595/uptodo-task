@@ -1,8 +1,6 @@
 import notifee, { 
   TriggerType, 
   TimestampTrigger,
-  AlarmType,
-  AndroidImportance,
 } from '@notifee/react-native';
 
 import {
@@ -21,7 +19,7 @@ export class NotifeeAdapter implements NotificationAdapter {
       id: NOTIFICATION_CHANNEL_ID,
       name: 'Todo Reminders',
       sound: 'default',
-      importance: AndroidImportance.HIGH,
+      importance: 4, // AndroidImportance.HIGH
       vibration: true,
     });
   }
@@ -37,7 +35,7 @@ export class NotifeeAdapter implements NotificationAdapter {
       timestamp: input.timestamp,
       alarmManager: {
         allowWhileIdle: true,
-        type: AlarmType.SET_EXACT_AND_ALLOW_WHILE_IDLE,
+        type: 0, // AlarmType.SET_EXACT_AND_ALLOW_WHILE_IDLE
       },
     };
 

@@ -13,11 +13,11 @@ import { Category } from '../../../../types/categories.types';
 import { Images, Layout } from '../../../../globals';
 import { FormattedMessage } from '../../../../services/localisation/locale-formatter';
 import { LocaleProvider } from '../../../../services/localisation/locale-provider';
-import { navigationRef } from '../../../navigation';
 import { magicModal } from 'react-native-magic-modal';
 import { CustomImage } from '../../../components/custom-image';
 import { Platform } from 'react-native';
 import { CreateNewCategoryModal } from '../create-new-category-screen';
+import { navigationRef } from '../../../../navigation';
 
 type Props = {
   onConfirm: (category: Category) => void;

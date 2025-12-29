@@ -14,12 +14,12 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../views/components/icon/types';
-import { navigationRef } from '../../../navigation';
 import {
   FormattedMessage,
   LocaleProvider,
 } from '../../../../services/localisation';
 import { styles } from './styles';
+import { navigationRef } from '../../../../navigation';
 
 export const ThemePickerScreen = () => {
   const currentTheme = UnistylesRuntime.themeName as ThemeName;

@@ -17,7 +17,6 @@ import {
   useRestoreTodo,
   useUpdateTodo,
 } from '../../../../../react-query';
-import { navigationRef } from '../../../../navigation';
 import {
   FormattedMessage,
   LocaleProvider,
@@ -32,6 +31,7 @@ import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { formatTodoDateTime } from '../../../../../utils';
 import { Images } from '../../../../../globals';
 import { getPriorityColor } from './utils';
+import { navigationRef } from '../../../../../navigation';
 
 export const TodoListItem = ({ item }: { item: Todo }) => {
   const { theme } = useTheme();

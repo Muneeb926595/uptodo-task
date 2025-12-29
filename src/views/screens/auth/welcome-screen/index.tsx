@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { TouchableOpacity, View } from 'react-native';
 import { FormattedMessage } from '../../../../services/localisation';
 import { AppText } from '../../../../views/components/text';
-import { ScreenProps } from '../../../navigation';
+import { ScreenProps } from '../../../../navigation';
 
 export const WelcomeScreen = (props: ScreenProps<'WelcomeScreen'>) => {
   const handleLogin = () => {

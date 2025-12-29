@@ -1,7 +1,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Todo } from '../../types';
+import { Todo } from '../types';
 
 export type MainStackParamList = {
   LoginScreen: undefined;

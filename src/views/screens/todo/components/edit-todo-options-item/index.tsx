@@ -11,7 +11,6 @@ import { Category, PriorityLevel, Todo } from '../../../../../types';
 import { useDeleteTodo } from '../../../../../react-query';
 import { mediaService, PickedImage } from '../../../../../services/media';
 import { useImagePicker } from '../../../../../hooks';
-import { navigationRef } from '../../../../navigation';
 import {
   FormattedMessage,
   LocaleProvider,
@@ -29,6 +28,7 @@ import { formatTodoDateTime } from '../../../../../utils';
 import { Constants, Images } from '../../../../../globals';
 import { AppIconName, AppIconSize } from '../../../../components/icon/types';
 import { Colors } from '../../../../../theme';
+import { navigationRef } from '../../../../../navigation';
 
 type ListItemProps = {
   item: EditTodoOptions;

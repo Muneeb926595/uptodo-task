@@ -5,26 +5,27 @@ import { useReactNavigationDevTools } from '@rozenite/react-navigation-plugin';
 
 import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
-import { AuthFlow } from '../screens/auth/navigation/auth';
 import { hideSplash } from 'react-native-splash-view';
 import { TabsNavigator } from './tab-navigator';
-import { notificationService } from '../../services/notifications';
-import { todoRepository } from '../../repository/todo';
-import { EditTodoScreen } from '../screens/todo';
-import { CreateNewCategoryScreen } from '../screens/categories/create-new-category-screen';
-import { focusRepository } from '../../repository/focus';
-import { useFirstTimeAppOpen } from '../../hooks';
-import { OnboardingScreen } from '../screens/auth/onboarding-screen';
-import { StorageKeys, storageService } from '../../services/storage';
+import { useFirstTimeAppOpen } from '../hooks';
 import {
-  ProfileSetupScreen,
+  focusRepository,
+  profileRepository,
+  todoRepository,
+} from '../repository';
+import { biometricService } from '../services/biometric';
+import { notificationService } from '../services/notifications';
+import { LockScreen, OnboardingScreen } from '../views/screens/auth';
+import { StorageKeys, storageService } from '../services/storage';
+import {
   EditProfileScreen,
-  ThemePickerScreen,
   LanguagePickerScreen,
-} from '../screens/profile';
-import { profileRepository } from '../../repository/profile/profile-repository';
-import { LockScreen } from '../screens/auth/lock-screen';
-import { biometricService } from '../../services/biometric';
+  ProfileSetupScreen,
+  ThemePickerScreen,
+} from '../views/screens/profile';
+import { AuthFlow } from '../views/screens/auth/navigation/auth';
+import { EditTodoScreen } from '../views/screens/todo';
+import { CreateNewCategoryScreen } from '../views/screens/categories';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 

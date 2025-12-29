@@ -8,10 +8,10 @@ import {
   AppIconName,
   AppIconSize,
 } from '../../../../views/components/icon/types';
-import { navigationRef } from '../../../navigation';
 import { LocaleProvider } from '../../../../services/localisation';
 import { storageService, StorageKeys } from '../../../../services/storage';
 import { styles } from './styles';
+import { navigationRef } from '../../../../navigation';
 
 type Language = {
   code: string;

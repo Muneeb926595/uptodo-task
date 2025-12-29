@@ -20,12 +20,12 @@ import {
 import { useTheme } from '../../../../theme';
 import { profileRepository } from '../../../../repository/profile';
 import { mediaService } from '../../../../services/media';
-import { navigationRef } from '../../../navigation';
 import {
   FormattedMessage,
   LocaleProvider,
 } from '../../../../services/localisation';
 import { AuthInput } from '../../../../views/components/auth-input';
+import { navigationRef } from '../../../../navigation';
 
 interface ProfileSetupScreenProps {
   onComplete?: () => void;

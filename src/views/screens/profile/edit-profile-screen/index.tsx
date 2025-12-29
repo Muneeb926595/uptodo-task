@@ -12,10 +12,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { styles } from '../profile-setup-screen/styles';
 import { AppText } from '../../../../views/components/text';
 import { useTheme } from '../../../../theme';
-import { navigationRef } from '../../../navigation';
 import { Container } from '../../../../views/components/container';
 import { LocaleProvider } from '../../../../services/localisation';
 import { useProfile, useUpdateProfile } from '../../../../react-query/profile';
+import { navigationRef } from '../../../../navigation';
 
 type ProfileFormData = {
   name: string;
