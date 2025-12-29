@@ -4,6 +4,14 @@
 
 **UpTodo** is a modern, production-ready React Native task management application built with React Native's New Architecture. The app follows enterprise-level coding standards with a modular, scalable architecture designed for maintainability and testability.
 
+## 🎬 App Demos
+
+Get a quick look at the app in action:
+
+- [**Full App Demo**](https://drive.google.com/file/d/1iI1Hw9Yl9Y5NsSuda_95as74AZf05b8U/view?usp=sharing) - Complete walkthrough of all features
+- [**Notification & Translation Demo**](https://drive.google.com/file/d/13PgGmIoA7Q4KOpdWeRcyUejicb0kmmwy/view?usp=sharing) - See notifications and multi-language support
+- [**Delete, Import & Export Demo**](https://drive.google.com/file/d/1_32ZOw1vQmJGgNe6ava3l0bXs661sy5M/view?usp=sharing) - Data management features
+
 ## 🚀 Quick Start
 
 #### Platform-Specific Requirements
